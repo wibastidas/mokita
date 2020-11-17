@@ -1,0 +1,7 @@
+{
+  "name": "Mokita",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
