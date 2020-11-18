@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { NewCustomerPageModule } from '../new-customer/new-customer.module';
+import { NewSalePageModule } from '../new-sale/new-sale.module';
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { Tab2Page } from './tab2.page';
 
@@ -11,7 +13,9 @@ import { Tab2Page } from './tab2.page';
     IonicModule,
     CommonModule,
     FormsModule,
-    Tab2PageRoutingModule
+    Tab2PageRoutingModule,
+    NewCustomerPageModule,
+    NewSalePageModule
   ],
   declarations: [Tab2Page]
 })

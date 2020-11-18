@@ -1,10 +1,11 @@
+
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-segment  value="sunny">
-      <ion-segment-button value="sunny">
+    <ion-segment (ionChange)="segmentChanged($event)"  [(ngModel)]="type">
+      <ion-segment-button value="newCustomer">
         <ion-label>Cliente Nuevo</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="rainy">
+      <ion-segment-button value="registeredCustomer">
         <ion-label>Cliente Registrado</ion-label>
       </ion-segment-button>
     </ion-segment>
@@ -12,9 +13,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header> -->
+  <div [ngSwitch]="type">
+    <ion-list *ngSwitchCase="'newCustomer'">
+      <app-new-customer></app-new-customer>
+    </ion-list>
+    <ion-list *ngSwitchCase="'registeredCustomer'">
+      <app-new-sale></app-new-sale>
+    </ion-list>
+  </div>
 </ion-content>
+
+

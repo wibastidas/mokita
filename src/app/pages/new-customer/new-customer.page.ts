@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
+import { EventorService } from 'src/app/services/eventor.service';
 
 @Component({
   selector: 'app-new-customer',
@@ -32,7 +34,9 @@ export class NewCustomerPage implements OnInit {
       { type:"required", message: "La referencia es requerida."}
     ]
   }
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, 
+              public alertController: AlertController,
+              public eventorService: EventorService) {
     this.customerForm = this.formBuilder.group({
       name: new FormControl("", Validators.compose([
         Validators.required
@@ -50,8 +54,8 @@ export class NewCustomerPage implements OnInit {
         Validators.required
       ])),
       email: new FormControl("", Validators.compose([
-        Validators.email,
-        Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
+        //Validators.email,
+        //Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
       ])),
       reference: new FormControl("", Validators.compose([
         Validators.required,
@@ -62,8 +66,35 @@ export class NewCustomerPage implements OnInit {
   ngOnInit() {
   }
 
-  createCustomer(customer){
-    console.log("createCustomer: ", customer);
+  async createCustomer(customer){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirmar!',
+      message: 'Registrar <strong>nuevo cliente</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Cancelar');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+            console.log("createCustomer: ", customer);
+            this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', {
+              type: "registeredCustomer"
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
   }
 
 }
