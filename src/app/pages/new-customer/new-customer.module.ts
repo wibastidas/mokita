@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { NewCustomerPageRoutingModule } from './new-customer-routing.module';
 import { NewCustomerPage } from './new-customer.page';
@@ -13,7 +13,8 @@ import { NewCustomerPage } from './new-customer.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    NewCustomerPageRoutingModule
+    NewCustomerPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [NewCustomerPage],
   exports: [NewCustomerPage]
