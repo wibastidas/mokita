@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "mokita-app": {
+      "hosting": {
+        "app": [
+          "mokita-app"
+        ]
+      }
+    }
+  }
+}

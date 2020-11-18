@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { Customer } from 'src/app/interfaces/interfaces';
 import { EventorService } from 'src/app/services/eventor.service';
 
 @Component({
@@ -66,7 +67,7 @@ export class NewCustomerPage implements OnInit {
   ngOnInit() {
   }
 
-  async createCustomer(customer){
+  async createCustomer(customer: Customer){
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
