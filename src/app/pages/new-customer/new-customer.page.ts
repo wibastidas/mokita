@@ -62,6 +62,8 @@ export class NewCustomerPage implements OnInit {
   ngOnInit() {
   }
 
-  createCustomer
+  createCustomer(customer){
+    console.log("createCustomer: ", customer);
+  }
 
 }
