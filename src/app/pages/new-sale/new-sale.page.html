@@ -1,1 +1,28 @@
-nueva venta
+<ion-item>
+    <ion-label>Seleccionar Cliente</ion-label>
+    <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+      <ion-select-option value="brown">Brown</ion-select-option>
+      <ion-select-option value="blonde">Blonde</ion-select-option>
+      <ion-select-option value="black">Black</ion-select-option>
+      <ion-select-option value="red">Red</ion-select-option>
+    </ion-select>
+</ion-item>
+
+<form 
+[formGroup]="saleForm" 
+(ngSubmit)="registerSale(saleForm.value)">
+  <ion-item>
+    <ion-label>Monto: </ion-label>
+    <ion-input type="number"  formControlName="amount"></ion-input>
+  </ion-item>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.amount">
+      <div *ngIf="saleForm.get('amount').hasError(validation.type) && (saleForm.get('amount').dirty || saleForm.get('amount').touched)">
+        {{validation.message}}
+      </div>
+    </ng-container>
+  </div>
+  <div text-center>
+    <ion-button [disabled]="saleForm.invalid" expand="full" type="submit">Registrar Venta</ion-button>
+  </div>
+</form>

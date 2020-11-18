@@ -81,9 +81,8 @@ export class NewCustomerPage implements OnInit {
             console.log('Cancelar');
           }
         }, {
-          text: 'Okay',
+          text: 'Ok',
           handler: () => {
-            console.log('Confirm Okay');
             console.log("createCustomer: ", customer);
             this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', {
               type: "registeredCustomer"

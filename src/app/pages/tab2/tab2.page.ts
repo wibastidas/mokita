@@ -32,6 +32,7 @@ export class Tab2Page  implements OnInit {
       message: 'Cliente creado satisfactoriamente!',
       duration: 4000,
       position: "top",
+      color:"primary",
       buttons: [
          {
           text: 'X',

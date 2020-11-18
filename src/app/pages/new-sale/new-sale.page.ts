@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-new-sale',
@@ -6,11 +8,57 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./new-sale.page.scss'],
 })
 export class NewSalePage implements OnInit {
+  saleForm: FormGroup;
+  validation_messages = {
+    amount: [
+      { type:"required", message: "El monto es requerido."}
+    ]
+    // ,
+    // modality: [
+    //   { type:"required", message: "La modalidad es requerido."}
+    // ],
+    // numeroCuotas: [
+    //   { type:"required", message: "El numero de cuotas es requerida."}
+    // ]
+  }
+  constructor(private formBuilder: FormBuilder, 
+              public alertController: AlertController) {
 
-  constructor() {
+    this.saleForm = this.formBuilder.group({
+      amount: new FormControl("", Validators.compose([
+        Validators.required
+      ]))
+    })
   }
 
   ngOnInit() {
+  }
+
+  async registerSale(sale){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirmar!',
+      message: 'Registrar <strong>venta</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Cancelar');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            console.log("registerSale: ", sale);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
   }
 
 }
