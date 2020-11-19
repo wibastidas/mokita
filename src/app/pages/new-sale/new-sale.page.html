@@ -1,6 +1,6 @@
 <ion-item>
     <ion-label>Seleccionar Cliente</ion-label>
-    <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+    <ion-select value="brown" okText="OK" cancelText="Dismiss">
       <ion-select-option value="brown">Brown</ion-select-option>
       <ion-select-option value="blonde">Blonde</ion-select-option>
       <ion-select-option value="black">Black</ion-select-option>
@@ -26,3 +26,10 @@
     <ion-button [disabled]="saleForm.invalid" expand="full" type="submit">Registrar Venta</ion-button>
   </div>
 </form>
+
+
+<ul>
+  <li class="text" *ngFor="let item of customers | async">
+    {{item.name}}
+  </li>
+</ul>
