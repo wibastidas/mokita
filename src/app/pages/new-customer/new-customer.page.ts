@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { take } from 'rxjs/operators';
 import { Customer } from 'src/app/interfaces/interfaces';
 import { AlertService } from 'src/app/services/alert.service';
 import { CustomersService } from 'src/app/services/customers.service';
@@ -90,15 +91,16 @@ export class NewCustomerPage implements OnInit {
           handler: () => {
             console.log("createCustomer: ", customer);
 
-            this.customersService.getCustomerByDocument(customer.document).subscribe(async cliente => {
-              console.log('cliente: ', cliente.length);
+            this.customersService.getCustomerByDocument(customer.document).pipe(take(1))
+            .subscribe(async cliente => {
+              console.log('cliente: ', cliente);
               if(cliente.length > 0){
                 console.log("Cliente ya existe!!!");
                 this.alertService.presentToast("El numero de cédula ya fue registrado.", 2000, "top" ,"primary");
               } else {
-                await this.customersService.createNewCustomer(customer).then(res => { console.log('res: ', res) });
+                //await this.customersService.createNewCustomer(customer).then(res => { console.log('res: ', res) });
 
-                this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', { type: "registeredCustomer" });
+                //this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', { type: "registeredCustomer" });
               }
             });
           }
@@ -125,3 +127,5 @@ export class NewCustomerPage implements OnInit {
   }
 
 }
+
+
