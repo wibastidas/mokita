@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { AlertService } from 'src/app/services/alert.service';
 import { EventorService } from 'src/app/services/eventor.service';
 
 @Component({
@@ -11,7 +11,7 @@ export class Tab2Page  implements OnInit {
   type: string;
 
   constructor(public eventorService: EventorService,
-              public toastController: ToastController) {
+              public alertService: AlertService) {
     this.type = "newCustomer";
   }
 
@@ -27,13 +27,13 @@ export class Tab2Page  implements OnInit {
     console.log('segmentChanged ev:  ', ev.detail.value);
   }
 
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Cliente creado satisfactoriamente!',
-      duration: 4000,
-      position: "top",
-      color:"primary",
-      buttons: [
+  presentToast() {
+    this.alertService.presentToast(
+      'Cliente creado satisfactoriamente!',
+      4000,
+      "top",
+      "primary",
+      [
          {
           text: 'X',
           role: 'cancel',
@@ -42,8 +42,7 @@ export class Tab2Page  implements OnInit {
           }
         }
       ]
-    });
-    toast.present();
+    );
   }
 
 }

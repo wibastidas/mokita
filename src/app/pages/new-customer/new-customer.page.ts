@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Customer } from 'src/app/interfaces/interfaces';
+import { AlertService } from 'src/app/services/alert.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { EventorService } from 'src/app/services/eventor.service';
 
@@ -40,7 +41,8 @@ export class NewCustomerPage implements OnInit {
   constructor(private formBuilder: FormBuilder, 
               public alertController: AlertController,
               public eventorService: EventorService,
-              private customersService: CustomersService) {
+              private customersService: CustomersService,
+              private alertService: AlertService) {
 
     this.customerForm = this.formBuilder.group({
       name: new FormControl("", Validators.compose([
@@ -92,6 +94,7 @@ export class NewCustomerPage implements OnInit {
               console.log('cliente: ', cliente.length);
               if(cliente.length > 0){
                 console.log("Cliente ya existe!!!");
+                this.alertService.presentToast("El numero de cédula ya fue registrado.", 2000, "top" ,"primary");
               } else {
                 await this.customersService.createNewCustomer(customer).then(res => { console.log('res: ', res) });
 

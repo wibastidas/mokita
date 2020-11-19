@@ -22,7 +22,7 @@ export class AlertService {
     await this.alert.present();
   }
 
-  async presentToast(message, duration, position, buttons?, color? ) {
+  async presentToast(message, duration, position, color?, buttons?  ) {
     this.toast = await this.toastController.create({
       message,
       duration,
