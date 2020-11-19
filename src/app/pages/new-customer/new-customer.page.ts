@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Customer } from 'src/app/interfaces/interfaces';
+import { CustomersService } from 'src/app/services/customers.service';
 import { EventorService } from 'src/app/services/eventor.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { EventorService } from 'src/app/services/eventor.service';
   styleUrls: ['./new-customer.page.scss'],
 })
 export class NewCustomerPage implements OnInit {
+  customers: Customer[];
   customerForm: FormGroup;
   validation_messages = {
     name: [
@@ -37,7 +39,9 @@ export class NewCustomerPage implements OnInit {
   }
   constructor(private formBuilder: FormBuilder, 
               public alertController: AlertController,
-              public eventorService: EventorService) {
+              public eventorService: EventorService,
+              private customersService: CustomersService) {
+
     this.customerForm = this.formBuilder.group({
       name: new FormControl("", Validators.compose([
         Validators.required
@@ -64,8 +68,6 @@ export class NewCustomerPage implements OnInit {
     })
   }
 
-  ngOnInit() {
-  }
 
   async createCustomer(customer: Customer){
 
@@ -85,9 +87,13 @@ export class NewCustomerPage implements OnInit {
           text: 'Ok',
           handler: () => {
             console.log("createCustomer: ", customer);
-            this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', {
-              type: "registeredCustomer"
+            this.customersService.createNewCustomer(customer).then(res => {
+              console.log('res: ', res);
             });
+
+            // this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', {
+            //   type: "registeredCustomer"
+            // });
           }
         }
       ]
@@ -95,6 +101,39 @@ export class NewCustomerPage implements OnInit {
 
     await alert.present();
 
+  }
+
+  ngOnInit() {
+    this.customersService.getCustomers().subscribe(clientes => {
+      console.log('clientes: ', clientes);
+    });
+
+    this.customersService.getCustomerByDocument(626266101).subscribe(cliente => {
+      console.log('cliente: ', cliente);
+    });
+  }
+
+  // async create(customer: Customer){
+  //   let newCustomer: Customer = { 
+  //     address: "Montevideo caracas",
+  //     email: "no",
+  //     lastName: "apppp",
+  //     name: "desde firebase",
+  //     phoneNumber: "1234567",
+  //     reference: "sdsfdsf",
+  //     document: 9888877776666
+  //   }
+  //   await this.customersService.createNewCustomer(newCustomer).then(res => {
+  //     console.log('res: ', res);
+  //   });
+  // }
+
+  update(customer: Customer) {
+    this.customersService.updateCustomer(customer);
+  }
+
+  delete(id: string) {
+    this.customersService.deleteCustomer(id);
   }
 
 }

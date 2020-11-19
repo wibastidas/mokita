@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Observable } from 'rxjs';
@@ -25,10 +24,9 @@ export class NewSalePage implements OnInit {
     // ]
   }
   constructor(private formBuilder: FormBuilder, 
-              public alertController: AlertController,
-              public firestore: AngularFirestore) {
+              public alertController: AlertController) {
 
-    this.customers = firestore.collection('customers').valueChanges();
+    //this.customers = firestore.collection('customers').valueChanges();
 
     this.saleForm = this.formBuilder.group({
       amount: new FormControl("", Validators.compose([
