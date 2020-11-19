@@ -84,7 +84,6 @@ export class NewCustomerPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Cancelar');
           }
         }, {
           text: 'Ok',
@@ -95,12 +94,11 @@ export class NewCustomerPage implements OnInit {
             .subscribe(async cliente => {
               console.log('cliente: ', cliente);
               if(cliente.length > 0){
-                console.log("Cliente ya existe!!!");
                 this.alertService.presentToast("El numero de cédula ya fue registrado.", 2000, "top" ,"primary");
               } else {
-                //await this.customersService.createNewCustomer(customer).then(res => { console.log('res: ', res) });
+                await this.customersService.createNewCustomer(customer).then(res => { console.log('res: ', res) });
 
-                //this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', { type: "registeredCustomer" });
+                this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', { type: "registeredCustomer" });
               }
             });
           }
