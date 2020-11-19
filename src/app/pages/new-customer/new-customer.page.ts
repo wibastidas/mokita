@@ -87,13 +87,17 @@ export class NewCustomerPage implements OnInit {
           text: 'Ok',
           handler: () => {
             console.log("createCustomer: ", customer);
-            this.customersService.createNewCustomer(customer).then(res => {
-              console.log('res: ', res);
-            });
 
-            // this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', {
-            //   type: "registeredCustomer"
-            // });
+            this.customersService.getCustomerByDocument(customer.document).subscribe(async cliente => {
+              console.log('cliente: ', cliente.length);
+              if(cliente.length > 0){
+                console.log("Cliente ya existe!!!");
+              } else {
+                await this.customersService.createNewCustomer(customer).then(res => { console.log('res: ', res) });
+
+                this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', { type: "registeredCustomer" });
+              }
+            });
           }
         }
       ]
@@ -107,26 +111,7 @@ export class NewCustomerPage implements OnInit {
     this.customersService.getCustomers().subscribe(clientes => {
       console.log('clientes: ', clientes);
     });
-
-    this.customersService.getCustomerByDocument(626266101).subscribe(cliente => {
-      console.log('cliente: ', cliente);
-    });
   }
-
-  // async create(customer: Customer){
-  //   let newCustomer: Customer = { 
-  //     address: "Montevideo caracas",
-  //     email: "no",
-  //     lastName: "apppp",
-  //     name: "desde firebase",
-  //     phoneNumber: "1234567",
-  //     reference: "sdsfdsf",
-  //     document: 9888877776666
-  //   }
-  //   await this.customersService.createNewCustomer(newCustomer).then(res => {
-  //     console.log('res: ', res);
-  //   });
-  // }
 
   update(customer: Customer) {
     this.customersService.updateCustomer(customer);

@@ -15,7 +15,7 @@ export class CustomersService {
   }
 
   getCustomerByDocument(document){
-    //return this.firestore.doc<Customer>(`customers/${document}`).valueChanges();
+    //return this.firestore.doc<Customer>(`customers/${document}`).valueChanges(); by id
     return this.firestore.collection('customers', ref => ref.where('document','==', document )).valueChanges();
   }
 
