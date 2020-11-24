@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { Customer } from 'src/app/interfaces/interfaces';
+import { CustomersService } from 'src/app/services/customers.service';
 
 @Component({
   selector: 'app-new-sale',
@@ -24,7 +28,8 @@ export class NewSalePage implements OnInit {
     // ]
   }
   constructor(private formBuilder: FormBuilder, 
-              public alertController: AlertController) {
+              public alertController: AlertController,
+              private customersService: CustomersService) {
 
     //this.customers = firestore.collection('customers').valueChanges();
 
@@ -36,6 +41,21 @@ export class NewSalePage implements OnInit {
   }
 
   ngOnInit() {
+    this.customersService.getCustomers().pipe(take(1)).subscribe((clientes: Customer[]) => {
+      console.log('clientes: ', clientes[0].date);
+
+      //DD/MM/YYYY HH:mm:ss"
+      const format1 = "MMMM Do YYYY, h:mm:ss a"
+      const format2 = "YYYY-MM-DD"
+
+      let dateTime1 = moment(clientes[0].date).format(format1);
+      let dateTime2 = moment(clientes[0].date).format(format2);
+
+      console.log("dateTime1: ", dateTime1);
+      console.log("dateTime2: ", dateTime2);
+
+      // console.log("moment(): ", moment(clientes[0].date).format('MM/DD/YYYY'));
+    });
   }
 
   async registerSale(sale){
@@ -66,3 +86,5 @@ export class NewSalePage implements OnInit {
   }
 
 }
+
+ 

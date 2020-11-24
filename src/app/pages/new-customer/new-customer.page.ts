@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { Customer } from 'src/app/interfaces/interfaces';
 import { AlertService } from 'src/app/services/alert.service';
@@ -67,7 +68,8 @@ export class NewCustomerPage implements OnInit {
       // ])),
       reference: new FormControl("", Validators.compose([
         Validators.required,
-      ]))
+      ])),
+      date: new FormControl(moment().format("YYYY-MM-DD HH:mm:ss"))
     })
   }
 
@@ -111,9 +113,10 @@ export class NewCustomerPage implements OnInit {
   }
 
   ngOnInit() {
-    this.customersService.getCustomers().subscribe(clientes => {
-      console.log('clientes: ', clientes);
-    });
+    // this.customersService.getCustomers().pipe(take(1)).subscribe(clientes => {
+    //   console.log('clientes: ', clientes);
+    // });
+
   }
 
   update(customer: Customer) {

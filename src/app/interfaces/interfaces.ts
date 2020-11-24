@@ -5,7 +5,8 @@ export interface Customer {
     phoneNumber : string,
     address : string,
     email : string,
-    reference : string
+    reference : string,
+    date: Date
 }
 
 export interface Sale {
