@@ -1,10 +1,7 @@
 <ion-item>
     <ion-label>Seleccionar Cliente</ion-label>
-    <ion-select value="brown" okText="OK" cancelText="Dismiss">
-      <ion-select-option value="brown">Brown</ion-select-option>
-      <ion-select-option value="blonde">Blonde</ion-select-option>
-      <ion-select-option value="black">Black</ion-select-option>
-      <ion-select-option value="red">Red</ion-select-option>
+    <ion-select okText="Seleccionar" cancelText="Cancelar" [(ngModel)]="documentCustomerSelected" (ngModelChange)="updateDocumentCustomerSelected()" >
+      <ion-select-option *ngFor="let customer of customers" value="{{customer.document}}">{{customer.name + ' ' + customer.lastName}} </ion-select-option>
     </ion-select>
 </ion-item>
 
@@ -22,8 +19,33 @@
       </div>
     </ng-container>
   </div>
+
+  <ion-item>
+    <ion-label>% Interés: </ion-label>
+    <ion-input type="number"  formControlName="rate"></ion-input>
+  </ion-item>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.rate">
+      <div *ngIf="saleForm.get('rate').hasError(validation.type) && (saleForm.get('rate').dirty || saleForm.get('rate').touched)">
+        {{validation.message}}
+      </div>
+    </ng-container>
+  </div>
+
+  <ion-item>
+    <ion-label>Número de cuotas: </ion-label>
+    <ion-input type="number"  formControlName="numeroCuotas"></ion-input>
+  </ion-item>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.numeroCuotas">
+      <div *ngIf="saleForm.get('numeroCuotas').hasError(validation.type) && (saleForm.get('numeroCuotas').dirty || saleForm.get('numeroCuotas').touched)">
+        {{validation.message}}
+      </div>
+    </ng-container>
+  </div>
+
   <div text-center>
-    <ion-button [disabled]="saleForm.invalid" expand="full" type="submit">Registrar Venta</ion-button>
+    <ion-button [disabled]="saleForm.invalid || !documentCustomerSelected" expand="full" type="submit">Registrar Venta</ion-button>
   </div>
 </form>
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import * as moment from 'moment';
-import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Customer } from 'src/app/interfaces/interfaces';
 import { CustomersService } from 'src/app/services/customers.service';
@@ -14,18 +13,22 @@ import { CustomersService } from 'src/app/services/customers.service';
 })
 export class NewSalePage implements OnInit {
   saleForm: FormGroup;
-  customers: Observable<any[]>;
+  customers: Customer[];
+  documentCustomerSelected: number;
   validation_messages = {
     amount: [
       { type:"required", message: "El monto es requerido."}
-    ]
+    ],
     // ,
     // modality: [
     //   { type:"required", message: "La modalidad es requerido."}
     // ],
-    // numeroCuotas: [
-    //   { type:"required", message: "El numero de cuotas es requerida."}
-    // ]
+    numeroCuotas: [
+      { type:"required", message: "El número de cuotas es requerida."}
+    ],
+    rate: [
+      { type:"required", message: "El % de interés es requerido."}
+    ]
   }
   constructor(private formBuilder: FormBuilder, 
               public alertController: AlertController,
@@ -36,25 +39,31 @@ export class NewSalePage implements OnInit {
     this.saleForm = this.formBuilder.group({
       amount: new FormControl("", Validators.compose([
         Validators.required
-      ]))
+      ])),
+      numeroCuotas: new FormControl(20, Validators.compose([
+        Validators.required
+      ])),
+      rate: new FormControl(20, Validators.compose([
+        Validators.required
+      ])),
     })
   }
 
   ngOnInit() {
-    this.customersService.getCustomers().pipe(take(1)).subscribe((clientes: Customer[]) => {
-      console.log('clientes: ', clientes[0].date);
-
+    this.customersService.getCustomers().pipe(take(1)).subscribe((customers: Customer[]) => {
+      console.log('customers: ', customers);
+      this.customers = customers;
       //DD/MM/YYYY HH:mm:ss"
       const format1 = "MMMM Do YYYY, h:mm:ss a"
       const format2 = "YYYY-MM-DD"
 
-      let dateTime1 = moment(clientes[0].date).format(format1);
-      let dateTime2 = moment(clientes[0].date).format(format2);
+      let dateTime1A = moment(customers[1].createdAt).format(format1);
+      let dateTime2B = moment(customers[1].createdAt).format(format2);
 
-      console.log("dateTime1: ", dateTime1);
-      console.log("dateTime2: ", dateTime2);
+      console.log("dateTime1A: ", dateTime1A);
+      console.log("dateTime2B: ", dateTime2B);
 
-      // console.log("moment(): ", moment(clientes[0].date).format('MM/DD/YYYY'));
+      // console.log("moment(): ", moment(customers[0].date).format('MM/DD/YYYY'));
     });
   }
 
@@ -75,7 +84,18 @@ export class NewSalePage implements OnInit {
         }, {
           text: 'Ok',
           handler: () => {
-            console.log("registerSale: ", sale);
+
+        
+
+            sale.createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
+            sale.cuotas = this.createCuotas(sale.numeroCuotas);
+            let montoInteres = (sale.amount * (sale.rate + sale.amount) / 100);
+            sale.montoCuota =  montoInteres / sale.numeroCuotas;
+
+            console.log("montoInteres: ",  montoInteres );
+            console.log("B: ",  sale.numeroCuotas );
+            
+            console.log("sale.numeroCuotas: ", sale.numeroCuotas)
           }
         }
       ]
@@ -83,6 +103,31 @@ export class NewSalePage implements OnInit {
 
     await alert.present();
 
+  }
+
+  createCuotas(numeroCuotas){
+    let dates = [];
+
+    let cont;
+    let numeroCuotasTmp = numeroCuotas;
+
+    for(cont=1; cont <= numeroCuotasTmp; cont++ ) {
+
+      if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'Sunday'){
+        dates.push({
+          cuota: dates.length + 1,
+          date: moment().add(cont,'days').format('YYYY-MM-DD'),
+          fechaPago: null,
+        });
+      } else {
+        numeroCuotasTmp = numeroCuotasTmp + 1;
+      }
+    }
+    return dates;
+  }
+
+  updateDocumentCustomerSelected(){
+    console.log('Event Called:', this.documentCustomerSelected);
   }
 
 }

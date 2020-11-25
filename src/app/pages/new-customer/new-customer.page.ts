@@ -69,12 +69,17 @@ export class NewCustomerPage implements OnInit {
       reference: new FormControl("", Validators.compose([
         Validators.required,
       ])),
-      date: new FormControl(moment().format("YYYY-MM-DD HH:mm:ss"))
+      createdAt: new FormControl(moment().format("YYYY-MM-DD HH:mm:ss"))
     })
   }
 
-
-  async createCustomer(customer: Customer){
+  ngOnInit() {
+    // this.customersService.getCustomers().pipe(take(1)).subscribe(clientes => {
+    //   console.log('clientes: ', clientes);
+    // });
+  }
+  
+  async alertConfirm(customer: Customer){
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -91,32 +96,26 @@ export class NewCustomerPage implements OnInit {
           text: 'Ok',
           handler: () => {
             console.log("createCustomer: ", customer);
-
-            this.customersService.getCustomerByDocument(customer.document).pipe(take(1))
-            .subscribe(async cliente => {
-              console.log('cliente: ', cliente);
-              if(cliente.length > 0){
-                this.alertService.presentToast("El numero de cédula ya fue registrado.", 2000, "top" ,"primary");
-              } else {
-                await this.customersService.createNewCustomer(customer).then(res => { console.log('res: ', res) });
-
-                this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', { type: "registeredCustomer" });
-              }
-            });
+            this.createCustomer(customer);
           }
         }
       ]
     });
-
     await alert.present();
-
   }
 
-  ngOnInit() {
-    // this.customersService.getCustomers().pipe(take(1)).subscribe(clientes => {
-    //   console.log('clientes: ', clientes);
-    // });
+  createCustomer(customer: Customer){
+    this.customersService.getCustomerByDocument(customer.document).pipe(take(1))
+    .subscribe(async cliente => {
+      console.log('cliente: ', cliente);
+      if(cliente.length > 0) {
+        this.alertService.presentToast("El numero de cédula ya fue registrado.", 2000, "top" ,"primary");
+      } else {
+        await this.customersService.createNewCustomer(customer).then(res => { console.log('res: ', res) });
 
+        this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', { type: "registeredCustomer", document: customer.document });
+      }
+    });
   }
 
   update(customer: Customer) {

@@ -6,11 +6,15 @@ export interface Customer {
     address : string,
     email : string,
     reference : string,
-    date: Date
+    createdAt: Date
 }
 
 export interface Sale {
     id: string,
     customer : Customer,
-    amount : string
+    amount : string,
+    createdAt: Date
+    montoCuota: number,
+    numeroCuotas: Number,
+    cuotas: []
 }
