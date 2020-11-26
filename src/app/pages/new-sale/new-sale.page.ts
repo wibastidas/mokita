@@ -130,6 +130,6 @@ export class NewSalePage implements OnInit {
     console.log('Event Called:', this.documentCustomerSelected);
   }
 
-}
+} 
 
  
