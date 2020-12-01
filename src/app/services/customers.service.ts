@@ -13,6 +13,10 @@ export class CustomersService {
     return this.firestore.collection('customers').valueChanges();
   }
 
+  getCustomersNew() {
+    return this.firestore.collection('customers').snapshotChanges();
+  }
+
   getCustomerByDocument(document){
     return this.firestore.collection(`customers`, ref => ref.where('document', "==", document)).snapshotChanges();
   }
@@ -22,8 +26,9 @@ export class CustomersService {
   }
 
   updateCustomer(customer: Customer){
-    delete customer.name;
-    this.firestore.doc('customers/' + customer.name).update(customer);
+    //delete customer.name;
+
+    this.firestore.doc('customers/' + customer.id).update(customer);
   }
 
   deleteCustomer(customerId: string){

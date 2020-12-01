@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
-import { take } from 'rxjs/operators';
+import { ModalController } from '@ionic/angular';
 import { Customer } from 'src/app/interfaces/interfaces';
 import { CustomersService } from 'src/app/services/customers.service';
+import { CustomerDetailPage } from '../customer-detail/customer-detail.page';
 
 @Component({
   selector: 'app-customers',
@@ -12,24 +12,52 @@ import { CustomersService } from 'src/app/services/customers.service';
 export class CustomersPage implements OnInit {
   customers: Customer[];
 
-  constructor(private customersService: CustomersService) { }
+  constructor(private customersService: CustomersService,
+              private modalController: ModalController) { }
 
   ngOnInit() {
-    this.customersService.getCustomers().pipe(take(1)).subscribe((customers: Customer[]) => {
-      console.log('customers: ', customers);
-      this.customers = customers;
-      //DD/MM/YYYY HH:mm:ss"
-      const format1 = "MMMM Do YYYY, h:mm:ss a"
-      const format2 = "YYYY-MM-DD"
+    // this.customersService.getCustomers().pipe(take(1)).subscribe((customers: Customer[]) => {
+    //   console.log('customers: ', customers);
+    //   this.customers = customers;
+    //   //DD/MM/YYYY HH:mm:ss"
+    //   const format1 = "MMMM Do YYYY, h:mm:ss a"
+    //   const format2 = "YYYY-MM-DD"
 
-      let dateTime1A = moment(customers[1].createdAt).format(format1);
-      let dateTime2B = moment(customers[1].createdAt).format(format2);
+    //   let dateTime1A = moment(customers[1].createdAt).format(format1);
+    //   let dateTime2B = moment(customers[1].createdAt).format(format2);
 
-      console.log("dateTime1A: ", dateTime1A);
-      console.log("dateTime2B: ", dateTime2B);
+    //   console.log("dateTime1A: ", dateTime1A);
+    //   console.log("dateTime2B: ", dateTime2B);
 
-      // console.log("moment(): ", moment(customers[0].date).format('MM/DD/YYYY'));
+    //   // console.log("moment(): ", moment(customers[0].date).format('MM/DD/YYYY'));
+    // });
+
+
+    this.customersService.getCustomersNew().subscribe(data => {
+      this.customers = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data() as Customer
+        } 
+      });
+      console.log("this.customers: ", this.customers)
+
     });
+
+  }
+
+
+
+  async goCustomerDetail(customer) {
+    console.log("goCustomerDetail: ", customer)
+
+    const modal = await this.modalController.create({
+      component: CustomerDetailPage,
+      componentProps: {
+        customer
+      }
+    });
+    return await modal.present();
   }
 
 }

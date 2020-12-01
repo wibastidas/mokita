@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{customer.name}} {{customer.lastName}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="dismissModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-button (click)="updateCustomer()" expand="block">Actualizar</ion-button>
+
+</ion-content>
