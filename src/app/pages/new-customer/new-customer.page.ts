@@ -32,10 +32,10 @@ export class NewCustomerPage implements OnInit {
     address: [
       { type:"required", message: "La dirección es requerida."}
     ],
-    // email: [
-    //   { type:"required", message: "El correo es requerido."},
-    //   { type: "pattern", message: "Este no es un email válido." }
-    // ],
+    email: [
+      { type:"required", message: "El correo es requerido."},
+      { type: "pattern", message: "Este no es un email válido." }
+    ],
     reference: [
       { type:"required", message: "La referencia es requerida."}
     ]
@@ -62,12 +62,12 @@ export class NewCustomerPage implements OnInit {
       address: new FormControl("", Validators.compose([
         Validators.required
       ])),
-      // email: new FormControl("", Validators.compose([
-      //   Validators.email,
-      //   Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
-      // ])),
+      email: new FormControl("", Validators.compose([
+        Validators.email,
+        Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
+      ])),
       reference: new FormControl("", Validators.compose([
-        Validators.required,
+       // Validators.required,
       ])),
       createdAt: new FormControl(moment().format("YYYY-MM-DD HH:mm:ss"))
     })
