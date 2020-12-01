@@ -8,6 +8,32 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-button (click)="updateCustomer()" expand="block">Actualizar</ion-button>
+
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-segment (ionChange)="segmentChanged($event)"  [(ngModel)]="type">
+        <ion-segment-button value="loansInformation">
+          <ion-label>Préstamos</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="customerInformation">
+          <ion-label>Datos Personales</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content [fullscreen]="true">
+    <div [ngSwitch]="type">
+      <ion-list *ngSwitchCase="'loansInformation'">
+        El cliente no tiene préstamos asociados.
+      </ion-list>
+      <ion-list *ngSwitchCase="'customerInformation'">
+
+      </ion-list>
+    </div>
+  </ion-content>
+
+
+  <!-- <ion-button (click)="updateCustomer()" expand="block">Actualizar</ion-button> -->
 
 </ion-content>

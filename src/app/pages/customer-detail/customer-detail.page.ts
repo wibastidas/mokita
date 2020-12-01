@@ -10,9 +10,13 @@ import { CustomersService } from 'src/app/services/customers.service';
 })
 export class CustomerDetailPage implements OnInit, OnDestroy {
   @Input() customer: Customer;
+  type: string;
 
   constructor(public modalCtrl: ModalController,
-              public customersService:CustomersService ) { }
+              public customersService:CustomersService ) {
+    this.type = "loansInformation";
+
+  }
 
   ngOnInit() {
     console.log("customer:: ", this.customer)
@@ -31,9 +35,11 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   }
 
   updateCustomer(){
-    this.customer.address = "Nueva Direccion"
-    console.log("updateCustomer", this.customer);
     this.customersService.updateCustomer(this.customer);
+  }
+
+  segmentChanged(ev : any){
+    console.log('segmentChanged ev:  ', ev.detail.value);
   }
 
 }
