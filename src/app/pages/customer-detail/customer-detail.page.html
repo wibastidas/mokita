@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{customer.name}} {{customer.lastName}}</ion-title>
+    <!-- <ion-title>{{customer.name}} {{customer.lastName}}</ion-title> -->
     <ion-buttons slot="end">
       <ion-button color="primary" (click)="dismissModal()">Cerrar</ion-button>
     </ion-buttons>
@@ -28,7 +28,107 @@
         El cliente no tiene préstamos asociados.
       </ion-list>
       <ion-list *ngSwitchCase="'customerInformation'">
-
+        <form  class="new-customer-page"
+        [formGroup]="customerForm" 
+        (ngSubmit)="updateCustomer(customerForm.value)">
+          <ion-list-header class="ios hydrated">
+            Información Personal
+          </ion-list-header>
+        
+          <ion-item>
+            <ion-label position="floating" color="primary">Nombre: </ion-label>
+            <ion-input type="text"  formControlName="name"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.name">
+              <div class="error-message ion-padding-start" *ngIf="customerForm.get('name').hasError(validation.type) && (customerForm.get('name').dirty || customerForm.get('name').touched)">
+                {{validation.message}} 
+              </div>
+            </ng-container>
+          </div>
+        
+          <ion-item>
+            <ion-label position="floating" color="primary">Apellido: </ion-label>
+            <ion-input type="text"  formControlName="lastName"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.lastName">
+              <div class="error-message ion-padding-start" *ngIf="customerForm.get('lastName').hasError(validation.type) && (customerForm.get('lastName').dirty || customerForm.get('lastName').touched)">
+                {{validation.message}}
+              </div>
+            </ng-container>
+          </div>
+        
+          <ion-item>
+            <ion-label position="floating" color="primary">Cédula: </ion-label>
+            <ion-input type="number"  formControlName="document"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.document">
+              <div class="error-message ion-padding-start" *ngIf="customerForm.get('document').hasError(validation.type) && (customerForm.get('document').dirty || customerForm.get('document').touched)">
+                {{validation.message}}
+              </div>
+            </ng-container>
+          </div>
+        
+          <ion-list-header class="ios hydrated">
+            Datos de Contacto
+          </ion-list-header>
+        
+          <ion-item>
+            <ion-label position="floating" color="primary">Celular: </ion-label>
+            <ion-input type="tel"  formControlName="phoneNumber"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.phoneNumber">
+              <div class="error-message ion-padding-start" *ngIf="customerForm.get('phoneNumber').hasError(validation.type) && (customerForm.get('phoneNumber').dirty || customerForm.get('phoneNumber').touched)">
+                {{validation.message}}
+              </div>
+            </ng-container>
+          </div>
+        
+          <ion-item>
+            <ion-label position="floating" color="primary">Dirección: </ion-label>
+            <ion-input type="text" formControlName="address"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.address">
+              <div class="error-message ion-padding-start" *ngIf="customerForm.get('address').hasError(validation.type) && (customerForm.get('address').dirty || customerForm.get('address').touched)">
+                {{validation.message}}
+              </div>
+            </ng-container>
+          </div>
+        
+          <ion-item>
+            <ion-label position="floating" color="primary">Correo: </ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.email">
+              <div class="error-message ion-padding-start" *ngIf="customerForm.get('email').hasError(validation.type) && (customerForm.get('email').dirty || customerForm.get('email').touched)">
+                {{validation.message}}
+              </div>
+            </ng-container>
+          </div>
+        
+          <ion-item>
+            <ion-label position="floating" color="primary">Referencia: </ion-label>
+            <ion-input type="text" formControlName="reference"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.reference">
+              <div class="error-message ion-padding-start" *ngIf="customerForm.get('reference').hasError(validation.type) && (customerForm.get('reference').dirty || customerForm.get('reference').touched)">
+                {{validation.message}}
+              </div>
+            </ng-container>
+          </div>
+          <div text-center>
+            <ion-button [disabled]="customerForm.invalid" expand="full" type="submit">Continuar</ion-button>
+          </div>
+        
+        </form>
+        
+         
       </ion-list>
     </div>
   </ion-content>

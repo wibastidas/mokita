@@ -13,6 +13,10 @@ export class CustomersService {
     return this.firestore.collection('customers').valueChanges();
   }
 
+  getCustomerById(id: string) {
+    return this.firestore.doc('/customers/' + id).valueChanges();
+  }
+
   getCustomersNew() {
     return this.firestore.collection('customers').snapshotChanges();
   }

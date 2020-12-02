@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TextAvatarModule } from 'src/app/directives/text-avatar';
 import { CustomersPageRoutingModule } from './customers-routing.module';
@@ -15,7 +15,8 @@ import { CustomersPage } from './customers.page';
     FormsModule,
     IonicModule,
     CustomersPageRoutingModule,
-    TextAvatarModule
+    TextAvatarModule,
+    ReactiveFormsModule
   ],
   declarations: [CustomersPage]
 })

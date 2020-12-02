@@ -1,11 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-
 import { CustomerDetailPageRoutingModule } from './customer-detail-routing.module';
-
 import { CustomerDetailPage } from './customer-detail.page';
 
 @NgModule({
@@ -13,7 +10,8 @@ import { CustomerDetailPage } from './customer-detail.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    CustomerDetailPageRoutingModule
+    CustomerDetailPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [CustomerDetailPage]
 })

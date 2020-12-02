@@ -54,7 +54,7 @@ export class CustomersPage implements OnInit {
     const modal = await this.modalController.create({
       component: CustomerDetailPage,
       componentProps: {
-        customer
+        customerId: customer.id
       }
     });
     return await modal.present();
