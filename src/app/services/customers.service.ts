@@ -26,7 +26,8 @@ export class CustomersService {
   }
 
   createNewCustomer(customer: Customer){
-    return this.firestore.collection('customers').add(customer);
+    
+    return this.firestore.collection('customers').doc(this.firestore.createId()).set(customer);
   }
 
   updateCustomer(customer: Customer){

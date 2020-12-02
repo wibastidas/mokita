@@ -80,9 +80,23 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
     console.log("customerId: ", this.customerId);
     this.customersService.getCustomerById(this.customerId).subscribe((res:Customer) => {
       console.log("res: ", res)
+      res.id = this.customerId;
+      console.log("res: ", res)
+
       this.customer = res
       this.customerForm.setValue(res);
     });
+
+
+    // this.customersService.getCustomerById(this.customerId).subscribe(data => {
+    //   let customer = {
+        
+    //       id: data.payload.doc.id,
+    //       ...e.payload.doc.data() as Customer
+        
+    //   }
+    //   console.log("data: ", data)
+    // });
   }
 
   ngOnDestroy() {
