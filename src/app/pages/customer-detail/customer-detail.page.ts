@@ -76,7 +76,6 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log("customerId: ", this.customer);
     this.customerForm.setValue(this.customer);
     // this.customersService.getCustomerById(this.customerId).subscribe((res:Customer) => {
     //   // console.log("res: ", res)
@@ -106,17 +105,15 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   }
 
   @HostListener('window:popstate', ['$event'])
-  dismissModal() {
-    console.log("dismissModal");
-    this.modalCtrl.dismiss();
+  dismissModal(updated) {
+
+    this.modalCtrl.dismiss({
+      'dismissed': updated
+    });
   }
 
   updateCustomer(){
-    console.log("this.customerForm: ", this.customerForm)
-    console.log("this.customer: ", this.customer)
-
-    this.customersService.updateCustomer(this.customerForm.value).then(res => { console.log('res update: ', res) });
-    this.dismissModal();
+    this.customersService.updateCustomer(this.customerForm.value).then(res => this.dismissModal(true));
   }
 
   segmentChanged(ev : any){

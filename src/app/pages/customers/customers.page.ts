@@ -78,6 +78,13 @@ export class CustomersPage implements OnInit {
         customer: customer
       }
     });
+
+    modal.onDidDismiss()
+    .then((data) => {
+      console.log("dataaaa: ", data['data'].dismissed)
+      if (data['data'].dismissed)  this.getCustomers();
+    });
+
     return await modal.present();
   }
 
