@@ -5,7 +5,9 @@
 </ion-header>
 
 <ion-content>
-
+  <div class="ion-text-center"  *ngIf="loading">
+    Cargando...
+  </div>
   <ion-list>
     <ion-item-sliding  *ngFor="let customer of customers">
       <ion-item (click)="goCustomerDetail(customer)">
