@@ -40,7 +40,7 @@ export class CustomersService {
   }
 
   deleteCustomer(customerId: string){
-    this.firestore.doc('customers/' + customerId).delete();
+    return  this.firestore.doc('customers/' + customerId).delete();
   }
 
   

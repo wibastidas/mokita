@@ -51,6 +51,10 @@ export class CustomersPage implements OnInit {
 
     // this.customersService.getCustomersNew().pipe();
 
+    this.getCustomers();   
+  }
+
+  getCustomers(){
     this.customersService.getCustomersNew().subscribe(data => {
       this.customers = data.map(e => {
         return {
@@ -60,18 +64,6 @@ export class CustomersPage implements OnInit {
       });
       console.log("this.customers: ", this.customers)
     });
-
-
-  //   this.exampleItems = this.firestore 
-  //                       .collection ("collectionNameHere") 
-  //                       .snapshotChanges () 
-  //                       .pipe (map ( 
-  //                                actions.map (a => ) ));
-  // { 
-  //     const data = a.payload.doc.data(); 
-  //     const id = a.payload.doc.id; 
-  //     return {id, ...data}   }
-
   }
 
   async goCustomerDetail(customer) {
@@ -92,5 +84,14 @@ export class CustomersPage implements OnInit {
     });
     return await modal.present();
   }
+
+
+  deleteCustomer(customer) {
+    console.log(" Daelete customer: ", customer);
+    this.customersService.deleteCustomer(customer.id).then(m => this.getCustomers());
+  }
+
+
+
 
 }
