@@ -28,8 +28,8 @@ export class CustomersService {
   createNewCustomer(customer: Customer){
     
     let id = this.firestore.createId();
-    customer.id = this.firestore.createId();
-    console.log("customer new: ", customer)
+    // customer.id = this.firestore.createId();
+    // console.log("customer new: ", customer)
     return this.firestore.collection('customers').doc( id ).set(customer);
   }
 

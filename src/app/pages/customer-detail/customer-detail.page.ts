@@ -13,8 +13,7 @@ import { CustomersService } from 'src/app/services/customers.service';
 })
 export class CustomerDetailPage implements OnInit, OnDestroy {
   customerForm: FormGroup;
-  @Input() customerId: string;
-  customer: Customer;
+  @Input() customer: Customer; 
   type: string;
   validation_messages = {
     name: [
@@ -77,15 +76,16 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log("customerId: ", this.customerId);
-    this.customersService.getCustomerById(this.customerId).subscribe((res:Customer) => {
-      // console.log("res: ", res)
-      // res.id = this.customerId;
-      console.log("res: ", res)
+    console.log("customerId: ", this.customer);
+    this.customerForm.setValue(this.customer);
+    // this.customersService.getCustomerById(this.customerId).subscribe((res:Customer) => {
+    //   // console.log("res: ", res)
+    //   // res.id = this.customerId;
+    //   console.log("res: ", res)
 
-      this.customer = res
-      this.customerForm.setValue(res);
-    });
+    //   this.customer = res
+    //   this.customerForm.setValue(res);
+    // });
 
 
     // this.customersService.getCustomerById(this.customerId).subscribe(data => {

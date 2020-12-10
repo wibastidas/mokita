@@ -34,29 +34,52 @@ export class CustomersPage implements OnInit {
     // });
 
 
-    this.customersService.getCustomers().subscribe((data: Customer[]) => {
-      console.log("data*: ", data)
-      this.customers = data;
+    // this.customersService.getCustomers().subscribe((data: Customer[]) => {
+    //   console.log("data*: ", data)
+    //   this.customers = data;
       
-      // .map(e => {
-      //   return {
-      //     id: e.payload.doc.id,
-      //     ...e.payload.doc.data() as Customer
-      //   } 
-      // });
-      console.log("this.customers: ", this.customers)
+    //   // .map(e => {
+    //   //   return {
+    //   //     id: e.payload.doc.id,
+    //   //     ...e.payload.doc.data() as Customer
+    //   //   } 
+    //   // });
+    //   console.log("this.customers: ", this.customers)
 
+    // });
+
+
+    // this.customersService.getCustomersNew().pipe();
+
+    this.customersService.getCustomersNew().subscribe(data => {
+      this.customers = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data() as Customer
+        } 
+      });
+      console.log("this.customers: ", this.customers)
     });
+
+
+  //   this.exampleItems = this.firestore 
+  //                       .collection ("collectionNameHere") 
+  //                       .snapshotChanges () 
+  //                       .pipe (map ( 
+  //                                actions.map (a => ) ));
+  // { 
+  //     const data = a.payload.doc.data(); 
+  //     const id = a.payload.doc.id; 
+  //     return {id, ...data}   }
 
   }
 
   async goCustomerDetail(customer) {
-    console.log("customer: ", customer)
 
     const modal = await this.modalController.create({
       component: CustomerDetailPage,
       componentProps: {
-        customerId: customer.id
+        customer: customer
       }
     });
     return await modal.present();
