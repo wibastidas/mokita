@@ -45,7 +45,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
               public customersService:CustomersService,
               private alertService: AlertService,
               private formBuilder: FormBuilder) {
-    this.type = "loansInformation";
+    this.type = "customerInformation";
 
     this.customerForm = this.formBuilder.group({
       name: new FormControl("", Validators.compose([
@@ -54,7 +54,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
       lastName: new FormControl("", Validators.compose([
         Validators.required
       ])),
-      document: new FormControl("", Validators.compose([
+      document: new FormControl({value: '', disabled: true}, Validators.compose([
         Validators.required
       ])),
       phoneNumber: new FormControl("", Validators.compose([
@@ -79,8 +79,8 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   ngOnInit() {
     console.log("customerId: ", this.customerId);
     this.customersService.getCustomerById(this.customerId).subscribe((res:Customer) => {
-      console.log("res: ", res)
-      res.id = this.customerId;
+      // console.log("res: ", res)
+      // res.id = this.customerId;
       console.log("res: ", res)
 
       this.customer = res
@@ -115,7 +115,8 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
     console.log("this.customerForm: ", this.customerForm)
     console.log("this.customer: ", this.customer)
 
-    this.customersService.updateCustomer(this.customerForm.value);
+    this.customersService.updateCustomer(this.customerForm.value).then(res => { console.log('res update: ', res) });
+    this.dismissModal();
   }
 
   segmentChanged(ev : any){

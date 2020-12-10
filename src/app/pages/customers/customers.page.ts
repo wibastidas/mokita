@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Customer } from 'src/app/interfaces/interfaces';
 import { CustomersService } from 'src/app/services/customers.service';
 import { CustomerDetailPage } from '../customer-detail/customer-detail.page';
+import { NewCustomerPage } from '../new-customer/new-customer.page';
 
 @Component({
   selector: 'app-customers',
@@ -33,29 +34,38 @@ export class CustomersPage implements OnInit {
     // });
 
 
-    this.customersService.getCustomersNew().subscribe(data => {
-      this.customers = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data() as Customer
-        } 
-      });
+    this.customersService.getCustomers().subscribe((data: Customer[]) => {
+      console.log("data*: ", data)
+      this.customers = data;
+      
+      // .map(e => {
+      //   return {
+      //     id: e.payload.doc.id,
+      //     ...e.payload.doc.data() as Customer
+      //   } 
+      // });
       console.log("this.customers: ", this.customers)
 
     });
 
   }
 
-
-
   async goCustomerDetail(customer) {
-    console.log("goCustomerDetail: ", customer)
+    console.log("customer: ", customer)
 
     const modal = await this.modalController.create({
       component: CustomerDetailPage,
       componentProps: {
         customerId: customer.id
       }
+    });
+    return await modal.present();
+  }
+
+  async createCustomer() {
+
+    const modal = await this.modalController.create({
+      component: NewCustomerPage,
     });
     return await modal.present();
   }

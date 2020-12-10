@@ -27,13 +27,16 @@ export class CustomersService {
 
   createNewCustomer(customer: Customer){
     
-    return this.firestore.collection('customers').doc(this.firestore.createId()).set(customer);
+    let id = this.firestore.createId();
+    customer.id = this.firestore.createId();
+    console.log("customer new: ", customer)
+    return this.firestore.collection('customers').doc( id ).set(customer);
   }
 
   updateCustomer(customer: Customer){
     //delete customer.name;
 
-    this.firestore.doc('customers/' + customer.id).update(customer);
+    return this.firestore.doc('customers/' + customer.id).update(customer);
   }
 
   deleteCustomer(customerId: string){

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { Customer } from 'src/app/interfaces/interfaces';
@@ -13,7 +13,7 @@ import { EventorService } from 'src/app/services/eventor.service';
   templateUrl: './new-customer.page.html',
   styleUrls: ['./new-customer.page.scss'],
 })
-export class NewCustomerPage implements OnInit {
+export class NewCustomerPage implements OnInit, OnDestroy {
   customers: Customer[];
   customerForm: FormGroup;
   validation_messages = {
@@ -44,7 +44,8 @@ export class NewCustomerPage implements OnInit {
               public alertController: AlertController,
               public eventorService: EventorService,
               private customersService: CustomersService,
-              private alertService: AlertService) {
+              private alertService: AlertService,
+              public modalCtrl: ModalController,) {
 
     this.customerForm = this.formBuilder.group({
       name: new FormControl("", Validators.compose([
@@ -71,6 +72,18 @@ export class NewCustomerPage implements OnInit {
       ])),
       createdAt: new FormControl(moment().format("YYYY-MM-DD HH:mm:ss"))
     })
+  }
+
+  ngOnDestroy() {
+    if (window.history.state.modal) {
+      history.back();
+    }
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  dismissModal() {
+    console.log("dismissModal");
+    this.modalCtrl.dismiss();
   }
 
   ngOnInit() {
@@ -113,18 +126,19 @@ export class NewCustomerPage implements OnInit {
       } else {
         await this.customersService.createNewCustomer(customer).then(res => { console.log('res: ', res) });
 
-        this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', { type: "registeredCustomer", document: customer.document });
+        //this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', { type: "registeredCustomer", document: customer.document });
       }
+      this.dismissModal();
     });
   }
 
-  update(customer: Customer) {
-    this.customersService.updateCustomer(customer);
-  }
+  // update(customer: Customer) {
+  //   this.customersService.updateCustomer(customer);
+  // }
 
-  delete(id: string) {
-    this.customersService.deleteCustomer(id);
-  }
+  // delete(id: string) {
+  //   this.customersService.deleteCustomer(id);
+  // }
 
 }
 

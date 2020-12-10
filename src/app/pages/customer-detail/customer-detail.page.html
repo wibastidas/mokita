@@ -12,11 +12,11 @@
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-segment (ionChange)="segmentChanged($event)"  [(ngModel)]="type">
-        <ion-segment-button value="loansInformation">
-          <ion-label>Préstamos</ion-label>
-        </ion-segment-button>
         <ion-segment-button value="customerInformation">
           <ion-label>Datos Personales</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="loansInformation">
+          <ion-label>Préstamos</ion-label>
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
@@ -99,7 +99,7 @@
             </ng-container>
           </div>
         
-          <ion-item>
+          <!-- <ion-item>
             <ion-label position="floating" color="primary">Correo: </ion-label>
             <ion-input type="email" formControlName="email"></ion-input>
           </ion-item>
@@ -109,7 +109,7 @@
                 {{validation.message}}
               </div>
             </ng-container>
-          </div>
+          </div> -->
         
           <ion-item>
             <ion-label position="floating" color="primary">Referencia: </ion-label>
@@ -123,7 +123,7 @@
             </ng-container>
           </div>
           <div text-center>
-            <ion-button [disabled]="customerForm.invalid" expand="full" type="submit">Continuar</ion-button>
+            <ion-button [disabled]="customerForm.invalid" expand="full" type="submit">Actualizar</ion-button>
           </div>
         
         </form>
