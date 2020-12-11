@@ -1,4 +1,11 @@
-<ion-item>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nuevo Préstamo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
     <ion-label>Seleccionar Cliente</ion-label>
     <ion-select okText="Seleccionar" cancelText="Cancelar" [(ngModel)]="documentCustomerSelected" (ngModelChange)="updateDocumentCustomerSelected()" >
       <ion-select-option *ngFor="let customer of customers" value="{{customer.document}}">{{customer.name + ' ' + customer.lastName}} </ion-select-option>
@@ -55,3 +62,5 @@
     {{item.name}}
   </li>
 </ul> -->
+</ion-content>
+

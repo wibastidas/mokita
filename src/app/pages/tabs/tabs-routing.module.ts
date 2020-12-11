@@ -17,7 +17,7 @@ const routes: Routes = [
       },
       {
         path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        loadChildren: () => import('../new-sale/new-sale.module').then(m => m.NewSalePageModule)
       },
       {
         path: 'expenses',
