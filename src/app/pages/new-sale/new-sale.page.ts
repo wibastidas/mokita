@@ -3,7 +3,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AlertController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Customer } from 'src/app/interfaces/interfaces';
+import { AlertService } from 'src/app/services/alert.service';
 import { CustomersService } from 'src/app/services/customers.service';
+import { SalesService } from 'src/app/services/sales.service';
 
 @Component({
   selector: 'app-new-sale',
@@ -13,7 +15,7 @@ import { CustomersService } from 'src/app/services/customers.service';
 export class NewSalePage implements OnInit {
   saleForm: FormGroup;
   customers: Customer[];
-  documentCustomerSelected: number;
+  customerId: string;
   validation_messages = {
     amount: [
       { type:"required", message: "El monto es requerido."}
@@ -31,9 +33,9 @@ export class NewSalePage implements OnInit {
   }
   constructor(private formBuilder: FormBuilder, 
               public alertController: AlertController,
-              private customersService: CustomersService) {
-
-    //this.customers = firestore.collection('customers').valueChanges();
+              public alertService: AlertService,
+              private customersService: CustomersService, 
+              public salesService: SalesService) {
 
     this.saleForm = this.formBuilder.group({
       amount: new FormControl("", Validators.compose([
@@ -49,8 +51,6 @@ export class NewSalePage implements OnInit {
   }
 
   ngOnInit() {
-
-
     this.customersService.getCustomersNew().subscribe(data => {
       this.customers = data.map(e => {
         return {
@@ -60,7 +60,6 @@ export class NewSalePage implements OnInit {
       });
       console.log("this.customers: ", this.customers)
     });
-
 
     // this.customersService.getCustomers().pipe(take(1)).subscribe((customers: Customer[]) => {
     //   console.log('customers: ', customers);
@@ -96,18 +95,7 @@ export class NewSalePage implements OnInit {
         }, {
           text: 'Ok',
           handler: () => {
-
-        
-
-            sale.createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
-            sale.cuotas = this.createCuotas(sale.numeroCuotas);
-            let montoInteres = (sale.amount * (sale.rate + sale.amount) / 100);
-            sale.montoCuota =  montoInteres / sale.numeroCuotas;
-
-            console.log("montoInteres: ",  montoInteres );
-            console.log("B: ",  sale.numeroCuotas );
-            
-            console.log("sale.numeroCuotas: ", sale.numeroCuotas)
+            this.createSale(sale);
           }
         }
       ]
@@ -115,6 +103,29 @@ export class NewSalePage implements OnInit {
 
     await alert.present();
 
+  }
+
+  async createSale(sale){
+  
+    sale.createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
+    sale.cuotas = this.createCuotas(sale.numeroCuotas);
+    sale.customerId = this.customerId
+    sale.interest = sale.amount * sale.rate/100;
+    sale.amountWithRate = sale.amount + sale.interest;
+    sale.fee = sale.amountWithRate/sale.numeroCuotas;
+    sale.paidFees = 0;
+    sale.pendingFees = sale.cuotas; 
+    sale.state = 'Active';
+    console.log('sale: ', sale);
+  
+    await this.salesService.createNewSale(sale).then(res => { this.showConfirmation() });
+    
+  }
+
+  showConfirmation(){
+    this.saleForm.reset();
+    this.customerId = null;
+    this.alertService.presentAlert("Cliente creado satisfactoriamente!", "Puede ver el prestamo en la información del cliente", ['Ok'])
   }
 
   createCuotas(numeroCuotas){
@@ -136,10 +147,6 @@ export class NewSalePage implements OnInit {
       }
     }
     return dates;
-  }
-
-  updateDocumentCustomerSelected(){
-    console.log('Event Called:', this.documentCustomerSelected);
   }
 
 } 

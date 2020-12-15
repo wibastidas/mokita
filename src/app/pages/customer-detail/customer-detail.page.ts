@@ -2,9 +2,11 @@ import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import * as moment from 'moment';
-import { Customer } from 'src/app/interfaces/interfaces';
+import { take } from 'rxjs/operators';
+import { Customer, Sale } from 'src/app/interfaces/interfaces';
 import { AlertService } from 'src/app/services/alert.service';
 import { CustomersService } from 'src/app/services/customers.service';
+import { SalesService } from 'src/app/services/sales.service';
 
 @Component({
   selector: 'app-customer-detail',
@@ -15,6 +17,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   customerForm: FormGroup;
   @Input() customer: Customer; 
   type: string;
+  sales: Sale[];
   validation_messages = {
     name: [
       { type:"required", message: "El nombre es requerido."}
@@ -43,7 +46,8 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   constructor(public modalCtrl: ModalController,
               public customersService:CustomersService,
               private alertService: AlertService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder, 
+              public salesService: SalesService) {
     this.type = "customerInformation";
 
     this.customerForm = this.formBuilder.group({
@@ -96,6 +100,17 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
     //   }
     //   console.log("data: ", data)
     // });
+
+    this.salesService.getSalesByCustomerId(this.customer.id).pipe(take(1))
+    .subscribe(async sales => {
+      this.sales = sales.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data() as Sale
+        } 
+      });
+      console.log("this.sales: ", this.sales)
+    });
   }
 
   ngOnDestroy() {
@@ -118,6 +133,10 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
 
   segmentChanged(ev : any){
     console.log('segmentChanged ev:  ', ev.detail.value);
+  }
+
+  deleteSale(sale){
+    console.log("deleteSale: ", sale);
   }
 
   // createCustomer(customer: Customer){

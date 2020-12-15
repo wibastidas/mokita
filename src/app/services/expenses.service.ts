@@ -13,10 +13,6 @@ export class ExpensesService {
     return this.firestore.collection('expenses').snapshotChanges();
   }
 
-  getExpensesByDocument(expense){
-    return this.firestore.collection(`expenses`, ref => ref.where('document', "==", document)).snapshotChanges();
-  }
-
   createNewExpense(expense: Expense){
     let id = this.firestore.createId();
     return this.firestore.collection('expenses').doc( id ).set(expense);

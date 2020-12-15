@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
+<ion-content class="customer-detail-page" fullscreen>
 
   <ion-header [translucent]="true">
     <ion-toolbar>
@@ -24,9 +24,33 @@
 
   <ion-content [fullscreen]="true">
     <div [ngSwitch]="type">
-      <ion-list *ngSwitchCase="'loansInformation'">
-        El cliente no tiene préstamos asociados.
+      <ion-list class="ion-padding" color="light" *ngSwitchCase="'loansInformation'">
+
+        <ng-container *ngIf="!sales || sales.length == 0">
+          El cliente no tiene préstamos asociados.
+        </ng-container>
+        
+        <ng-container *ngIf="sales && sales.length > 0">
+          <ion-item-sliding *ngFor="let sale of sales" class="loan-item">
+            <ion-item>
+              <ion-label>
+                <h2>Estado: {{sale.state}}</h2>
+                <h3>Monto: {{sale.amount | currency}} <b>|</b> Cuotas: {{sale.numeroCuotas}} x {{sale.fee}} </h3>
+                <p class="ion-text-capitalize">Vencimiento: {{ sale.cuotas[19].date | date:'fullDate'}} </p>
+              </ion-label>
+              <ion-button  fill="outline" slot="end">Ver más</ion-button> 
+            </ion-item>
+  
+            <ion-item-options side="end">
+              <ion-item-option color="danger"  (click)="deleteSale(sale)">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+  
+          </ion-item-sliding> 
+        </ng-container>
       </ion-list>
+
       <ion-list *ngSwitchCase="'customerInformation'">
         <form  class="new-customer-page"
         [formGroup]="customerForm" 
@@ -122,8 +146,8 @@
               </div>
             </ng-container>
           </div>
-          <div text-center>
-            <ion-button [disabled]="customerForm.invalid" expand="full" type="submit">Actualizar</ion-button>
+          <div class="ion-text-center">
+            <ion-button [disabled]="customerForm.invalid" fill="outline" expand="round"  type="submit">Actualizar</ion-button>
           </div>
         
         </form>

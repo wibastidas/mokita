@@ -12,12 +12,18 @@ export interface Customer {
 
 export interface Sale {
     id: string,
-    customer : Customer,
+    customerId : string,
     amount : string,
     createdAt: Date
     montoCuota: number,
     numeroCuotas: Number,
-    cuotas: []
+    cuotas: [{cuota: number, date: Date; fechaPago: Date}],
+    interest: any, 
+    amountWithRate: any,
+    fee: any,
+    paidFees: any,
+    pendingFees: any,
+    state:string
 }
 
 export interface Expense {

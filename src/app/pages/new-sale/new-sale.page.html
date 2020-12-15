@@ -7,8 +7,8 @@
 <ion-content>
   <ion-item>
     <ion-label>Seleccionar Cliente</ion-label>
-    <ion-select okText="Seleccionar" cancelText="Cancelar" [(ngModel)]="documentCustomerSelected" (ngModelChange)="updateDocumentCustomerSelected()" >
-      <ion-select-option *ngFor="let customer of customers" value="{{customer.document}}">{{customer.name + ' ' + customer.lastName}} </ion-select-option>
+    <ion-select okText="Seleccionar" cancelText="Cancelar" [(ngModel)]="customerId">
+      <ion-select-option *ngFor="let customer of customers" value="{{customer.id}}">{{customer.name + ' ' + customer.lastName}} </ion-select-option>
     </ion-select>
 </ion-item>
 
@@ -51,16 +51,10 @@
     </ng-container>
   </div>
 
-  <div text-center>
-    <ion-button [disabled]="saleForm.invalid || !documentCustomerSelected" expand="full" type="submit">Registrar Venta</ion-button>
+  <div class="ion-text-center">
+    <ion-button [disabled]="saleForm.invalid || !customerId" expand="round" type="submit">Registrar Venta</ion-button>
   </div>
 </form>
 
-
-<!-- <ul>
-  <li class="text" *ngFor="let item of customers | async">
-    {{item.name}}
-  </li>
-</ul> -->
 </ion-content>
 
