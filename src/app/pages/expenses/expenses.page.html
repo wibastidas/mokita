@@ -8,7 +8,7 @@
   <div class="ion-text-center"  *ngIf="loading">
     Cargando...
   </div>
-  <ion-list>
+  <ion-list *ngIf="!loading">
     <ion-item-sliding  *ngFor="let expense of expenses">
       <ion-item (click)="goExpenseDetail(expense)">
         <ion-label>
@@ -29,6 +29,7 @@
   </ion-list>
 
 
-
-  <ion-button (click)="createExpense()" expand="block">Cargar Gasto</ion-button>
+  <div class="ion-text-center"  *ngIf="!loading">
+    <ion-button *ngIf="!loading"  (click)="createExpense()" expand="round">Cargar Gasto</ion-button>
+  </div>
 </ion-content>

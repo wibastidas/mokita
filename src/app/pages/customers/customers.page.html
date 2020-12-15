@@ -8,7 +8,7 @@
   <div class="ion-text-center"  *ngIf="loading">
     Cargando...
   </div>
-  <ion-list>
+  <ion-list *ngIf="!loading">
     <ion-item-sliding  *ngFor="let customer of customers">
       <ion-item (click)="goCustomerDetail(customer)">
         <ion-avatar slot="start">
@@ -32,7 +32,7 @@
     </ion-item-sliding>
   </ion-list>
 
-
-
-  <ion-button (click)="createCustomer()" expand="block">Crear Cliente</ion-button>
+  <div class="ion-text-center"  *ngIf="!loading">
+    <ion-button  (click)="createCustomer()" expand="round">Crear Cliente</ion-button>
+  </div>
 </ion-content>
