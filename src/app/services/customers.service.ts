@@ -9,13 +9,13 @@ export class CustomersService {
 
   constructor(public firestore: AngularFirestore) { }
 
-  getCustomers() {
-    return this.firestore.collection('customers').valueChanges();
-  }
+  // getCustomers() {
+  //   return this.firestore.collection('customers').valueChanges();
+  // }
 
-  getCustomerById(id: string) {
-    return this.firestore.doc('/customers/' + id).valueChanges();
-  }
+  // getCustomerById(id: string) {
+  //   return this.firestore.doc('/customers/' + id).valueChanges();
+  // }
 
   getCustomersNew() {
     return this.firestore.collection('customers').snapshotChanges();

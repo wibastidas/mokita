@@ -45,7 +45,7 @@ export class NewCustomerPage implements OnInit, OnDestroy {
               public eventorService: EventorService,
               private customersService: CustomersService,
               private alertService: AlertService,
-              public modalCtrl: ModalController,) {
+              public modalCtrl: ModalController) {
 
     this.customerForm = this.formBuilder.group({
       name: new FormControl("", Validators.compose([

@@ -19,3 +19,11 @@ export interface Sale {
     numeroCuotas: Number,
     cuotas: []
 }
+
+export interface Expense {
+    id: string,
+    concept: string,
+    description : Customer,
+    amount : string,
+    createdAt: Date
+}
