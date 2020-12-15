@@ -11,9 +11,6 @@
   <form  class="new-expense-page"
   [formGroup]="expenseForm" 
   (ngSubmit)="createExpense(expenseForm.value)">
-    <ion-list-header class="ios hydrated">
-      Información del Gasto
-    </ion-list-header>
   
     <ion-item>
       <!-- <ion-label position="floating" color="primary">Concepto: </ion-label> -->
@@ -57,7 +54,7 @@
     </ion-item>
 
     <div text-center>
-      <ion-button [disabled]="expenseForm.invalid" expand="full" type="submit">Continuar</ion-button>
+      <ion-button [disabled]="expenseForm.invalid" expand="full" type="submit">Crear</ion-button>
     </div>
   
   </form>
