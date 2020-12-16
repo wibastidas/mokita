@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Customer } from 'src/app/interfaces/interfaces';
 import { CustomersService } from 'src/app/services/customers.service';
@@ -16,6 +17,7 @@ export class CustomersPage implements OnInit {
 
   constructor(private customersService: CustomersService,
               public alertController: AlertController,
+              private router: Router,
               private modalController: ModalController) { }
 
   ngOnInit() {
@@ -86,6 +88,10 @@ export class CustomersPage implements OnInit {
     });
 
     return await modal.present();
+  }
+
+  goCustomerDetail2(customer){
+    this.router.navigateByUrl('/customer-detail/' + customer.id);
   }
 
   async createCustomer() {

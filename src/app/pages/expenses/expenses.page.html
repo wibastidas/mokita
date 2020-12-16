@@ -5,9 +5,9 @@
 </ion-header>
 
 <ion-content>
-  <div class="ion-text-center"  *ngIf="loading">
-    Cargando...
-  </div>
+
+  <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+
   <ion-list *ngIf="!loading">
     <ion-item-sliding  *ngFor="let expense of expenses">
       <ion-item (click)="goExpenseDetail(expense)">

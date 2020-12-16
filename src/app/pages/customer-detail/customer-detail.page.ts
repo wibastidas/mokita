@@ -1,5 +1,6 @@
-import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { take } from 'rxjs/operators';
@@ -15,9 +16,12 @@ import { SalesService } from 'src/app/services/sales.service';
 })
 export class CustomerDetailPage implements OnInit, OnDestroy {
   customerForm: FormGroup;
-  @Input() customer: Customer; 
+  customer: Customer; 
+  customerId: string;
   type: string;
   sales: Sale[];
+  loadingCustomerInformation = false;
+  loadingLoansInformation = false;
   validation_messages = {
     name: [
       { type:"required", message: "El nombre es requerido."}
@@ -47,8 +51,15 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
               public customersService:CustomersService,
               private alertService: AlertService,
               private formBuilder: FormBuilder, 
+              private route: ActivatedRoute, 
+              private router: Router,
               public salesService: SalesService) {
-    this.type = "customerInformation";
+
+    
+    this.customerId = this.route.snapshot.paramMap.get('id');
+    console.log("customerId: ", this.customerId)
+
+    this.type = "loansInformation";
 
     this.customerForm = this.formBuilder.group({
       name: new FormControl("", Validators.compose([
@@ -78,17 +89,21 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
     })
     
   }
+  
 
   ngOnInit() {
-    this.customerForm.setValue(this.customer);
-    // this.customersService.getCustomerById(this.customerId).subscribe((res:Customer) => {
-    //   // console.log("res: ", res)
-    //   // res.id = this.customerId;
-    //   console.log("res: ", res)
+    //this.customerForm.setValue(this.customer);
+    this.loadingCustomerInformation = true;
+    this.customersService.getCustomerById(this.customerId).subscribe((res:Customer) => {
+      this.loadingCustomerInformation = false;
+      // console.log("res: ", res)
+      // res.id = this.customerId;
+      console.log("res: ", res)
 
-    //   this.customer = res
-    //   this.customerForm.setValue(res);
-    // });
+      this.customer = res
+      this.customerForm.setValue(res);
+      this.getSalesByCustomerId();
+    });
 
 
     // this.customersService.getCustomerById(this.customerId).subscribe(data => {
@@ -101,8 +116,14 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
     //   console.log("data: ", data)
     // });
 
+    
+  }
+
+  getSalesByCustomerId() {
+    this.loadingLoansInformation = true;
     this.salesService.getSalesByCustomerId(this.customer.id).pipe(take(1))
     .subscribe(async sales => {
+      this.loadingLoansInformation = false;
       this.sales = sales.map(e => {
         return {
           id: e.payload.doc.id,
@@ -114,21 +135,21 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (window.history.state.modal) {
-      history.back();
-    }
+    // if (window.history.state.modal) {
+    //   history.back();
+    // }
   }
 
-  @HostListener('window:popstate', ['$event'])
-  dismissModal(updated) {
+  // @HostListener('window:popstate', ['$event'])
+  // dismissModal(updated) {
 
-    this.modalCtrl.dismiss({
-      'dismissed': updated
-    });
-  }
+  //   this.modalCtrl.dismiss({
+  //     'dismissed': updated
+  //   });
+  // }
 
   updateCustomer(){
-    this.customersService.updateCustomer(this.customerForm.value).then(res => this.dismissModal(true));
+    this.customersService.updateCustomer(this.customerForm.value).then(res => res);
   }
 
   segmentChanged(ev : any){

@@ -1,22 +1,32 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>Detalle del Cliente</ion-title>
     <ion-buttons slot="end">
       <ion-button color="primary" (click)="dismissModal(false)">Cerrar</ion-button>
     </ion-buttons>
   </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detalle del Cliente</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="customer-detail-page" fullscreen>
+  <ion-progress-bar *ngIf="loadingLoansInformation" type="indeterminate"></ion-progress-bar>
 
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-segment (ionChange)="segmentChanged($event)"  [(ngModel)]="type">
-        <ion-segment-button value="customerInformation">
-          <ion-label>Datos Personales</ion-label>
-        </ion-segment-button>
         <ion-segment-button value="loansInformation">
           <ion-label>Préstamos</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="customerInformation">
+          <ion-label>Datos Personales</ion-label>
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
@@ -26,8 +36,10 @@
     <div [ngSwitch]="type">
       <ion-list class="ion-padding" color="light" *ngSwitchCase="'loansInformation'">
 
-        <ng-container *ngIf="!sales || sales.length == 0">
-          El cliente no tiene préstamos asociados.
+        <ng-container *ngIf="!loadingLoansInformation">
+          <div class="ion-text-center" *ngIf="!sales || sales.length == 0">
+            El cliente no tiene préstamos asociados.
+          </div>
         </ng-container>
         
         <ng-container *ngIf="sales && sales.length > 0">
