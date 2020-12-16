@@ -19,6 +19,8 @@
 <ion-content class="customer-detail-page" fullscreen>
   <ion-progress-bar *ngIf="loadingLoansInformation" type="indeterminate"></ion-progress-bar>
 
+  <app-skeleton *ngIf="loadingLoansInformation"></app-skeleton>
+
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-segment (ionChange)="segmentChanged($event)"  [(ngModel)]="type">

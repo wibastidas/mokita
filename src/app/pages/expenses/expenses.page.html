@@ -8,6 +8,8 @@
 
   <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
 
+  <app-skeleton *ngIf="loading"></app-skeleton>
+
   <ion-list *ngIf="!loading">
     <ion-item-sliding  *ngFor="let expense of expenses">
       <ion-item (click)="goExpenseDetail(expense)">
