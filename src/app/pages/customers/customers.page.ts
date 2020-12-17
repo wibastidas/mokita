@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Customer } from 'src/app/interfaces/interfaces';
 import { CustomersService } from 'src/app/services/customers.service';
-import { CustomerDetailPage } from '../customer-detail/customer-detail.page';
 import { NewCustomerPage } from '../new-customer/new-customer.page';
 
 @Component({
@@ -72,25 +71,25 @@ export class CustomersPage implements OnInit {
     });
   }
 
-  async goCustomerDetail(customer) {
+  // async goCustomerDetail(customer) {
 
-    const modal = await this.modalController.create({
-      component: CustomerDetailPage,
-      componentProps: {
-        customer: customer
-      }
-    });
+  //   const modal = await this.modalController.create({
+  //     component: CustomerDetailPage,
+  //     componentProps: {
+  //       customer: customer
+  //     }
+  //   });
 
-    modal.onDidDismiss()
-    .then((data) => {
-      console.log("dataaaa: ", data['data'].dismissed)
-      if (data['data'].dismissed)  this.getCustomers();
-    });
+  //   modal.onDidDismiss()
+  //   .then((data) => {
+  //     console.log("dataaaa: ", data['data'].dismissed)
+  //     if (data['data'].dismissed)  this.getCustomers();
+  //   });
 
-    return await modal.present();
-  }
+  //   return await modal.present();
+  // }
 
-  goCustomerDetail2(customer){
+  goCustomerDetail(customer){
     this.router.navigateByUrl('/customer-detail/' + customer.id);
   }
 

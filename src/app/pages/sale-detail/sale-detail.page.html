@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detalle de Préstamo</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="sale-detail-page">
+    <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+  
+    <app-skeleton *ngIf="loading"></app-skeleton>
+
+    <form 
+    [formGroup]="saleForm" 
+    (ngSubmit)="pdateSaleConfirm(saleForm.value)">
+
+    <ion-item>
+      <ion-label>Estado: </ion-label>
+      <ion-input type="text"  formControlName="state" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Fecha del préstamo: </ion-label>
+      <ion-input type="text" [value]="saleForm.get('amount').value | date" formControlName="createdAt" ></ion-input>
+    </ion-item>
+
+      <ion-item>
+        <ion-label>Monto: </ion-label>
+        <ion-input type="number"  formControlName="amount"></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.amount">
+          <div *ngIf="saleForm.get('amount').hasError(validation.type) && (saleForm.get('amount').dirty || saleForm.get('amount').touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label>% Interés: </ion-label>
+        <ion-input type="number"  formControlName="rate"></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.rate">
+          <div *ngIf="saleForm.get('rate').hasError(validation.type) && (saleForm.get('rate').dirty || saleForm.get('rate').touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label>Número de cuotas: </ion-label>
+        <ion-input type="number"  formControlName="numeroCuotas"></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.numeroCuotas">
+          <div *ngIf="saleForm.get('numeroCuotas').hasError(validation.type) && (saleForm.get('numeroCuotas').dirty || saleForm.get('numeroCuotas').touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label>Monto de la Cuota: </ion-label>
+        <ion-input type="text" [value]="saleForm.get('fee').value" formControlName="createdAt" ></ion-input>
+      </ion-item>
+
+      <div class="ion-text-center">
+        <ion-button [disabled]="saleForm.invalid || !saleId" expand="round" type="submit">Actualizar</ion-button>
+      </div>
+    </form>
+
+</ion-content>

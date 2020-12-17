@@ -11,7 +11,7 @@
  
   <ion-list *ngIf="!loading">
     <ion-item-sliding  *ngFor="let customer of customers">
-      <ion-item (click)="goCustomerDetail2(customer)">
+      <ion-item (click)="goCustomerDetail(customer)">
         <ion-avatar slot="start">
           <text-avatar [text]="customer.name"></text-avatar>
         </ion-avatar>

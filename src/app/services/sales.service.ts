@@ -13,6 +13,10 @@ export class SalesService {
     return this.firestore.collection('sales').snapshotChanges();
   }
 
+  getSaleById(saleId: string) {
+    return this.firestore.doc('/sales/' + saleId).valueChanges();
+  }
+
   getSalesByCustomerId(customerId){
     return this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId)).snapshotChanges();
   }

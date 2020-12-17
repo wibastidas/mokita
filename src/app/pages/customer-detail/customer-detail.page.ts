@@ -5,7 +5,6 @@ import { ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { Customer, Sale } from 'src/app/interfaces/interfaces';
-import { AlertService } from 'src/app/services/alert.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { SalesService } from 'src/app/services/sales.service';
 
@@ -49,7 +48,6 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
 
   constructor(public modalCtrl: ModalController,
               public customersService:CustomersService,
-              private alertService: AlertService,
               private formBuilder: FormBuilder, 
               private route: ActivatedRoute, 
               private router: Router,
@@ -158,6 +156,10 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
 
   deleteSale(sale){
     console.log("deleteSale: ", sale);
+  }
+
+  goSaleDetail(sale){
+    this.router.navigateByUrl('/sale-detail/' + sale.id);
   }
 
   // createCustomer(customer: Customer){

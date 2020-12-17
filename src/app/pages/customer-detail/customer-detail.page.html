@@ -52,7 +52,7 @@
                 <h3>Monto: {{sale.amount | currency}} <b>|</b> Cuotas: {{sale.numeroCuotas}} x {{sale.fee}} </h3>
                 <p class="ion-text-capitalize">Vencimiento: {{ sale.cuotas[19].date | date:'fullDate'}} </p>
               </ion-label>
-              <ion-button  fill="outline" slot="end">Ver más</ion-button> 
+              <ion-button (click)="goSaleDetail(sale)"  fill="outline" slot="end">Ver más</ion-button> 
             </ion-item>
   
             <ion-item-options side="end">
