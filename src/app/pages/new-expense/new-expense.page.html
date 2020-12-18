@@ -39,6 +39,7 @@
     <ion-item>
       <ion-label position="floating" color="primary">Monto: </ion-label>
       <ion-input type="number"  formControlName="amount"></ion-input>
+      <ion-icon size="small" name="cash-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
     </ion-item>
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.amount">
@@ -51,6 +52,7 @@
     <ion-item>
       <ion-label position="floating" color="primary">Descripción: </ion-label>
       <ion-input type="text"  formControlName="description"></ion-input>
+      <ion-icon size="small" name="reader-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
     </ion-item>
 
     <div class="ion-text-center">

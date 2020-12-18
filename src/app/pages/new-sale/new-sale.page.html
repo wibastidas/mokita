@@ -21,6 +21,7 @@
   <ion-item>
     <ion-label>Monto: </ion-label>
     <ion-input type="number"  formControlName="amount"></ion-input>
+    <ion-icon size="small" name="cash-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
   </ion-item>
   <div class="validation-errors">
     <ng-container *ngFor="let validation of validation_messages.amount">
@@ -33,6 +34,7 @@
   <ion-item>
     <ion-label>% Interés: </ion-label>
     <ion-input type="number"  formControlName="rate"></ion-input>
+    <ion-icon size="small" name="wallet-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
   </ion-item>
   <div class="validation-errors">
     <ng-container *ngFor="let validation of validation_messages.rate">
@@ -45,6 +47,7 @@
   <ion-item>
     <ion-label>Número de cuotas: </ion-label>
     <ion-input type="number"  formControlName="numeroCuotas"></ion-input>
+    <ion-icon size="small" name="sync-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
   </ion-item>
   <div class="validation-errors">
     <ng-container *ngFor="let validation of validation_messages.numeroCuotas">
