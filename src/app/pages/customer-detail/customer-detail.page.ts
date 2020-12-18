@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { Customer, Sale } from 'src/app/interfaces/interfaces';
@@ -50,6 +50,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
               public customersService:CustomersService,
               private formBuilder: FormBuilder, 
               private route: ActivatedRoute, 
+              public alertController: AlertController,
               private router: Router,
               public salesService: SalesService) {
 
@@ -156,6 +157,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
 
   deleteSale(sale){
     console.log("deleteSale: ", sale);
+    this.salesService.deleteSale(sale.id).then(res => this.getSalesByCustomerId());
   }
 
   goSaleDetail(sale){
@@ -175,5 +177,31 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   //     }
   //   });
   // }
+
+  async deleteSaleConfirm(sale){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Eliminar!',
+      message: 'Eliminar <strong>venta</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Cancelar');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            this.deleteSale(sale);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
 }

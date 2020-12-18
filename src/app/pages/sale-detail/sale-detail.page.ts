@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -37,7 +38,8 @@ export class SaleDetailPage implements OnInit {
               private formBuilder: FormBuilder, 
               public alertController: AlertController,
               public alertService: AlertService,
-              public salesService: SalesService ) {
+              public salesService: SalesService,
+              private location: Location) {
 
     this.saleId = this.route.snapshot.paramMap.get('id');
 
@@ -69,6 +71,16 @@ export class SaleDetailPage implements OnInit {
       customerId: new FormControl("", Validators.compose([
         Validators.required
       ])),
+      paidFees: new FormControl("", Validators.compose([
+        Validators.required
+      ])),
+      pendingFees: new FormControl("", Validators.compose([
+        Validators.required
+      ])),
+      interest: new FormControl("", Validators.compose([
+        Validators.required
+      ])),
+      id: new FormControl("")
     })
   }
 
@@ -82,6 +94,7 @@ export class SaleDetailPage implements OnInit {
       console.log("res: ", res)
 
       this.sale = res;
+      this.sale.id = this.saleId;
       this.saleForm.setValue(res);
     });
   }
@@ -126,7 +139,7 @@ export class SaleDetailPage implements OnInit {
     sale.state = 'Active';
     console.log('sale2: ', sale);
   
-    //await this.salesService.updateSale(sale).then(res => { this.showConfirmation() });
+    await this.salesService.updateSale(sale).then(res => { this.showConfirmation() });
     
   }
 
@@ -152,7 +165,8 @@ export class SaleDetailPage implements OnInit {
   }
 
   showConfirmation(){
-    this.alertService.presentToast("Cliente creado satisfactoriamente!", 3000, top)
+    this.alertService.presentToast("Cliente creado satisfactoriamente!", 3000, top);
+    this.location.back();
   }
 
 }

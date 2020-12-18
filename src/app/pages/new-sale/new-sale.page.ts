@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
@@ -35,7 +36,8 @@ export class NewSalePage implements OnInit {
               public alertController: AlertController,
               public alertService: AlertService,
               private customersService: CustomersService, 
-              public salesService: SalesService) {
+              public salesService: SalesService,
+              private location: Location) {
 
     this.saleForm = this.formBuilder.group({
       amount: new FormControl("", Validators.compose([
@@ -123,9 +125,10 @@ export class NewSalePage implements OnInit {
   }
 
   showConfirmation(){
-    this.saleForm.reset();
-    this.customerId = null;
+    //this.saleForm.reset();
+    //this.customerId = null;
     this.alertService.presentAlert("Cliente creado satisfactoriamente!", "Puede ver el prestamo en la información del cliente", ['Ok'])
+    this.location.back();
   }
 
   createCuotas(numeroCuotas){
