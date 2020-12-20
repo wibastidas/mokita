@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
+import * as moment from 'moment';
 
 
 @Component({
@@ -19,6 +20,8 @@ export class AppComponent {
   }
 
   initializeApp() {
+    moment.locale('es')
+    
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();

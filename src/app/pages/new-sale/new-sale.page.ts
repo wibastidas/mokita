@@ -57,6 +57,8 @@ export class NewSalePage implements OnInit {
   }
 
   ngOnInit() {
+    console.log("moment()", moment().format('llll'))
+    
     this.customersService.getCustomersNew().subscribe(data => {
       this.customers = data.map(e => {
         return {
@@ -119,7 +121,7 @@ export class NewSalePage implements OnInit {
 
   async createSale(sale){
   
-    sale.createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
+    sale.createdAt = moment().format('llll');
     sale.cuotas = this.createCuotas(sale.numeroCuotas);
     sale.customerId = this.customerId
     sale.interest = sale.amount * sale.rate/100;
@@ -150,10 +152,10 @@ export class NewSalePage implements OnInit {
 
     for(cont=1; cont <= numeroCuotasTmp; cont++ ) {
 
-      if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'Sunday'){
+      if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'domingo'){
         dates.push({
           cuota: dates.length + 1,
-          date: moment().add(cont,'days').format('YYYY-MM-DD'),
+          date: moment().add(cont,'days').format('llll'),
           fechaPago: null,
         });
       } else {

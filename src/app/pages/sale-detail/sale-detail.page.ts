@@ -145,7 +145,7 @@ export class SaleDetailPage implements OnInit {
     sale.amountWithRate = sale.amount + sale.interest;
     sale.fee = sale.amountWithRate/sale.numeroCuotas;
     sale.paidFees = 0;
-    sale.pendingFees = sale.cuotas; 
+    sale.pendingFees = sale.numeroCuotas; 
     sale.state = 'Active';
     console.log('sale2: ', sale);  
     await this.salesService.updateSale(sale).then(res => { this.showConfirmation() });
@@ -160,10 +160,10 @@ export class SaleDetailPage implements OnInit {
 
     for(cont=1; cont <= numeroCuotasTmp; cont++ ) {
 
-      if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'Sunday'){
+      if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'domingo'){
         dates.push({
           cuota: dates.length + 1,
-          date: moment().add(cont,'days').format('YYYY-MM-DD'),
+          date: moment().add(cont,'days').format('llll'),
           fechaPago: null,
         });
       } else {
