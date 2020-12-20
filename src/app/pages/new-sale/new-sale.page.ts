@@ -134,7 +134,6 @@ export class NewSalePage implements OnInit {
     sale.paidFees = 0;
     sale.pendingFees = sale.numeroCuotas; 
     sale.state = 'Active';
-    console.log('sale: ', sale);
     sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
 
     await this.salesService.createNewSale(sale).then(res => { this.showConfirmation() });

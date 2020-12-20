@@ -141,7 +141,7 @@ export class SaleDetailPage implements OnInit {
   async updateSale(sale){
     console.log("sale: ", sale)
   
-    //sale.createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
+    sale.updateAt = moment().format('llll');
     sale.cuotas = this.createCuotas(sale.numeroCuotas);
     //sale.customerId = this.customerId
     sale.interest = sale.amount * sale.rate/100;
@@ -150,8 +150,8 @@ export class SaleDetailPage implements OnInit {
     sale.paidFees = 0;
     sale.pendingFees = sale.numeroCuotas; 
     sale.state = 'Active';
+    sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
     console.log('sale2: ', sale);  
-    sale.updateAt = moment().format('llll');
 
     await this.salesService.updateSale(sale).then(res => { this.showConfirmation() });
     

@@ -24,6 +24,7 @@ export interface Sale {
     paidFees: any,
     pendingFees: any,
     state:string
+    vencimiento: string
 }
 
 export interface Expense {
