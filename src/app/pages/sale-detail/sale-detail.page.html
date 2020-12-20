@@ -24,9 +24,15 @@
 
     <ion-item>
       <ion-label>Fecha del préstamo: </ion-label>
-      <ion-input type="text" [value]="saleForm.get('amount').value | date" formControlName="createdAt" ></ion-input>
+      <ion-input type="text" [value]="saleForm.get('createdAt').value | date: 'medium'" formControlName="createdAt" ></ion-input>
       <ion-icon size="small" name="calendar-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
     </ion-item>
+
+    <!-- <ion-item>
+      <ion-label>Fecha de Vencimiento: </ion-label>
+      <ion-input type="text"  formControlName="vencimiento" ></ion-input>
+      <ion-icon size="small" name="calendar-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+    </ion-item> -->
 
       <ion-item>
         <ion-label>Monto: </ion-label>
@@ -69,7 +75,7 @@
 
       <ion-item>
         <ion-label>Monto de la Cuota: </ion-label>
-        <ion-input type="text" [value]="saleForm.get('fee').value" formControlName="createdAt" ></ion-input>
+        <ion-input type="text" [value]="montoCuota"  formControlName="fee" ></ion-input>
         <ion-icon size="small" name="card-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
       </ion-item>
 

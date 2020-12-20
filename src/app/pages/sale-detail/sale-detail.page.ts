@@ -18,6 +18,7 @@ export class SaleDetailPage implements OnInit {
   sale: Sale;
   saleId: string;
   loading: Boolean= false;
+  montoCuota;
   validation_messages = {
     amount: [
       { type:"required", message: "El monto es requerido."}
@@ -40,7 +41,6 @@ export class SaleDetailPage implements OnInit {
               public alertService: AlertService,
               public salesService: SalesService,
               private location: Location) {
-
     this.saleId = this.route.snapshot.paramMap.get('id');
 
     this.saleForm = this.formBuilder.group({
@@ -59,7 +59,7 @@ export class SaleDetailPage implements OnInit {
       amountWithRate: new FormControl("", Validators.compose([
         Validators.required
       ])),
-      fee: new FormControl("", Validators.compose([
+      fee: new FormControl({ value: "", disabled: true }, Validators.compose([
         Validators.required
       ])),
       state: new FormControl({ value: "", disabled: true }, Validators.compose([
@@ -80,6 +80,9 @@ export class SaleDetailPage implements OnInit {
       interest: new FormControl("", Validators.compose([
         Validators.required
       ])),
+      // vencimiento: new FormControl({ value: "", disabled: true }, Validators.compose([
+      //   Validators.required
+      // ])),
       id: new FormControl("")
     })
   }
@@ -96,7 +99,14 @@ export class SaleDetailPage implements OnInit {
       this.sale = res;
       this.sale.id = this.saleId;
       this.saleForm.setValue(res);
+      this.montoCuota = this.saleForm.get('fee').value;
     });
+
+    this.saleForm.valueChanges.subscribe(selectedValue => {
+      if(this.saleForm.get('amount') && this.saleForm.get('numeroCuotas') && this.saleForm.get('rate')){
+        this.calcularMontoCuota();
+      }
+    })
   }
 
   async pdateSaleConfirm(sale){
@@ -137,8 +147,7 @@ export class SaleDetailPage implements OnInit {
     sale.paidFees = 0;
     sale.pendingFees = sale.cuotas; 
     sale.state = 'Active';
-    console.log('sale2: ', sale);
-  
+    console.log('sale2: ', sale);  
     await this.salesService.updateSale(sale).then(res => { this.showConfirmation() });
     
   }
@@ -167,6 +176,12 @@ export class SaleDetailPage implements OnInit {
   showConfirmation(){
     this.alertService.presentToast("Cliente creado satisfactoriamente!", 3000, top);
     this.location.back();
+  }
+
+  calcularMontoCuota(){
+    let interest = this.saleForm.get('amount').value * this.saleForm.get('rate').value/100;
+    let amountWithRate = this.saleForm.get('amount').value + interest;
+    this.montoCuota = amountWithRate/this.saleForm.get('numeroCuotas').value;
   }
 
 }

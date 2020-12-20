@@ -57,6 +57,12 @@
     </ng-container>
   </div>
 
+  <ion-item>
+    <ion-label>Monto de la Cuota: </ion-label>
+    <ion-input type="text" [value]="montoCuota" formControlName="fee" ></ion-input>
+    <ion-icon size="small" name="card-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+  </ion-item>
+
   <div class="ion-text-center">
     <ion-button [disabled]="saleForm.invalid || !customerId" expand="round" type="submit">Registrar Venta</ion-button>
   </div>

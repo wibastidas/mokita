@@ -17,6 +17,7 @@ export class NewSalePage implements OnInit {
   saleForm: FormGroup;
   customers: Customer[];
   customerId: string;
+  montoCuota;
   validation_messages = {
     amount: [
       { type:"required", message: "El monto es requerido."}
@@ -49,6 +50,9 @@ export class NewSalePage implements OnInit {
       rate: new FormControl(20, Validators.compose([
         Validators.required
       ])),
+      fee: new FormControl({ value: "", disabled: true }, Validators.compose([
+        Validators.required
+      ])),
     })
   }
 
@@ -78,6 +82,12 @@ export class NewSalePage implements OnInit {
 
     //   // console.log("moment(): ", moment(customers[0].date).format('MM/DD/YYYY'));
     // });
+
+    this.saleForm.valueChanges.subscribe(selectedValue => {
+      if(this.saleForm.get('amount') && this.saleForm.get('numeroCuotas') && this.saleForm.get('rate')){
+        this.calcularMontoCuota();
+      }
+    })
   }
 
   async registerSale(sale){
@@ -116,10 +126,11 @@ export class NewSalePage implements OnInit {
     sale.amountWithRate = sale.amount + sale.interest;
     sale.fee = sale.amountWithRate/sale.numeroCuotas;
     sale.paidFees = 0;
-    sale.pendingFees = sale.cuotas; 
+    sale.pendingFees = sale.numeroCuotas; 
     sale.state = 'Active';
     console.log('sale: ', sale);
-  
+    //sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
+
     await this.salesService.createNewSale(sale).then(res => { this.showConfirmation() });
     
   }
@@ -127,7 +138,7 @@ export class NewSalePage implements OnInit {
   showConfirmation(){
     //this.saleForm.reset();
     //this.customerId = null;
-    this.alertService.presentAlert("Cliente creado satisfactoriamente!", "Puede ver el prestamo en la información del cliente", ['Ok'])
+    this.alertService.presentAlert("Préstamo creado satisfactoriamente!", "Puede ver el prestamo en la información del cliente", ['Ok'])
     this.location.back();
   }
 
@@ -151,6 +162,18 @@ export class NewSalePage implements OnInit {
     }
     return dates;
   }
+
+  calcularMontoCuota(){
+    let interest = this.saleForm.get('amount').value * this.saleForm.get('rate').value/100;
+    let amountWithRate = this.saleForm.get('amount').value + interest;
+    this.montoCuota = amountWithRate/this.saleForm.get('numeroCuotas').value;
+  }
+
+  // addDays(days : number): Date{
+  //   var futureDate = Date.now();
+  //   futureDate.setDate(futureDate.getDate() + days);
+  //   return futureDate;
+  // }
 
 } 
 

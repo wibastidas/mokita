@@ -96,7 +96,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
     this.customersService.getCustomerById(this.customerId).subscribe((res:Customer) => {
       this.loadingCustomerInformation = false;
       // console.log("res: ", res)
-      // res.id = this.customerId;
+      res.id = this.customerId;
       console.log("res: ", res)
 
       this.customer = res
