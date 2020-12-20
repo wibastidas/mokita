@@ -83,7 +83,10 @@ export class SaleDetailPage implements OnInit {
       // vencimiento: new FormControl({ value: "", disabled: true }, Validators.compose([
       //   Validators.required
       // ])),
-      id: new FormControl("")
+      id: new FormControl(""),
+      updateAt: new FormControl(""),
+      vencimiento: new FormControl("")
+
     })
   }
 
@@ -148,6 +151,8 @@ export class SaleDetailPage implements OnInit {
     sale.pendingFees = sale.numeroCuotas; 
     sale.state = 'Active';
     console.log('sale2: ', sale);  
+    sale.updateAt = moment().format('llll');
+
     await this.salesService.updateSale(sale).then(res => { this.showConfirmation() });
     
   }

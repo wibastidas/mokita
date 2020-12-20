@@ -53,6 +53,9 @@ export class NewSalePage implements OnInit {
       fee: new FormControl({ value: "", disabled: true }, Validators.compose([
         Validators.required
       ])),
+      vencimiento: new FormControl(""),
+      updateAt: new FormControl(""),
+
     })
   }
 
@@ -122,6 +125,7 @@ export class NewSalePage implements OnInit {
   async createSale(sale){
   
     sale.createdAt = moment().format('llll');
+    sale.updateAt = moment().format('llll');
     sale.cuotas = this.createCuotas(sale.numeroCuotas);
     sale.customerId = this.customerId
     sale.interest = sale.amount * sale.rate/100;
@@ -131,7 +135,7 @@ export class NewSalePage implements OnInit {
     sale.pendingFees = sale.numeroCuotas; 
     sale.state = 'Active';
     console.log('sale: ', sale);
-    //sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
+    sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
 
     await this.salesService.createNewSale(sale).then(res => { this.showConfirmation() });
     
