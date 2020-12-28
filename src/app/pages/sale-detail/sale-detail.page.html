@@ -4,6 +4,11 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button  color="primary">
+        Editar
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -12,9 +17,30 @@
   
     <app-skeleton *ngIf="loading"></app-skeleton>
 
-    <form 
+    <ion-card *ngIf="sale">
+      <ion-card-header>
+        <ion-card-subtitle><ion-badge color="primary">{{sale.state}}</ion-badge></ion-card-subtitle>
+        <ion-card-title>{{sale.amount | currency:'$'}}</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ion-label>
+          <h3>Interés: {{sale.rate | currency:'%'}}</h3>
+          <h3>Número de cuotas: {{sale.numeroCuotas}}</h3>
+          <h3>Monto de la Cuota: {{sale.fee}}</h3>
+          <h3>Creado: {{sale.createdAt}}</h3>
+          <h3>Vencimiento: {{sale.vencimiento}}</h3>
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- <form 
     [formGroup]="saleForm" 
     (ngSubmit)="pdateSaleConfirm(saleForm.value)">
+
+    <ion-list-header lines="inset">
+      <ion-label>Préstamo</ion-label>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Estado: </ion-label>
@@ -82,6 +108,14 @@
       <div class="ion-text-center">
         <ion-button [disabled]="saleForm.invalid || !saleId" expand="round" type="submit">Actualizar</ion-button>
       </div>
-    </form>
+    </form> -->
+
+    <ion-list-header lines="inset">
+      <ion-label>Abonos</ion-label>
+      <ion-button (click)="agregarAbono(sale.fee)" fill="outline">Abonar</ion-button>
+    </ion-list-header>
 
 </ion-content>
+
+
+ 

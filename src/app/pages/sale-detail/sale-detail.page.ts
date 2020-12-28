@@ -189,4 +189,43 @@ export class SaleDetailPage implements OnInit {
     this.montoCuota = amountWithRate/this.saleForm.get('numeroCuotas').value;
   }
 
+  async agregarAbono(fee) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Realizar Abono!',
+      inputs: [
+        {
+          name: 'monto',
+          type: 'number',
+          placeholder: 'Monto',
+          value: fee
+        },
+        {
+          name: 'note',
+          type: 'textarea',
+          placeholder: 'Notas'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Guardar',
+          handler: (data) => {
+            if(data.monto){
+              console.log('Confirm Ok:', data);
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 }
