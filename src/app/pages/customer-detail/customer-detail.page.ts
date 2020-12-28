@@ -183,7 +183,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Eliminar!',
-      message: 'Eliminar <strong>venta</strong>',
+      message: 'Eliminar <strong>préstamo</strong>',
       buttons: [
         {
           text: 'Cancel',
