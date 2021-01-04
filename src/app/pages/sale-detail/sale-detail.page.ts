@@ -37,7 +37,7 @@ export class SaleDetailPage implements OnInit {
     });
   }
 
-  async agregarAbono(fee) {
+  async agregarAbono(montoCuota) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Realizar Abono!',
@@ -46,7 +46,7 @@ export class SaleDetailPage implements OnInit {
           name: 'monto',
           type: 'number',
           placeholder: 'Monto',
-          value: fee
+          value: montoCuota
         },
         {
           name: 'note',

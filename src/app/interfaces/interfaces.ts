@@ -7,22 +7,21 @@ export interface Customer {
     address : string,
     email : string,
     reference : string,
-    createdAt: Date
+    createdAt: string
 }
 
 export interface Sale {
     id: string,
     customerId : string,
     amount : string,
-    createdAt: Date
+    createdAt: string
     montoCuota: number,
     numeroCuotas: Number,
     cuotas: [{cuota: number, date: Date; fechaPago: Date}],
     interest: any, 
     amountWithRate: any,
-    fee: any,
-    paidFees: any,
-    pendingFees: any,
+    cuotasPagadas: any,
+    cuotasPendientes: any,
     state:string
     vencimiento: string,
     rate:any
@@ -35,5 +34,6 @@ export interface Expense {
     concept: string,
     description : Customer,
     amount : string,
-    createdAt: Date
+    createdAt: string,
+    updatedAt: string
 }

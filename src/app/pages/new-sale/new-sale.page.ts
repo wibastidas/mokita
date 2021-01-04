@@ -50,7 +50,7 @@ export class NewSalePage implements OnInit {
       rate: new FormControl(20, Validators.compose([
         Validators.required
       ])),
-      fee: new FormControl({ value: "", disabled: true }, Validators.compose([
+      montoCuota: new FormControl({ value: "", disabled: true }, Validators.compose([
         Validators.required
       ])),
       vencimiento: new FormControl(""),
@@ -130,12 +130,13 @@ export class NewSalePage implements OnInit {
     sale.customerId = this.customerId
     sale.interest = sale.amount * sale.rate/100;
     sale.amountWithRate = sale.amount + sale.interest;
-    sale.fee = sale.amountWithRate/sale.numeroCuotas;
-    sale.paidFees = 0;
-    sale.pendingFees = sale.numeroCuotas; 
+    sale.montoCuota = sale.amountWithRate/sale.numeroCuotas;
     sale.state = 'Active';
     sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
     sale.abonos = [];
+    sale.cuotasPendientes = sale.numeroCuotas; 
+    sale.cuotasPagadas = 0
+    sale.saldo = 
     await this.salesService.createNewSale(sale).then(res => { this.showConfirmation() });
     
   }

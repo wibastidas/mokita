@@ -39,7 +39,8 @@ export class ExpenseDetailPage implements OnInit, OnDestroy {
       description: new FormControl("", Validators.compose([
         //Validators.required
       ])),
-      createdAt: new FormControl(moment().format("YYYY-MM-DD HH:mm:ss")),
+      createdAt: new FormControl(moment().format('llll')),
+      updatedAt: new FormControl(moment().format('llll')),
       id: new FormControl("")
     })
   }
@@ -63,6 +64,7 @@ export class ExpenseDetailPage implements OnInit, OnDestroy {
   }
 
   updateExpense(){
+    this.expense.updatedAt =  moment().format('llll');
     this.expenseService.updateExpense(this.expenseForm.value).then(res => this.dismissModal(true));
   }
 

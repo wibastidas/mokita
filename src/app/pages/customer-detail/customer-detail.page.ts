@@ -83,7 +83,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
       reference: new FormControl("", Validators.compose([
        // Validators.required,
       ])),
-      createdAt: new FormControl(moment().format("YYYY-MM-DD HH:mm:ss")),
+      createdAt: new FormControl(moment().format('llll')),
       id: new FormControl("")
     })
     

@@ -54,7 +54,7 @@ export class EditSalePage implements OnInit, OnDestroy {
       amountWithRate: new FormControl("", Validators.compose([
         Validators.required
       ])),
-      fee: new FormControl({ value: "", disabled: true }, Validators.compose([
+      montoCuota: new FormControl({ value: "", disabled: true }, Validators.compose([
         Validators.required
       ])),
       state: new FormControl({ value: "", disabled: true }, Validators.compose([
@@ -66,10 +66,10 @@ export class EditSalePage implements OnInit, OnDestroy {
       customerId: new FormControl("", Validators.compose([
         Validators.required
       ])),
-      paidFees: new FormControl("", Validators.compose([
+      cuotasPagadas: new FormControl("", Validators.compose([
         Validators.required
       ])),
-      pendingFees: new FormControl("", Validators.compose([
+      cuotasPendientes: new FormControl("", Validators.compose([
         Validators.required
       ])),
       interest: new FormControl("", Validators.compose([
@@ -102,7 +102,7 @@ export class EditSalePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.saleForm.setValue(this.sale);
-    this.montoCuota = this.saleForm.get('fee').value;
+    this.montoCuota = this.saleForm.get('montoCuota').value;
 
     this.saleForm.valueChanges.subscribe(selectedValue => {
       if(this.saleForm.get('amount') && this.saleForm.get('numeroCuotas') && this.saleForm.get('rate')){
@@ -145,9 +145,9 @@ export class EditSalePage implements OnInit, OnDestroy {
     //sale.customerId = this.customerId
     sale.interest = sale.amount * sale.rate/100;
     sale.amountWithRate = sale.amount + sale.interest;
-    sale.fee = sale.amountWithRate/sale.numeroCuotas;
-    sale.paidFees = 0;
-    sale.pendingFees = sale.numeroCuotas; 
+    sale.montoCuota = sale.amountWithRate/sale.numeroCuotas;
+    sale.cuotasPagadas = 0;
+    sale.cuotasPendientes = sale.numeroCuotas; 
     sale.state = 'Active';
     sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
     console.log('sale2: ', sale);  
