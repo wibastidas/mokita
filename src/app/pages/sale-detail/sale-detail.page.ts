@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
+import * as moment from 'moment';
 import { Sale } from 'src/app/interfaces/interfaces';
 import { AlertService } from 'src/app/services/alert.service';
 import { SalesService } from 'src/app/services/sales.service';
@@ -32,6 +33,7 @@ export class SaleDetailPage implements OnInit {
       this.loading = false;
       this.sale = res;
       this.sale.id = this.saleId;
+      console.log("sale: ", this.sale);
     });
   }
 
@@ -64,7 +66,8 @@ export class SaleDetailPage implements OnInit {
           text: 'Guardar',
           handler: (data) => {
             if(data.monto){
-              console.log('Confirm Ok:', data);
+              this.sale.abonos.push({...data, createAt: moment().format('l')});
+              this.updateSale();
             }
           }
         }
@@ -85,10 +88,86 @@ export class SaleDetailPage implements OnInit {
 
     modal.onDidDismiss()
     .then((data) => {
-      console.log("dataaaa: ", data['data'].dismissed)
+      //console.log("dataaaa: ", data['data'].dismissed)
     });
 
     return await modal.present();
+  }
+
+  async updateSale(){
+    console.log("updateSale: ", this.sale);
+    this.sale.updatedAt = moment().format('llll');
+    await this.salesService.updateSale(this.sale).then(res => { console.log("modificado!!!") }); 
+  }
+
+  deleteAbono(index) {
+    this.sale.abonos.splice(index, 1);
+    this.updateSale();
+  }
+
+  async confirmDelete(index){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirmar!',
+      message: 'Eliminar <strong>abono</strong>',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            this.deleteAbono(index);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async editarAbono(index) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Realizar Abono!',
+      inputs: [
+        {
+          name: 'monto',
+          type: 'number',
+          placeholder: 'Monto',
+          value: this.sale.abonos[index].monto
+        },
+        {
+          name: 'note',
+          type: 'textarea',
+          placeholder: 'Notas',
+          value: this.sale.abonos[index].note
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Guardar',
+          handler: (data) => {
+            if(data.monto){
+              this.sale.abonos[index] = { ...data, updated: moment().format('l')}
+              this.updateSale();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

@@ -135,7 +135,7 @@ export class NewSalePage implements OnInit {
     sale.pendingFees = sale.numeroCuotas; 
     sale.state = 'Active';
     sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
-
+    sale.abonos = [];
     await this.salesService.createNewSale(sale).then(res => { this.showConfirmation() });
     
   }

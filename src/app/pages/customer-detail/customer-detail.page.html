@@ -49,8 +49,8 @@
             <ion-item>
               <ion-label>
                 <h2>Estado: {{sale.state}}</h2>
-                <h3>Monto: {{sale.amount | currency :'$':'symbol':'1.2-2'}} <b>|</b> Cuotas: {{sale.numeroCuotas}} x {{sale.fee}} </h3>
-                <p class="ion-text-capitalize">Vencimiento: {{ sale.vencimiento | titlecase }} </p>
+                <h3>Monto: {{sale.amount | currency :'$':'symbol':'1.2-2'}}</h3>
+                <p class="ion-text-capitalize">Cuotas: {{sale.numeroCuotas}} x {{sale.fee}} </p>
               </ion-label>
               <ion-button (click)="goSaleDetail(sale)"  fill="outline" slot="end">Ver más</ion-button> 
             </ion-item>

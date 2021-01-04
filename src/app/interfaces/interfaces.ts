@@ -26,6 +26,8 @@ export interface Sale {
     state:string
     vencimiento: string,
     rate:any
+    abonos?: any
+    updatedAt?: any
 }
 
 export interface Expense {

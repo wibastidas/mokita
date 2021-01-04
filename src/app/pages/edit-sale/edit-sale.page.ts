@@ -80,6 +80,7 @@ export class EditSalePage implements OnInit, OnDestroy {
       // ])),
       id: new FormControl(""),
       updateAt: new FormControl(""),
+      abonos: new FormControl(""),
       vencimiento: new FormControl({ value: "", disabled: true }, Validators.compose([
         Validators.required
       ]))

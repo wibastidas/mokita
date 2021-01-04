@@ -110,10 +110,34 @@
       </div>
     </form> -->
 
-    <ion-list-header lines="inset">
-      <ion-label>Abonos</ion-label>
-      <ion-button (click)="agregarAbono(sale.fee)" fill="outline">Abonar</ion-button>
-    </ion-list-header>
+    <ion-list>
+      <ion-list-header lines="inset">
+        <ion-label>Abonos</ion-label>
+        <ion-button (click)="agregarAbono(sale.fee)" fill="outline">Abonar</ion-button>
+      </ion-list-header>
+      <ng-container *ngIf="sale &&  sale.abonos.length > 0">
+        <ion-item-sliding  lines="inset" *ngFor="let abono of sale.abonos;let indexOfelement=index;">
+          <ion-item>
+            <ion-label>
+              <h2>Monto: {{abono.monto}}</h2>
+              <h3>Creado: {{abono.createAt}}</h3>
+              <h3 *ngIf="abono.updated">Modificado: {{abono.updated}}</h3>
+              <p *ngIf="abono.note"> Nota: {{abono.note}}</p>        
+            </ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option color="primary"  (click)="editarAbono(indexOfelement)">
+              <ion-icon slot="icon-only" name="pencil"></ion-icon>
+            </ion-item-option>
+            <ion-item-option color="danger"  (click)="confirmDelete(indexOfelement)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+  
+      </ng-container>
+
+    </ion-list>
 
 </ion-content>
 
