@@ -19,7 +19,7 @@
 
   <ion-item>
     <ion-label>Estado: </ion-label>
-    <ion-input type="text"  formControlName="state" ></ion-input>
+    <ion-input type="text"  formControlName="estado" ></ion-input>
     <ion-icon size="small" name="shield-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
   </ion-item>
 
@@ -50,12 +50,12 @@
 
     <ion-item>
       <ion-label>% Interés: </ion-label>
-      <ion-input type="number"  formControlName="rate"></ion-input>
+      <ion-input type="number"  formControlName="porcentaje"></ion-input>
       <ion-icon size="small" name="wallet-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
     </ion-item>
     <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.rate">
-        <div *ngIf="saleForm.get('rate').hasError(validation.type) && (saleForm.get('rate').dirty || saleForm.get('rate').touched)">
+      <ng-container *ngFor="let validation of validation_messages.porcentaje">
+        <div *ngIf="saleForm.get('porcentaje').hasError(validation.type) && (saleForm.get('porcentaje').dirty || saleForm.get('porcentaje').touched)">
           {{validation.message}}
         </div>
       </ng-container>

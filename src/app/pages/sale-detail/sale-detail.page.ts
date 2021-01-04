@@ -97,7 +97,25 @@ export class SaleDetailPage implements OnInit {
   async updateSale(){
     console.log("updateSale: ", this.sale);
     this.sale.updatedAt = moment().format('llll');
+    this.sale.saldo = this.calcularSaldoPendiente(this.sale);
     await this.salesService.updateSale(this.sale).then(res => { console.log("modificado!!!") }); 
+  }
+
+  calcularSaldoPendiente(sale){
+    console.log("calcularSaldoPendiente")
+
+    let saldo = sale.montoConInteres;
+    if(sale && sale.abonos && sale.abonos.length > 0) {
+      console.log("sale: ", sale)
+      console.log("this.calcularAbonos(sale.abonos): ", this.calcularAbonos(sale.abonos))
+
+      saldo = sale.montoConInteres - this.calcularAbonos(sale.abonos);
+    }
+    return saldo;
+  }
+
+  calcularAbonos(abonos){
+    return abonos.reduce((total, abono) => total + abono.monto, 0);
   }
 
   deleteAbono(index) {
@@ -158,10 +176,9 @@ export class SaleDetailPage implements OnInit {
         }, {
           text: 'Guardar',
           handler: (data) => {
-            console.log("data: ", data)
-            console.log("hola", this.sale.abonos[index])
             if(data.monto){
-              this.sale.abonos[index] = { ...data, createdAt: this.sale.abonos[index].createdAt ,updated: moment().format('llll')}
+              console.log("data: ", data)
+              this.sale.abonos[index] = { monto: parseInt(data.monto), note: data.note, createdAt: this.sale.abonos[index].createdAt ,updated: moment().format('llll')}
               this.updateSale();
             }
           }

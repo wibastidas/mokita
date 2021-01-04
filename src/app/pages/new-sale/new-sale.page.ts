@@ -29,7 +29,7 @@ export class NewSalePage implements OnInit {
     numeroCuotas: [
       { type:"required", message: "El número de cuotas es requerida."}
     ],
-    rate: [
+    porcentaje: [
       { type:"required", message: "El % de interés es requerido."}
     ]
   }
@@ -47,14 +47,14 @@ export class NewSalePage implements OnInit {
       numeroCuotas: new FormControl(20, Validators.compose([
         Validators.required
       ])),
-      rate: new FormControl(20, Validators.compose([
+      porcentaje: new FormControl(20, Validators.compose([
         Validators.required
       ])),
       montoCuota: new FormControl({ value: "", disabled: true }, Validators.compose([
         Validators.required
       ])),
       vencimiento: new FormControl(""),
-      updateAt: new FormControl(""),
+      updatedAt: new FormControl(""),
 
     })
   }
@@ -89,7 +89,7 @@ export class NewSalePage implements OnInit {
     // });
 
     this.saleForm.valueChanges.subscribe(selectedValue => {
-      if(this.saleForm.get('amount') && this.saleForm.get('numeroCuotas') && this.saleForm.get('rate')){
+      if(this.saleForm.get('amount') && this.saleForm.get('numeroCuotas') && this.saleForm.get('porcentaje')){
         this.calcularMontoCuota();
       }
     })
@@ -125,18 +125,18 @@ export class NewSalePage implements OnInit {
   async createSale(sale){
   
     sale.createdAt = moment().format('llll');
-    sale.updateAt = moment().format('llll');
+    sale.updatedAt = moment().format('llll');
     sale.cuotas = this.createCuotas(sale.numeroCuotas);
     sale.customerId = this.customerId
-    sale.interest = sale.amount * sale.rate/100;
-    sale.amountWithRate = sale.amount + sale.interest;
-    sale.montoCuota = sale.amountWithRate/sale.numeroCuotas;
-    sale.state = 'Active';
+    sale.intereses = sale.amount * sale.porcentaje/100;
+    sale.montoConInteres = sale.amount + sale.intereses;
+    sale.montoCuota = sale.montoConInteres/sale.numeroCuotas;
+    sale.estado = 'Active';
     sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
     sale.abonos = [];
     sale.cuotasPendientes = sale.numeroCuotas; 
     sale.cuotasPagadas = 0
-    sale.saldo = 
+    sale.saldo = sale.montoConInteres;
     await this.salesService.createNewSale(sale).then(res => { this.showConfirmation() });
     
   }
@@ -170,9 +170,9 @@ export class NewSalePage implements OnInit {
   }
 
   calcularMontoCuota(){
-    let interest = this.saleForm.get('amount').value * this.saleForm.get('rate').value/100;
-    let amountWithRate = this.saleForm.get('amount').value + interest;
-    this.montoCuota = amountWithRate/this.saleForm.get('numeroCuotas').value;
+    let intereses = this.saleForm.get('amount').value * this.saleForm.get('porcentaje').value/100;
+    let montoConInteres = this.saleForm.get('amount').value + intereses;
+    this.montoCuota = montoConInteres/this.saleForm.get('numeroCuotas').value;
   }
 
   // addDays(days : number): Date{

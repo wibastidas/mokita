@@ -134,7 +134,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // if (window.history.state.modal) {
+    // if (window.history.estado.modal) {
     //   history.back();
     // }
   }

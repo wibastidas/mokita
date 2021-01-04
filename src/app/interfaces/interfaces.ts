@@ -16,17 +16,18 @@ export interface Sale {
     amount : string,
     createdAt: string
     montoCuota: number,
-    numeroCuotas: Number,
+    numeroCuotas: number,
     cuotas: [{cuota: number, date: Date; fechaPago: Date}],
-    interest: any, 
-    amountWithRate: any,
-    cuotasPagadas: any,
-    cuotasPendientes: any,
-    state:string
+    intereses: any, 
+    montoConInteres: any,
+    cuotasPagadas: number,
+    cuotasPendientes: number,
+    estado:string
     vencimiento: string,
-    rate:any
+    porcentaje:any
     abonos?: any
-    updatedAt?: any
+    updatedAt?: any,
+    saldo: any
 }
 
 export interface Expense {

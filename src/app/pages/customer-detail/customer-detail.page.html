@@ -48,7 +48,7 @@
           <ion-item-sliding *ngFor="let sale of sales" class="loan-item">
             <ion-item>
               <ion-label>
-                <h2>Estado: {{sale.state}}</h2>
+                <h2>Estado: {{sale.estado}}</h2>
                 <h3>Monto: {{sale.amount | currency :'$':'symbol':'1.2-2'}}</h3>
                 <p class="ion-text-capitalize">Cuotas: {{sale.numeroCuotas}} x {{sale.montoCuota}} </p>
               </ion-label>

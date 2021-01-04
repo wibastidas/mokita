@@ -27,7 +27,7 @@ export class EditSalePage implements OnInit, OnDestroy {
     numeroCuotas: [
       { type:"required", message: "El número de cuotas es requerida."}
     ],
-    rate: [
+    porcentaje: [
       { type:"required", message: "El % de interés es requerido."}
     ]
   }
@@ -45,19 +45,19 @@ export class EditSalePage implements OnInit, OnDestroy {
       numeroCuotas: new FormControl("", Validators.compose([
         Validators.required
       ])),
-      rate: new FormControl("", Validators.compose([
+      porcentaje: new FormControl("", Validators.compose([
         Validators.required
       ])),
       cuotas: new FormControl([], Validators.compose([
         Validators.required
       ])),
-      amountWithRate: new FormControl("", Validators.compose([
+      montoConInteres: new FormControl("", Validators.compose([
         Validators.required
       ])),
       montoCuota: new FormControl({ value: "", disabled: true }, Validators.compose([
         Validators.required
       ])),
-      state: new FormControl({ value: "", disabled: true }, Validators.compose([
+      estado: new FormControl({ value: "", disabled: true }, Validators.compose([
         Validators.required
       ])),
       createdAt: new FormControl({ value: "", disabled: true }, Validators.compose([
@@ -72,15 +72,16 @@ export class EditSalePage implements OnInit, OnDestroy {
       cuotasPendientes: new FormControl("", Validators.compose([
         Validators.required
       ])),
-      interest: new FormControl("", Validators.compose([
+      intereses: new FormControl("", Validators.compose([
         Validators.required
       ])),
+      updatedAt: new FormControl(""),
       // vencimiento: new FormControl({ value: "", disabled: true }, Validators.compose([
       //   Validators.required
       // ])),
       id: new FormControl(""),
-      updateAt: new FormControl(""),
       abonos: new FormControl(""),
+      saldo: new FormControl(""),
       vencimiento: new FormControl({ value: "", disabled: true }, Validators.compose([
         Validators.required
       ]))
@@ -105,7 +106,7 @@ export class EditSalePage implements OnInit, OnDestroy {
     this.montoCuota = this.saleForm.get('montoCuota').value;
 
     this.saleForm.valueChanges.subscribe(selectedValue => {
-      if(this.saleForm.get('amount') && this.saleForm.get('numeroCuotas') && this.saleForm.get('rate')){
+      if(this.saleForm.get('amount') && this.saleForm.get('numeroCuotas') && this.saleForm.get('porcentaje')){
         this.calcularMontoCuota();
       }
     })
@@ -140,20 +141,32 @@ export class EditSalePage implements OnInit, OnDestroy {
   async updateSale(sale){
     console.log("sale: ", sale)
   
-    sale.updateAt = moment().format('llll');
+    sale.updatedAt = moment().format('llll');
     sale.cuotas = this.createCuotas(sale.numeroCuotas);
     //sale.customerId = this.customerId
-    sale.interest = sale.amount * sale.rate/100;
-    sale.amountWithRate = sale.amount + sale.interest;
-    sale.montoCuota = sale.amountWithRate/sale.numeroCuotas;
+    sale.intereses = sale.amount * sale.porcentaje/100;
+    sale.montoConInteres = sale.amount + sale.intereses;
+    sale.montoCuota = sale.montoConInteres/sale.numeroCuotas;
     sale.cuotasPagadas = 0;
     sale.cuotasPendientes = sale.numeroCuotas; 
-    sale.state = 'Active';
+    sale.estado = 'Active';
     sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
-    console.log('sale2: ', sale);  
+    sale.saldo = this.calcularSaldoPendiente(sale);
 
     await this.salesService.updateSale(sale).then(res => { this.dismissModal() });
     
+  }
+
+  calcularSaldoPendiente(sale){
+    let saldo = sale.montoConInteres;
+    if(sale && sale.abonos && sale.abonos.length > 0) {
+      saldo = sale.montoConInteres - this.calcularAbonos(sale.abonos);
+    }
+    return saldo;
+  }
+
+  calcularAbonos(abonos){
+    return abonos.reduce((total, abono) => total + abono.monto, 0);
   }
 
   createCuotas(numeroCuotas){
@@ -184,9 +197,9 @@ export class EditSalePage implements OnInit, OnDestroy {
   // }
 
   calcularMontoCuota(){
-    let interest = this.saleForm.get('amount').value * this.saleForm.get('rate').value/100;
-    let amountWithRate = this.saleForm.get('amount').value + interest;
-    this.montoCuota = amountWithRate/this.saleForm.get('numeroCuotas').value;
+    let intereses = this.saleForm.get('amount').value * this.saleForm.get('porcentaje').value/100;
+    let montoConInteres = this.saleForm.get('amount').value + intereses;
+    this.montoCuota = montoConInteres/this.saleForm.get('numeroCuotas').value;
   }
 
 }
