@@ -66,7 +66,7 @@ export class SaleDetailPage implements OnInit {
           text: 'Guardar',
           handler: (data) => {
             if(data.monto){
-              this.sale.abonos.push({...data, createAt: moment().format('l')});
+              this.sale.abonos.push({...data, createdAt: moment().format('llll')});
               this.updateSale();
             }
           }
@@ -158,8 +158,10 @@ export class SaleDetailPage implements OnInit {
         }, {
           text: 'Guardar',
           handler: (data) => {
+            console.log("data: ", data)
+            console.log("hola", this.sale.abonos[index])
             if(data.monto){
-              this.sale.abonos[index] = { ...data, updated: moment().format('l')}
+              this.sale.abonos[index] = { ...data, createdAt: this.sale.abonos[index].createdAt ,updated: moment().format('llll')}
               this.updateSale();
             }
           }
