@@ -26,6 +26,8 @@
       <ion-card-content>
         <ion-label>
           <h3>Saldo Pendiente: {{sale.saldo | currency:'$'}}</h3>
+          <h3>Cuotas Pendientes: {{sale.cuotasPendientes | number}}</h3>
+          <h3>Cuotas Pagadas: {{sale.cuotasPagadas | number}}</h3>
           <h3>Interés: {{sale.porcentaje | currency:'%'}}</h3>
           <h3>Número de cuotas: {{sale.numeroCuotas}}</h3>
           <h3>Monto de la Cuota: {{sale.montoCuota}}</h3>

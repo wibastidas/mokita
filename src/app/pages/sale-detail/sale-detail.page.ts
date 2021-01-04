@@ -66,7 +66,7 @@ export class SaleDetailPage implements OnInit {
           text: 'Guardar',
           handler: (data) => {
             if(data.monto){
-              this.sale.abonos.push({...data, createdAt: moment().format('llll')});
+              this.sale.abonos.push({monto: parseInt(data.monto), note: data.note, createdAt: moment().format('llll')});
               this.updateSale();
             }
           }
@@ -98,6 +98,9 @@ export class SaleDetailPage implements OnInit {
     console.log("updateSale: ", this.sale);
     this.sale.updatedAt = moment().format('llll');
     this.sale.saldo = this.calcularSaldoPendiente(this.sale);
+    console.log("this.sale.saldo : ", this.sale.saldo )
+    this.sale.cuotasPendientes = this.sale.saldo/this.sale.montoCuota
+    this.sale.cuotasPagadas = this.sale.numeroCuotas - this.sale.cuotasPendientes;
     await this.salesService.updateSale(this.sale).then(res => { console.log("modificado!!!") }); 
   }
 

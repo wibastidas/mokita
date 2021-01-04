@@ -151,6 +151,8 @@ export class EditSalePage implements OnInit, OnDestroy {
     sale.cuotasPendientes = sale.numeroCuotas; 
     sale.estado = 'Active';
     sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
+    sale.cuotasPendientes = sale.saldo/sale.montoCuota
+    sale.cuotasPagadas = sale.numeroCuotas - sale.cuotasPendientes;
     sale.saldo = this.calcularSaldoPendiente(sale);
 
     await this.salesService.updateSale(sale).then(res => { this.dismissModal() });
