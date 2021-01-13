@@ -5,6 +5,7 @@ import firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../interfaces/interfaces';
+import { AlertService } from './alert.service';
 
 
 @Injectable({
@@ -13,7 +14,7 @@ import { User } from '../interfaces/interfaces';
 export class AuthService {
   public user$: Observable<User>;
 
-  constructor(public afAuth: AngularFireAuth, private afs: AngularFirestore) {
+  constructor(public afAuth: AngularFireAuth, private afs: AngularFirestore, private alertService: AlertService) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
@@ -39,6 +40,7 @@ export class AuthService {
       return user;
     } catch (error) {
       console.log('Error->', error);
+
     }
   }
 
@@ -48,7 +50,17 @@ export class AuthService {
       await this.sendVerifcationEmail();
       return user;
     } catch (error) {
-      console.log('Error->', error);
+
+      let message: string;
+      if (error.code == 'auth/weak-password') {
+        message = 'La contraseña debe tener al menos 6 caracteres'
+      } else if (error.code == 'auth/email-already-in-use') {
+        message = 'La dirección de correo electrónico ya está siendo utilizada por otra cuenta.'
+      } else {
+        message = error.message;
+      }
+      this.alertService.presentAlert("Error!", message, ['Ok'])
+
     }
   }
 
@@ -59,6 +71,14 @@ export class AuthService {
       return user;
     } catch (error) {
       console.log('Error->', error);
+      let message: string;
+      if (error.code == 'auth/wrong-password') {
+        message = 'La contraseña no es válida o el usuario no tiene contraseña.'
+      } else {
+        message = error.message;
+      }
+      this.alertService.presentAlert("Error!", message, ['Ok'])
+
     }
   }
 
@@ -67,6 +87,8 @@ export class AuthService {
       return (await this.afAuth.currentUser).sendEmailVerification();
     } catch (error) {
       console.log('Error->', error);
+      this.alertService.presentAlert("Error!", error.message, ['Ok'])
+
     }
   }
 
@@ -79,6 +101,8 @@ export class AuthService {
       await this.afAuth.signOut();
     } catch (error) {
       console.log('Error->', error);
+      this.alertService.presentAlert("Error!", error.message, ['Ok'])
+
     }
   }
 
