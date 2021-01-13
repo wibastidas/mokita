@@ -1,0 +1,63 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+
+    <ion-list-header class="ion-text-center">
+      <ion-label class="ion-text-center">BIENVENIDO</ion-label>
+    </ion-list-header>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="google" (click)="onLoginGoogle()" expand="block"><ion-icon name="logo-google"></ion-icon>
+          &nbsp;INICIAR SESIÓN CON GOOGLE
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button type="submit" color="facebook" expand="block"><ion-icon name="logo-facebook"></ion-icon>
+          &nbsp;INICIAR SESIÓN CON FACEBOOK
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <div class="ion-text-center">
+      <span  class="center-span"> O utiliza: </span>
+    </div>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Correo electrónico</ion-label>
+      <ion-input type="text" #email required></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input type="password" #password required></ion-input>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" (click)="onLogin(email, password)" expand="block">Login</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p class="ion-text-center">
+          <a routerLink="/forgot-password">¿Has olvidado tu contraseña? </a>
+        </p>
+      </ion-col>
+    </ion-row>
+
+
+
+  </form>
+  <ion-row>
+    <ion-col>
+      <p class="ion-text-end">
+        <a routerLink="/register">Crear una cuenta </a>
+      </p>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -7,7 +7,8 @@ export interface Customer {
     address : string,
     email : string,
     reference : string,
-    createdAt: string
+    createdAt: string,
+    userUid?: string;
 }
 
 export interface Sale {
@@ -37,4 +38,23 @@ export interface Expense {
     amount : string,
     createdAt: string,
     updatedAt: string
+}
+
+export interface User {
+    // id?: string,
+    // name?: string,
+    // email?: string,
+    // password?: string,
+    // photoUrl?: string,
+    // roles: Roles
+
+    uid: string;
+    email: string;
+    displayName: string;
+    emailVerified: boolean;
+}
+
+export interface Roles {
+    cobrador?: string,
+    admin?: boolean,
 }

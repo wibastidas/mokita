@@ -49,6 +49,14 @@ const routes: Routes = [
   {
     path: 'edit-sale',
     loadChildren: () => import('./pages/edit-sale/edit-sale.module').then( m => m.EditSalePageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./pages/auth/register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/auth/login/login.module').then( m => m.LoginPageModule)
   }
 ];
 @NgModule({
