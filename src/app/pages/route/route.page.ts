@@ -9,12 +9,16 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./route.page.scss'],
 })
 export class RoutePage implements OnInit {
-
+  public user;
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
               private authSvc: AuthService) { }
 
   ngOnInit() {
+    this.authSvc.isAuth().subscribe(res => {
+      this.user = res.providerData[0];
+      console.log("user: ", this.user);
+    })
   }
 
   goNewSale(){
@@ -23,7 +27,7 @@ export class RoutePage implements OnInit {
 
   async showOptions() {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Opciones',
+      header: this.user.displayName || this.user.email,
       cssClass: 'my-custom-class',
       buttons: [{
         text: 'Cerrar Sesión',

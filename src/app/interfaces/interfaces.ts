@@ -28,7 +28,8 @@ export interface Sale {
     porcentaje:any
     abonos?: any
     updatedAt?: any,
-    saldo: any
+    saldo: any,
+    userUid?: string;
 }
 
 export interface Expense {
@@ -37,7 +38,8 @@ export interface Expense {
     description : Customer,
     amount : string,
     createdAt: string,
-    updatedAt: string
+    updatedAt: string,
+    userUid?: string;
 }
 
 export interface User {
@@ -45,13 +47,13 @@ export interface User {
     // name?: string,
     // email?: string,
     // password?: string,
-    // photoUrl?: string,
-    // roles: Roles
 
     uid: string;
     email: string;
     displayName: string;
     emailVerified: boolean;
+    photoUrl?: string,
+    roles?: Roles
 }
 
 export interface Roles {

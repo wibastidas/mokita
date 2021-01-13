@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { User } from '../interfaces/interfaces';
 import { AlertService } from './alert.service';
 
@@ -94,6 +94,10 @@ export class AuthService {
 
   isEmailVerified(user: User): boolean {
     return user.emailVerified === true ? true : false;
+  }
+
+  isAuth() {
+    return this.afAuth.authState.pipe(map(auth => auth));
   }
 
   async logout(): Promise<void> {
