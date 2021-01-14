@@ -57,6 +57,6 @@ export interface User {
 }
 
 export interface Roles {
-    cobrador?: string,
+    cobrador?: boolean,
     admin?: boolean,
 }

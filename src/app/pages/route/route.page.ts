@@ -10,15 +10,27 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RoutePage implements OnInit {
   public user;
+  public isAdmin: any = null;
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
               private authSvc: AuthService) { }
 
   ngOnInit() {
-    this.authSvc.isAuth().subscribe(res => {
-      this.user = res.providerData[0];
-      console.log("user: ", this.user);
+    this.getCurrentUser();
+  }
+
+  getCurrentUser(){
+
+    this.authSvc.isAuth().subscribe(auth => {
+      if(auth) {
+        this.user = auth;
+        this.authSvc.isUserAdmin(this.user.uid).subscribe(userRole => {
+          this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
+          console.log("this.isAdmin?: ", this.isAdmin);
+        })
+      }
     })
+
   }
 
   goNewSale(){
@@ -26,25 +38,37 @@ export class RoutePage implements OnInit {
   }
 
   async showOptions() {
+    let buttonsActionSheet = [{
+      text: 'Cerrar Sesión',
+      icon: 'log-out-outline',
+      handler: () => {
+        console.log('Cerrar sesion clicked');
+        this.authSvc.logout();
+        this.router.navigate(['/login']);
+      }
+    }, {
+      text: 'Cancelar',
+      icon: 'close',
+      role: 'cancel',
+      handler: () => {
+        console.log('Cancelar clicked');
+      }
+    }];
+
+    if (this.isAdmin) {
+      buttonsActionSheet.unshift({
+        text: 'Crear Cobrador',
+        icon: 'person-add-outline',
+        handler: () => {
+          this.router.navigate(['/register']);
+        }
+      })
+    }
+    
     const actionSheet = await this.actionSheetController.create({
       header: this.user.displayName || this.user.email,
       cssClass: 'my-custom-class',
-      buttons: [{
-        text: 'Cerrar Sesión',
-        icon: 'log-out-outline',
-        handler: () => {
-          console.log('Cerrar sesion clicked');
-          this.authSvc.logout();
-          this.router.navigate(['/login']);
-        }
-      }, {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancelar clicked');
-        }
-      }]
+      buttons: buttonsActionSheet
     });
     await actionSheet.present();
   }

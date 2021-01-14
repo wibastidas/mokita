@@ -14,7 +14,9 @@ import { AlertService } from './alert.service';
 export class AuthService {
   public user$: Observable<User>;
 
-  constructor(public afAuth: AngularFireAuth, private afs: AngularFirestore, private alertService: AlertService) {
+  constructor(public afAuth: AngularFireAuth, 
+              private afs: AngularFirestore, 
+              private alertService: AlertService) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
@@ -44,7 +46,7 @@ export class AuthService {
     }
   }
 
-  async register(email: string, password: string): Promise<User> {
+  async register(email: string, password: string, isAdmin: boolean): Promise<User> {
     try {
       const { user } = await this.afAuth.createUserWithEmailAndPassword(email, password);
       await this.sendVerifcationEmail();
@@ -111,6 +113,7 @@ export class AuthService {
   }
 
   private updateUserData(user: User) {
+    console.log("updateUserData: ", user);
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
 
     const data: User = {
@@ -118,8 +121,20 @@ export class AuthService {
       email: user.email,
       emailVerified: user.emailVerified,
       displayName: user.displayName,
+      roles: {
+        admin: true
+      }
+      // roles: {
+      //   cobrador: true
+      // }
     };
 
     return userRef.set(data, { merge: true });
   }
+
+  isUserAdmin(userUid){
+    return this.afs.doc<User>(`users/${userUid}`).valueChanges();
+  }
+
+
 }

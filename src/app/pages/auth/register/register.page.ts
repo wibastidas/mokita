@@ -8,13 +8,30 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
+  public isAdmin: any = null;
+
   constructor(private authSvc: AuthService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getCurrentUser();
+  }
 
-  async onRegister(email, password) {
+  getCurrentUser(){
+
+    this.authSvc.isAuth().subscribe(auth => {
+      if(auth) {
+        this.authSvc.isUserAdmin(auth.uid).subscribe(userRole => {
+          this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
+          console.log("this.isAdmin?: ", this.isAdmin);
+        })
+      }
+    })
+
+  }
+  
+  async onRegister(email, password, isAdmin) {
     try {
-      const user = await this.authSvc.register(email.value, password.value);
+      const user = await this.authSvc.register(email.value, password.value, isAdmin);
       if (user) {
         const isVerified = this.authSvc.isEmailVerified(user);
         this.redirectUser(isVerified);
