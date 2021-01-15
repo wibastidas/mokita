@@ -26,7 +26,6 @@ export class RoutePage implements OnInit {
         this.user = auth;
         this.authSvc.isUserAdmin(this.user.uid).subscribe(userRole => {
           this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
-          console.log("this.isAdmin?: ", this.isAdmin);
         })
       }
     })

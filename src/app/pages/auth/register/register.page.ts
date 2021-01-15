@@ -8,7 +8,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
-  public isAdmin: any = null;
+  public isCobrador: any = null;
+  public user;
 
   constructor(private authSvc: AuthService, private router: Router) {}
 
@@ -19,19 +20,26 @@ export class RegisterPage implements OnInit {
   getCurrentUser(){
 
     this.authSvc.isAuth().subscribe(auth => {
+      console.log("auth: ", auth)
       if(auth) {
+        this.user = auth;
         this.authSvc.isUserAdmin(auth.uid).subscribe(userRole => {
-          this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
-          console.log("this.isAdmin?: ", this.isAdmin);
+          console.log("userRole: ", userRole)
+          if(userRole){
+            let isAdminCreator = Object.assign({}, userRole.roles).hasOwnProperty('admin');
+            if(isAdminCreator) {
+              this.isCobrador = true;
+            }
+          }
         })
       }
     })
 
   }
   
-  async onRegister(email, password, isAdmin) {
+  async onRegister(email, password, isCobrador) {
     try {
-      const user = await this.authSvc.register(email.value, password.value, isAdmin);
+      const user = await this.authSvc.registerUser(email.value, password.value, isCobrador);
       if (user) {
         const isVerified = this.authSvc.isEmailVerified(user);
         this.redirectUser(isVerified);

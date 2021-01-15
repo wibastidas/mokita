@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Crear una nueva cuenta</ion-title>
+    <ion-title>Crear una cuenta</ion-title>
+
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -19,14 +20,14 @@
     </ion-item>
     <ion-row>
       <ion-col>
-        <ion-button type="submit" (click)="onRegister(email, password, isAdmin)" expand="block">Crear</ion-button>
+        <ion-button type="submit" (click)="onRegister(email, password, isCobrador)" expand="block">Crear</ion-button>
       </ion-col>
     </ion-row>
   </form>
   <ion-row>
     <ion-col>
       <p class="ion-text-end">
-        <a routerLink="/login">¿Ya tienes una cuenta? </a>
+        <a routerLink="/login" *ngIf="!user">¿Ya tienes una cuenta? </a>
       </p>
     </ion-col>
   </ion-row>

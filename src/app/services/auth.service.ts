@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { User } from '../interfaces/interfaces';
 import { AlertService } from './alert.service';
 
@@ -27,6 +27,27 @@ export class AuthService {
     );
   }
 
+  async registerUser(email: string, password: string, isCobrador: boolean): Promise<User> {
+    try {
+      const { user } = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      this.updateUserData(user, isCobrador);
+      await this.sendVerifcationEmail();
+      return user;
+    } catch (error) {
+
+      let message: string;
+      if (error.code == 'auth/weak-password') {
+        message = 'La contraseña debe tener al menos 6 caracteres'
+      } else if (error.code == 'auth/email-already-in-use') {
+        message = 'La dirección de correo electrónico ya está siendo utilizada por otra cuenta.'
+      } else {
+        message = error.message;
+      }
+      this.alertService.presentAlert("Error!", message, ['Ok'])
+
+    }
+  }
+
   async resetPassword(email: string): Promise<void> {
     try {
       return this.afAuth.sendPasswordResetEmail(email);
@@ -46,30 +67,18 @@ export class AuthService {
     }
   }
 
-  async register(email: string, password: string, isAdmin: boolean): Promise<User> {
-    try {
-      const { user } = await this.afAuth.createUserWithEmailAndPassword(email, password);
-      await this.sendVerifcationEmail();
-      return user;
-    } catch (error) {
-
-      let message: string;
-      if (error.code == 'auth/weak-password') {
-        message = 'La contraseña debe tener al menos 6 caracteres'
-      } else if (error.code == 'auth/email-already-in-use') {
-        message = 'La dirección de correo electrónico ya está siendo utilizada por otra cuenta.'
-      } else {
-        message = error.message;
-      }
-      this.alertService.presentAlert("Error!", message, ['Ok'])
-
-    }
-  }
-
   async login(email: string, password: string): Promise<User> {
     try {
       const { user } = await this.afAuth.signInWithEmailAndPassword(email, password);
-      this.updateUserData(user);
+
+      this.afs.doc('/users/' + user.uid).valueChanges().pipe(take(1)).subscribe((user: any) => {
+        if(user.roles) {
+          this.updateUserData(user, user.roles);
+        } else {
+          this.updateUserData(user);
+        }
+      });
+      
       return user;
     } catch (error) {
       console.log('Error->', error);
@@ -112,21 +121,14 @@ export class AuthService {
     }
   }
 
-  private updateUserData(user: User) {
-    console.log("updateUserData: ", user);
+  private updateUserData(user: User, isCobrador = false) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-
     const data: User = {
       uid: user.uid,
       email: user.email,
       emailVerified: user.emailVerified,
       displayName: user.displayName,
-      roles: {
-        admin: true
-      }
-      // roles: {
-      //   cobrador: true
-      // }
+      roles: isCobrador ? { cobrador: true } : { admin: true }
     };
 
     return userRef.set(data, { merge: true });
