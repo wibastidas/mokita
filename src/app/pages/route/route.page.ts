@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
 
 @Component({
   selector: 'app-route',
@@ -13,23 +14,21 @@ export class RoutePage implements OnInit {
   public isAdmin: any = null;
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
-              private authSvc: AuthService) { }
+              private authSvc: AuthService, 
+              public roleAutorization: RoleBasedAutorizationService) { }
 
   ngOnInit() {
     this.getCurrentUser();
   }
 
   getCurrentUser(){
-
-    this.authSvc.isAuth().subscribe(auth => {
-      if(auth) {
-        this.user = auth;
-        this.authSvc.isUserAdmin(this.user.uid).subscribe(userRole => {
-          this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
-        })
+    this.authSvc.getCurrentUser().then(userRole => {
+      console.log("userRole: ", userRole)
+      if(userRole){
+        this.user = userRole;
+        this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
       }
-    })
-
+    });
   }
 
   goNewSale(){
@@ -54,9 +53,9 @@ export class RoutePage implements OnInit {
       }
     }];
 
-    if (this.isAdmin) {
+    if (this.roleAutorization.canCreateUser(this.user)) {
       buttonsActionSheet.unshift({
-        text: 'Crear Cobrador',
+        text: 'Crear Usuario',
         icon: 'person-add-outline',
         handler: () => {
           this.router.navigate(['/register']);

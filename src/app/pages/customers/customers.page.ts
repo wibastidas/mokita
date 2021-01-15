@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Customer } from 'src/app/interfaces/interfaces';
+import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
+import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
 import { NewCustomerPage } from '../new-customer/new-customer.page';
 
 @Component({
@@ -11,13 +13,16 @@ import { NewCustomerPage } from '../new-customer/new-customer.page';
   styleUrls: ['./customers.page.scss'],
 })
 export class CustomersPage implements OnInit {
-  customers: Customer[];
-  loading: Boolean= false;
+  public customers: Customer[];
+  public loading: Boolean= false;
+  public user;
 
   constructor(private customersService: CustomersService,
               public alertController: AlertController,
               private router: Router,
-              private modalController: ModalController) { }
+              private authSvc: AuthService, 
+              private modalController: ModalController,
+              public roleAutorization: RoleBasedAutorizationService) { }
 
   ngOnInit() {
     // this.customersService.getCustomers().pipe(take(1)).subscribe((customers: Customer[]) => {
@@ -53,9 +58,10 @@ export class CustomersPage implements OnInit {
 
 
     // this.customersService.getCustomersNew().pipe();
-
     this.getCustomers();   
   }
+
+
 
   getCustomers(){
     this.loading = true;

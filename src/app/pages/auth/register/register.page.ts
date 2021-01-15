@@ -18,23 +18,15 @@ export class RegisterPage implements OnInit {
   }
 
   getCurrentUser(){
-
-    this.authSvc.isAuth().subscribe(auth => {
-      console.log("auth: ", auth)
-      if(auth) {
-        this.user = auth;
-        this.authSvc.isUserAdmin(auth.uid).subscribe(userRole => {
-          console.log("userRole: ", userRole)
-          if(userRole){
-            let isAdminCreator = Object.assign({}, userRole.roles).hasOwnProperty('admin');
-            if(isAdminCreator) {
-              this.isCobrador = true;
-            }
-          }
-        })
+    this.authSvc.getCurrentUser().then(userRole => {
+      console.log("userRole: ", userRole)
+      if(userRole){
+        let isAdminCreator = Object.assign({}, userRole.roles).hasOwnProperty('admin');
+        if(isAdminCreator) {
+          this.isCobrador = true;
+        }
       }
-    })
-
+    });
   }
   
   async onRegister(email, password, isCobrador) {

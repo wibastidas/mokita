@@ -27,6 +27,7 @@ export class AuthService {
     );
   }
 
+
   async registerUser(email: string, password: string, isCobrador: boolean): Promise<User> {
     try {
       const { user } = await this.afAuth.createUserWithEmailAndPassword(email, password);
@@ -134,7 +135,21 @@ export class AuthService {
     return userRef.set(data, { merge: true });
   }
 
-  isUserAdmin(userUid){
+  getCurrentUser(): Promise<User>{
+
+    return new Promise(resolve => {
+      this.isAuth().subscribe(auth => {
+        if(auth) {
+          this.getUser(auth.uid).subscribe(user => {
+            resolve(user);
+          })
+        }
+      })
+    });
+
+  }
+
+  getUser(userUid){
     return this.afs.doc<User>(`users/${userUid}`).valueChanges();
   }
 
