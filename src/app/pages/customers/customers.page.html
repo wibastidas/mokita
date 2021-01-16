@@ -9,7 +9,7 @@
 
   <app-skeleton *ngIf="loading"></app-skeleton>
  
-  <ion-list *ngIf="!loading && roleAutorization.canCreateSale(user)">
+  <ion-list *ngIf="!loading && roleAutorization.canReadCustomer(authSvc.getLoggedUser())">
     <ion-item-sliding  *ngFor="let customer of customers">
       <ion-item (click)="goCustomerDetail(customer)">
         <ion-avatar slot="start">

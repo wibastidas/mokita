@@ -3,6 +3,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
 import * as moment from 'moment';
+import { AuthService } from './services/auth.service';
 
 
 @Component({
@@ -14,7 +15,8 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private authService: AuthService
   ) {    
     this.initializeApp();
   }
@@ -26,5 +28,14 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+
+    this.authService.isAuth().subscribe(auth => {
+      if(auth) {
+        this.authService.getUser(auth.uid).subscribe(user => {
+          this.authService.setLoggedUser(user);
+        })
+      }
+    })
+
   }
 }

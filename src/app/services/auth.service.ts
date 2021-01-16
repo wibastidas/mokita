@@ -13,7 +13,8 @@ import { AlertService } from './alert.service';
 })
 export class AuthService {
   public user$: Observable<User>;
-
+  public loggedUser: User;
+  
   constructor(public afAuth: AngularFireAuth, 
               private afs: AngularFirestore, 
               private alertService: AlertService) {
@@ -114,6 +115,7 @@ export class AuthService {
 
   async logout(): Promise<void> {
     try {
+      this.setLoggedUser(null);
       await this.afAuth.signOut();
     } catch (error) {
       console.log('Error->', error);
@@ -153,5 +155,12 @@ export class AuthService {
     return this.afs.doc<User>(`users/${userUid}`).valueChanges();
   }
 
+  setLoggedUser(user){
+    console.log("setLoggedUser: ", user);
+    this.loggedUser = user;
+  }
 
+  getLoggedUser(){
+    return this.loggedUser;
+  }
 }

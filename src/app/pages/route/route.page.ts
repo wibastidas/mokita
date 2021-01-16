@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
 
@@ -11,6 +13,7 @@ import { RoleBasedAutorizationService } from 'src/app/services/role-based-autori
 })
 export class RoutePage implements OnInit {
   public user;
+  public user$: Observable<User>;
   public isAdmin: any = null;
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
