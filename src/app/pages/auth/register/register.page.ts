@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
-  public isCobrador: any = null;
+  public isNewUserCobrador: any = null;
   public user;
 
   constructor(private authSvc: AuthService, private router: Router) {}
@@ -18,20 +18,19 @@ export class RegisterPage implements OnInit {
   }
 
   getCurrentUser(){
-    this.authSvc.getCurrentUser().then(userRole => {
-      console.log("userRole: ", userRole)
-      if(userRole){
-        let isAdminCreator = Object.assign({}, userRole.roles).hasOwnProperty('admin');
-        if(isAdminCreator) {
-          this.isCobrador = true;
-        }
+
+    if(this.authSvc.getLoggedUser()){
+      let isAdminCreator = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
+      if (isAdminCreator) {
+        this.isNewUserCobrador = true;
       }
-    });
+    }
+
   }
   
-  async onRegister(email, password, isCobrador) {
+  async onRegister(email, password, isNewUserCobrador) {
     try {
-      const user = await this.authSvc.registerUser(email.value, password.value, isCobrador);
+      const user = await this.authSvc.registerUser(email.value, password.value, isNewUserCobrador);
       if (user) {
         const isVerified = this.authSvc.isEmailVerified(user);
         this.redirectUser(isVerified);
@@ -46,6 +45,8 @@ export class RegisterPage implements OnInit {
       this.router.navigate(['/']);
     } else {
       this.router.navigate(['verify-email']);
+      //this.authSvc.setLoggedUser(null);
+      //pendiente no hacer login con el usuario creado cuando es un cobrador
     }
   }
 }
