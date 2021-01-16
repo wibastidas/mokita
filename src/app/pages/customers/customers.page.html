@@ -33,7 +33,7 @@
     </ion-item-sliding>
   </ion-list>
 
-  <div class="ion-text-center"  *ngIf="!loading">
+  <div class="ion-text-center"  *ngIf="!loading && roleAutorization.canReadCustomer(authSvc.getLoggedUser())">
     <ion-button  (click)="createCustomer()" expand="round">Crear Cliente</ion-button>
   </div>
 </ion-content>

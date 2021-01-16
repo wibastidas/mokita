@@ -5,7 +5,9 @@ import { AlertController, ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { Customer, Sale } from 'src/app/interfaces/interfaces';
+import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
+import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
 import { SalesService } from 'src/app/services/sales.service';
 
 @Component({
@@ -52,6 +54,8 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
               private route: ActivatedRoute, 
               public alertController: AlertController,
               private router: Router,
+              private authSvc: AuthService, 
+              public roleAutorization: RoleBasedAutorizationService,
               public salesService: SalesService) {
 
     
