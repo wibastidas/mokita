@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
-import { Observable } from 'rxjs';
-import { User } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
 
@@ -12,27 +10,13 @@ import { RoleBasedAutorizationService } from 'src/app/services/role-based-autori
   styleUrls: ['./route.page.scss'],
 })
 export class RoutePage implements OnInit {
-  public user;
-  public user$: Observable<User>;
-  public isAdmin: any = null;
+
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
               private authSvc: AuthService, 
               public roleAutorization: RoleBasedAutorizationService) { }
 
-  ngOnInit() {
-    this.getCurrentUser();
-  }
-
-  getCurrentUser(){
-    this.authSvc.getCurrentUser().then(userRole => {
-      console.log("userRole: ", userRole)
-      if(userRole){
-        this.user = userRole;
-        this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
-      }
-    });
-  }
+  ngOnInit() {}
 
   goNewSale(){
     this.router.navigateByUrl('/new-sale');
@@ -56,7 +40,7 @@ export class RoutePage implements OnInit {
       }
     }];
 
-    if (this.roleAutorization.canCreateUser(this.user)) {
+    if (this.roleAutorization.canCreateUser(this.authSvc.getLoggedUser())) {
       buttonsActionSheet.unshift({
         text: 'Crear Usuario',
         icon: 'person-add-outline',
@@ -67,7 +51,7 @@ export class RoutePage implements OnInit {
     }
     
     const actionSheet = await this.actionSheetController.create({
-      header: this.user.displayName || this.user.email,
+      header: this.authSvc.getLoggedUser().displayName || this.authSvc.getLoggedUser().email,
       cssClass: 'my-custom-class',
       buttons: buttonsActionSheet
     });
