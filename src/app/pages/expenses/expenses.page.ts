@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Expense } from 'src/app/interfaces/interfaces';
+import { AuthService } from 'src/app/services/auth.service';
 import { ExpensesService } from 'src/app/services/expenses.service';
+import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
 import { ExpenseDetailPage } from '../expense-detail/expense-detail.page';
 import { NewExpensePage } from '../new-expense/new-expense.page';
 
@@ -16,6 +18,8 @@ export class ExpensesPage implements OnInit {
 
   constructor(private expensesService: ExpensesService,
               public alertController: AlertController,
+              private authSvc: AuthService, 
+              public roleAutorization: RoleBasedAutorizationService,
               private modalController: ModalController) { }
 
   ngOnInit() {

@@ -4,6 +4,8 @@ import { AlertController, ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Sale } from 'src/app/interfaces/interfaces';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
 import { SalesService } from 'src/app/services/sales.service';
 import { EditSalePage } from '../edit-sale/edit-sale.page';
 
@@ -21,6 +23,8 @@ export class SaleDetailPage implements OnInit {
               public alertController: AlertController,
               public alertService: AlertService,
               public salesService: SalesService,
+              private authSvc: AuthService, 
+              public roleAutorization: RoleBasedAutorizationService,
               private modalController: ModalController) {
     this.saleId = this.route.snapshot.paramMap.get('id');
   }

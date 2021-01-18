@@ -52,10 +52,10 @@
                 <h3>Monto: {{sale.amount | currency :'$':'symbol':'1.2-2'}}</h3>
                 <p class="ion-text-capitalize">Cuotas: {{sale.numeroCuotas}} x {{sale.montoCuota}} </p>
               </ion-label>
-              <ion-button (click)="goSaleDetail(sale)"  fill="outline" slot="end">Ver más</ion-button> 
+              <ion-button *ngIf="roleAutorization.canReadSale(authSvc.getLoggedUser())" (click)="goSaleDetail(sale)"  fill="outline" slot="end">Ver más</ion-button> 
             </ion-item>
   
-            <ion-item-options side="end">
+            <ion-item-options side="end" *ngIf="roleAutorization.canDeleteSale(authSvc.getLoggedUser())" >
               <ion-item-option color="danger"  (click)="deleteSaleConfirm(sale)">
                 <ion-icon slot="icon-only" name="trash"></ion-icon>
               </ion-item-option>

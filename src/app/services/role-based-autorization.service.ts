@@ -65,12 +65,12 @@ export class RoleBasedAutorizationService {
     }
   
     canEditExpense(user: User): boolean {
-      const allowed = ['admin', 'cobrador']
+      const allowed = ['admin']
       return this.checkAuthorization(user, allowed)
     }
   
     canDeleteExpense(user: User): boolean {
-      const allowed = ['admin', 'cobrador']
+      const allowed = ['admin']
       return this.checkAuthorization(user, allowed)
     }
 

@@ -54,7 +54,7 @@
     </ion-item>
 
     <div class="ion-text-center">
-      <ion-button [disabled]="expenseForm.invalid" fill="outline" expand="round"  type="submit">Actualizar</ion-button>
+      <ion-button  *ngIf="roleAutorization.canEditExpense(authSvc.getLoggedUser())"  [disabled]="expenseForm.invalid" fill="outline" expand="round"  type="submit">Actualizar</ion-button>
     </div>
   
   </form>

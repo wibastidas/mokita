@@ -4,7 +4,9 @@ import { ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Expense } from 'src/app/interfaces/interfaces';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { ExpensesService } from 'src/app/services/expenses.service';
+import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
 
 @Component({
   selector: 'app-expense-detail',
@@ -27,6 +29,8 @@ export class ExpenseDetailPage implements OnInit, OnDestroy {
   constructor(public modalCtrl: ModalController,
               public expenseService: ExpensesService,
               private alertService: AlertService,
+              private authSvc: AuthService, 
+              public roleAutorization: RoleBasedAutorizationService,
               private formBuilder: FormBuilder) {
 
     this.expenseForm = this.formBuilder.group({

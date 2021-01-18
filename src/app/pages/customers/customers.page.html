@@ -25,7 +25,7 @@
         <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
         <!-- <ion-button  fill="outline" slot="end">Ver &nbsp; <ion-icon name="eye-outline"> </ion-icon> </ion-button> -->
       </ion-item>
-      <ion-item-options side="end">
+      <ion-item-options side="end" *ngIf="roleAutorization.canDeleteCustomer(authSvc.getLoggedUser())">
         <ion-item-option color="danger"  (click)="deleteCustomer(customer)">
           <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-item-option>

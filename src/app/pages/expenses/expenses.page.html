@@ -10,7 +10,7 @@
 
   <app-skeleton *ngIf="loading"></app-skeleton>
 
-  <ion-list *ngIf="!loading">
+  <ion-list *ngIf="!loading && roleAutorization.canReadExpense(authSvc.getLoggedUser())" >
     <ion-item-sliding  *ngFor="let expense of expenses">
       <ion-item (click)="goExpenseDetail(expense)">
         <ion-label>
@@ -23,7 +23,7 @@
         <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option color="danger"  (click)="deleteExpense(expense)">
+        <ion-item-option color="danger" *ngIf="roleAutorization.canDeleteExpense(authSvc.getLoggedUser())" (click)="deleteExpense(expense)">
           <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-item-option>
       </ion-item-options>
@@ -31,7 +31,7 @@
   </ion-list>
 
 
-  <div class="ion-text-center"  *ngIf="!loading">
+  <div class="ion-text-center"  *ngIf="!loading && roleAutorization.canCreateExpense(authSvc.getLoggedUser())">
     <ion-button *ngIf="!loading"  (click)="createExpense()" expand="round">Cargar Gasto</ion-button>
   </div>
 </ion-content>

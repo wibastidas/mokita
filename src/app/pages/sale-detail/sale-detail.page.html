@@ -4,7 +4,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-buttons slot="end">
+    <ion-buttons *ngIf="roleAutorization.canEditSale(authSvc.getLoggedUser())" slot="end">
       <ion-button (click)="editSaleDetail(sale)"  color="primary">
         Editar
       </ion-button>
@@ -37,86 +37,10 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- <form 
-    [formGroup]="saleForm" 
-    (ngSubmit)="pdateSaleConfirm(saleForm.value)">
-
-    <ion-list-header lines="inset">
-      <ion-label>Préstamo</ion-label>
-    </ion-list-header>
-
-    <ion-item>
-      <ion-label>Estado: </ion-label>
-      <ion-input type="text"  formControlName="estado" ></ion-input>
-      <ion-icon size="small" name="shield-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Creado: </ion-label>
-      <ion-input type="text" formControlName="createdAt" ></ion-input>
-      <ion-icon size="small" name="calendar-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Vencimiento: </ion-label>
-      <ion-input type="text"  formControlName="vencimiento" ></ion-input>
-      <ion-icon size="small" name="calendar-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-    </ion-item>
-
-      <ion-item>
-        <ion-label>Monto: </ion-label>
-        <ion-input type="number"  formControlName="amount"></ion-input>
-        <ion-icon size="small" name="cash-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-      </ion-item>
-      <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.amount">
-          <div *ngIf="saleForm.get('amount').hasError(validation.type) && (saleForm.get('amount').dirty || saleForm.get('amount').touched)">
-            {{validation.message}}
-          </div>
-        </ng-container>
-      </div>
-
-      <ion-item>
-        <ion-label>% Interés: </ion-label>
-        <ion-input type="number"  formControlName="porcentaje"></ion-input>
-        <ion-icon size="small" name="wallet-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-      </ion-item>
-      <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.porcentaje">
-          <div *ngIf="saleForm.get('porcentaje').hasError(validation.type) && (saleForm.get('porcentaje').dirty || saleForm.get('porcentaje').touched)">
-            {{validation.message}}
-          </div>
-        </ng-container>
-      </div>
-
-      <ion-item>
-        <ion-label>Número de cuotas: </ion-label>
-        <ion-input type="number"  formControlName="numeroCuotas"></ion-input>
-        <ion-icon size="small" name="sync-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-      </ion-item>
-      <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.numeroCuotas">
-          <div *ngIf="saleForm.get('numeroCuotas').hasError(validation.type) && (saleForm.get('numeroCuotas').dirty || saleForm.get('numeroCuotas').touched)">
-            {{validation.message}}
-          </div>
-        </ng-container>
-      </div>
-
-      <ion-item>
-        <ion-label>Monto de la Cuota: </ion-label>
-        <ion-input type="text" [value]="montoCuota"  formControlName="montoCuota" ></ion-input>
-        <ion-icon size="small" name="card-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-      </ion-item>
-
-      <div class="ion-text-center">
-        <ion-button [disabled]="saleForm.invalid || !saleId" expand="round" type="submit">Actualizar</ion-button>
-      </div>
-    </form> -->
-
     <ion-list>
       <ion-list-header lines="inset">
         <ion-label>Abonos</ion-label>
-        <ion-button (click)="agregarAbono(sale.montoCuota)" fill="outline">Abonar</ion-button>
+        <ion-button *ngIf="roleAutorization.canCreateAbono(authSvc.getLoggedUser())" (click)="agregarAbono(sale.montoCuota)" fill="outline">Abonar</ion-button>
       </ion-list-header>
       <ng-container *ngIf="sale &&  sale.abonos.length > 0">
         <ion-item-sliding  lines="inset" *ngFor="let abono of sale.abonos;let indexOfelement=index;">
@@ -129,10 +53,10 @@
             </ion-label>
           </ion-item>
           <ion-item-options side="end">
-            <ion-item-option color="primary"  (click)="editarAbono(indexOfelement)">
+            <ion-item-option color="primary" *ngIf="roleAutorization.canEditAbono(authSvc.getLoggedUser())"  (click)="editarAbono(indexOfelement)">
               <ion-icon slot="icon-only" name="pencil"></ion-icon>
             </ion-item-option>
-            <ion-item-option color="danger"  (click)="confirmDelete(indexOfelement)">
+            <ion-item-option color="danger" *ngIf="roleAutorization.canDeleteAbono(authSvc.getLoggedUser())"  (click)="confirmDelete(indexOfelement)">
               <ion-icon slot="icon-only" name="trash"></ion-icon>
             </ion-item-option>
           </ion-item-options>
