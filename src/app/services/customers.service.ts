@@ -21,6 +21,14 @@ export class CustomersService {
     return this.firestore.collection('customers').snapshotChanges();
   }
 
+  getCustomersByAdmin(adminId) {
+    return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).snapshotChanges();
+  }
+
+  getCustomersByCobrador(cobradorId) {
+    return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).snapshotChanges();
+  }
+
   getCustomerByDocument(document){
     return this.firestore.collection(`customers`, ref => ref.where('document', "==", document)).snapshotChanges();
   }

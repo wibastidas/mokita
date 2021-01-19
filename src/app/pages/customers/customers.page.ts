@@ -58,23 +58,40 @@ export class CustomersPage implements OnInit {
 
 
     // this.customersService.getCustomersNew().pipe();
-    this.getCustomers();   
+    if(this.authSvc.getLoggedUser()){
+      this.getCustomers();   
+    }
   }
-
-
 
   getCustomers(){
     this.loading = true;
-    this.customersService.getCustomersNew().subscribe(data => {
-      this.customers = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data() as Customer
-        } 
+
+    let isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
+    if (isAdmin) {
+      this.customersService.getCustomersByAdmin(this.authSvc.getLoggedUser().uid).subscribe(data => {
+        this.customers = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data() as Customer
+          } 
+        });
+        console.log("this.customers: ", this.customers)
+        this.loading = false;
       });
-      console.log("this.customers: ", this.customers)
-      this.loading = false;
-    });
+    } else {
+      this.customersService.getCustomersByCobrador(this.authSvc.getLoggedUser().uid).subscribe(data => {
+        this.customers = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data() as Customer
+          } 
+        });
+        console.log("this.customers: ", this.customers)
+        this.loading = false;
+      });
+    }
+
+
   }
 
   // async goCustomerDetail(customer) {

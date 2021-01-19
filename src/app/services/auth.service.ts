@@ -157,10 +157,13 @@ export class AuthService {
   }
 
   setLoggedUser(user){
+    console.log("setLoggedUser: ", user);
     this.loggedUser = user;
   }
 
   getLoggedUser(){
+    console.log("getLoggedUser: ", this.loggedUser);
+
     return this.loggedUser;
   }
 }
