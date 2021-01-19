@@ -72,7 +72,8 @@ export class NewCustomerPage implements OnInit, OnDestroy {
       reference: new FormControl("", Validators.compose([
        // Validators.required,
       ])),
-      createdAt: new FormControl(moment().format('llll'))
+      createdAt: new FormControl(moment().format('llll')),
+      createdBy: null
     })
   }
 

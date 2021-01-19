@@ -75,7 +75,7 @@ export class AuthService {
 
       this.afs.doc('/users/' + user.uid).valueChanges().pipe(take(1)).subscribe((user: any) => {
         if(user.roles) {
-          this.updateUserData(user, user.roles);
+          this.updateUserData(user, user.roles, user.createdBy);
         } else {
           this.updateUserData(user);
         }
