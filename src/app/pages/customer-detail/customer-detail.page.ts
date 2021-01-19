@@ -88,6 +88,9 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
        // Validators.required,
       ])),
       createdAt: new FormControl(moment().format('llll')),
+      createdBy: "",
+      adminId: "",
+      cobradorId: "",
       id: new FormControl("")
     })
     

@@ -130,7 +130,7 @@ export class NewCustomerPage implements OnInit, OnDestroy {
       customer.adminId = this.authSvc.getLoggedUser().uid;
 
       //Pendiente .... Obtener y mostrar cobradores
-      customer.cobradorId = this.authSvc.getLoggedUser().uid;
+      customer.cobradorId = null;
     }
     this.customersService.getCustomerByDocument(customer.document).pipe(take(1))
     .subscribe(async cliente => {
