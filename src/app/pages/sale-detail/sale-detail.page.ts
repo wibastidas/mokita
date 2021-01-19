@@ -70,7 +70,7 @@ export class SaleDetailPage implements OnInit {
           text: 'Guardar',
           handler: (data) => {
             if(data.monto){
-              this.sale.abonos.push({monto: parseInt(data.monto), note: data.note, createdAt: moment().format('llll')});
+              this.sale.abonos.push({monto: parseInt(data.monto), note: data.note, createdAt: moment().format('llll'), createdBy: this.authSvc.getLoggedUser().uid});
               this.updateSale();
             }
           }

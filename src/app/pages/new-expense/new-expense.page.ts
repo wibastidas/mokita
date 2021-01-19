@@ -4,6 +4,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Expense } from 'src/app/interfaces/interfaces';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { EventorService } from 'src/app/services/eventor.service';
 import { ExpensesService } from 'src/app/services/expenses.service';
 
@@ -29,6 +30,7 @@ export class NewExpensePage implements OnInit, OnDestroy {
               public eventorService: EventorService,
               private expensesService: ExpensesService,
               private alertService: AlertService,
+              private authSvc: AuthService,
               public modalCtrl: ModalController) {
 
     this.expenseForm = this.formBuilder.group({
@@ -89,7 +91,15 @@ export class NewExpensePage implements OnInit, OnDestroy {
   async createExpense(expense: Expense){
   
     console.log('expense: ', expense);
-  
+
+    expense.createdBy = this.authSvc.getLoggedUser().uid;
+    if(this.authSvc.getLoggedUser().createdBy) {
+      //Lo esta creando un cobrador. Aunque no se soporta este permiso actualmente
+      expense.adminId = this.authSvc.getLoggedUser().createdBy;
+    } else {
+      expense.adminId = this.authSvc.getLoggedUser().uid;
+    }
+
     await this.expensesService.createNewExpense(expense).then(res => { console.log('res: ', res) });
 
     this.dismissModal();

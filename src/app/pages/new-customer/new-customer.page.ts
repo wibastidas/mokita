@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { Customer } from 'src/app/interfaces/interfaces';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { EventorService } from 'src/app/services/eventor.service';
 
@@ -45,6 +46,7 @@ export class NewCustomerPage implements OnInit, OnDestroy {
               public eventorService: EventorService,
               private customersService: CustomersService,
               private alertService: AlertService,
+              private authSvc: AuthService,
               public modalCtrl: ModalController) {
 
     this.customerForm = this.formBuilder.group({
@@ -118,6 +120,17 @@ export class NewCustomerPage implements OnInit, OnDestroy {
   }
 
   createCustomer(customer: Customer){
+    customer.createdBy = this.authSvc.getLoggedUser().uid;
+    if(this.authSvc.getLoggedUser().createdBy) {
+      //Lo esta creando un cobrador. Aunque no se soporta este permiso actualmente
+      customer.adminId = this.authSvc.getLoggedUser().createdBy;
+      customer.cobradorId = this.authSvc.getLoggedUser().uid;
+    } else {
+      customer.adminId = this.authSvc.getLoggedUser().uid;
+
+      //Pendiente .... Obtener y mostrar cobradores
+      customer.cobradorId = this.authSvc.getLoggedUser().uid;
+    }
     this.customersService.getCustomerByDocument(customer.document).pipe(take(1))
     .subscribe(async cliente => {
       console.log('cliente: ', cliente);

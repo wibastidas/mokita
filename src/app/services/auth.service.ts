@@ -29,10 +29,10 @@ export class AuthService {
   }
 
 
-  async registerUser(email: string, password: string, isNewUserCobrador: boolean): Promise<User> {
+  async registerUser(email: string, password: string, isNewUserCobrador: boolean, createdBy): Promise<User> {
     try {
       const { user } = await this.afAuth.createUserWithEmailAndPassword(email, password);
-      this.updateUserData(user, isNewUserCobrador);
+      this.updateUserData(user, isNewUserCobrador, createdBy);
       await this.sendVerifcationEmail();
       return user;
     } catch (error) {
@@ -124,14 +124,15 @@ export class AuthService {
     }
   }
 
-  private updateUserData(user: User, isNewUserCobrador = false) {
+  private updateUserData(user: User, isNewUserCobrador = false, createdBy = null) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
       uid: user.uid,
       email: user.email,
       emailVerified: user.emailVerified,
       displayName: user.displayName,
-      roles: isNewUserCobrador ? { cobrador: true } : { admin: true }
+      roles: isNewUserCobrador ? { cobrador: true } : { admin: true },
+      createdBy
     };
 
     return userRef.set(data, { merge: true });
@@ -156,7 +157,6 @@ export class AuthService {
   }
 
   setLoggedUser(user){
-    console.log("setLoggedUser: ", user);
     this.loggedUser = user;
   }
 

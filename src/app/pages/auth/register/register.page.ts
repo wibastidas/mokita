@@ -30,7 +30,11 @@ export class RegisterPage implements OnInit {
   
   async onRegister(email, password, isNewUserCobrador) {
     try {
-      const user = await this.authSvc.registerUser(email.value, password.value, isNewUserCobrador);
+      let createdBy = null;
+      if (isNewUserCobrador) {
+        createdBy = this.authSvc.getLoggedUser().uid;
+      } 
+      const user = await this.authSvc.registerUser(email.value, password.value, isNewUserCobrador, createdBy);
       if (user) {
         const isVerified = this.authSvc.isEmailVerified(user);
         this.redirectUser(isVerified);

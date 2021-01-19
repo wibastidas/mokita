@@ -9,6 +9,9 @@ export interface Customer {
     reference : string,
     createdAt: string,
     userUid?: string;
+    createdBy?: string,
+    adminId?: string,
+    cobradorId?: string
 }
 
 export interface Sale {
@@ -29,7 +32,9 @@ export interface Sale {
     abonos?: any
     updatedAt?: any,
     saldo: any,
-    userUid?: string;
+    userUid?: string,
+    createdBy?: string,
+    adminId?: string
 }
 
 export interface Expense {
@@ -39,21 +44,20 @@ export interface Expense {
     amount : string,
     createdAt: string,
     updatedAt: string,
-    userUid?: string;
+    userUid?: string,
+    createdBy?: string,
+    adminId?: string,
+    cobradorId?: string
 }
 
 export interface User {
-    // id?: string,
-    // name?: string,
-    // email?: string,
-    // password?: string,
-
     uid: string;
     email: string;
     displayName: string;
     emailVerified: boolean;
     photoUrl?: string,
-    roles?: Roles
+    roles?: Roles,
+    createdBy?: string
 }
 
 export interface Roles {

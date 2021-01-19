@@ -5,6 +5,7 @@ import { AlertController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Customer } from 'src/app/interfaces/interfaces';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { SalesService } from 'src/app/services/sales.service';
 
@@ -37,6 +38,7 @@ export class NewSalePage implements OnInit {
               public alertController: AlertController,
               public alertService: AlertService,
               private customersService: CustomersService, 
+              private authSvc: AuthService,
               public salesService: SalesService,
               private location: Location) {
 
@@ -137,6 +139,13 @@ export class NewSalePage implements OnInit {
     sale.cuotasPendientes = sale.numeroCuotas; 
     sale.cuotasPagadas = 0
     sale.saldo = sale.montoConInteres;
+    sale.createdBy = this.authSvc.getLoggedUser().uid;
+    if(this.authSvc.getLoggedUser().createdBy) {
+      //Lo esta creando un cobrador. Aunque no se soporta este permiso actualmente
+      sale.adminId = this.authSvc.getLoggedUser().createdBy;
+    } else {
+      sale.adminId = this.authSvc.getLoggedUser().uid;
+    }
     await this.salesService.createNewSale(sale).then(res => { this.showConfirmation() });
     
   }
