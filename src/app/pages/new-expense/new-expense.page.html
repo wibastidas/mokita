@@ -11,7 +11,10 @@
   <form  class="new-expense-page"
   [formGroup]="expenseForm" 
   (ngSubmit)="createExpense(expenseForm.value)">
-  
+    <ion-list-header class="ios hydrated">
+      Información del Gasto
+    </ion-list-header>
+
     <ion-item>
       <!-- <ion-label position="floating" color="primary">Concepto: </ion-label> -->
 

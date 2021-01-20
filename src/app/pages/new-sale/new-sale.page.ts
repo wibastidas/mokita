@@ -62,17 +62,27 @@ export class NewSalePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log("moment()", moment().format('llll'))
     
-    this.customersService.getCustomersNew().subscribe(data => {
-      this.customers = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data() as Customer
-        } 
+    let isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
+    if (isAdmin) { 
+      this.customersService.getCustomersByAdmin(this.authSvc.getLoggedUser().uid).subscribe(data => {
+        this.customers = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data() as Customer
+          } 
+        });
       });
-      console.log("this.customers: ", this.customers)
-    });
+    } else {
+      this.customersService.getCustomersByCobrador(this.authSvc.getLoggedUser().uid).subscribe(data => {
+        this.customers = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data() as Customer
+          } 
+        });
+      });
+    }
 
     // this.customersService.getCustomers().pipe(take(1)).subscribe((customers: Customer[]) => {
     //   console.log('customers: ', customers);
