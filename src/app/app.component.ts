@@ -33,6 +33,7 @@ export class AppComponent {
       if(auth) {
         this.authService.getUser(auth.uid).subscribe(user => {
           this.authService.setLoggedUser(user);
+          this.authService.saveLoggedUser(user);
         })
       }
     })

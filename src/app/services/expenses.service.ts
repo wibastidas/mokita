@@ -13,6 +13,14 @@ export class ExpensesService {
     return this.firestore.collection('expenses').snapshotChanges();
   }
 
+  getExpensesByAdmin(adminId) {
+    return this.firestore.collection(`expenses`, ref => ref.where('adminId', "==", adminId)).snapshotChanges();
+  }
+
+  getExpensesByCobrador(cobradorId) {
+    return this.firestore.collection(`expenses`, ref => ref.where('createdBy', "==", cobradorId)).snapshotChanges();
+  }
+
   createNewExpense(expense: Expense){
     let id = this.firestore.createId();
     return this.firestore.collection('expenses').doc( id ).set(expense);

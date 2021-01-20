@@ -23,21 +23,41 @@ export class ExpensesPage implements OnInit {
               private modalController: ModalController) { }
 
   ngOnInit() {
-    this.getExpenses();   
+    if (this.authSvc.getLoggedUser()) {
+      this.getExpenses();  
+    } else {
+      this.authSvc.getLoggedUser$().subscribe(value => {
+        this.getExpenses();  
+      });
+    } 
   }
 
   getExpenses(){
     this.loading = true;
-    this.expensesService.getExpensesNew().subscribe(data => {
-      this.expenses = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data() as Expense
-        } 
+    let isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
+    if (isAdmin) {
+      this.expensesService.getExpensesByAdmin(this.authSvc.getLoggedUser().uid).subscribe(data => {
+        this.expenses = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data() as Expense
+          } 
+        });
+        console.log("this.expenses: ", this.expenses)
+        this.loading = false;
       });
-      console.log("this.expenses: ", this.expenses)
-      this.loading = false;
-    });
+    } else {
+      this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid).subscribe(data => {
+        this.expenses = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data() as Expense
+          } 
+        });
+        console.log("this.expenses: ", this.expenses)
+        this.loading = false;
+      });
+    }
   }
 
   async goExpenseDetail(expense) {

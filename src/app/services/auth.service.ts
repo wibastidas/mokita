@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 import { User } from '../interfaces/interfaces';
 import { AlertService } from './alert.service';
@@ -14,6 +14,8 @@ import { AlertService } from './alert.service';
 export class AuthService {
   public user$: Observable<User>;
   public loggedUser: User;
+  // Tu subject deberia ser privado, asi proteges su funcionalidad.
+  public loggedUser$ = new Subject<any>();
   
   constructor(public afAuth: AngularFireAuth, 
               private afs: AngularFirestore, 
@@ -157,13 +159,18 @@ export class AuthService {
   }
 
   setLoggedUser(user){
-    console.log("setLoggedUser: ", user);
     this.loggedUser = user;
   }
 
-  getLoggedUser(){
-    console.log("getLoggedUser: ", this.loggedUser);
-
+  getLoggedUser() {
     return this.loggedUser;
+  }
+
+  saveLoggedUser(user: User): void {
+    this.loggedUser$.next(user);
+  }
+
+  getLoggedUser$(): Observable<User>{
+    return this.loggedUser$.asObservable();
   }
 }

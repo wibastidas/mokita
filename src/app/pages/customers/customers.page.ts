@@ -55,11 +55,12 @@ export class CustomersPage implements OnInit {
     //   console.log("this.customers: ", this.customers)
 
     // });
-
-
-    // this.customersService.getCustomersNew().pipe();
-    if(this.authSvc.getLoggedUser()){
-      this.getCustomers();   
+    if (this.authSvc.getLoggedUser()) {
+      this.getCustomers(); 
+    } else {
+      this.authSvc.getLoggedUser$().subscribe(value => {
+        this.getCustomers(); 
+      });
     }
   }
 
