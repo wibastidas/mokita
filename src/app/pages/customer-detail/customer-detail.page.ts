@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { take } from 'rxjs/operators';
-import { Customer, Sale } from 'src/app/interfaces/interfaces';
+import { Customer, Sale, User } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
@@ -18,7 +18,10 @@ import { SalesService } from 'src/app/services/sales.service';
 export class CustomerDetailPage implements OnInit, OnDestroy {
   customerForm: FormGroup;
   customer: Customer; 
+  isAdmin: boolean = false;
   customerId: string;
+  cobradores: any;
+  cobradorSelected;
   type: string;
   sales: Sale[];
   loadingCustomerInformation = false;
@@ -98,14 +101,27 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   
 
   ngOnInit() {
+
+    this.isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
+    
+    if(this.isAdmin) {
+      this.customersService.getVendedoresByAdmin(this.authSvc.getLoggedUser().uid).subscribe((data) => {
+ 
+        this.cobradores = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data() as User
+          } 
+        });
+        console.log("this.cobradores: ", this.cobradores)
+      });
+    }
+
     //this.customerForm.setValue(this.customer);
     this.loadingCustomerInformation = true;
     this.customersService.getCustomerById(this.customerId).subscribe((res:Customer) => {
       this.loadingCustomerInformation = false;
-      // console.log("res: ", res)
       res.id = this.customerId;
-      console.log("res: ", res)
-
       this.customer = res
       this.customerForm.setValue(res);
       this.getSalesByCustomerId();
@@ -209,6 +225,10 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
     });
 
     await alert.present();
+  }
+
+  setCobradorSelected(){
+    console.log("cobradorUid: ", this.cobradorSelected)
   }
 
 }

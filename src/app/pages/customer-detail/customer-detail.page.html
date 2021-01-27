@@ -166,6 +166,18 @@
               </div>
             </ng-container>
           </div>
+
+          <ion-list-header class="ios hydrated" *ngIf="isAdmin">
+            Cobrador
+          </ion-list-header>
+      
+          <ion-item *ngIf="isAdmin">
+            <ion-label>Seleccionar Cobrador</ion-label>
+            <ion-select okText="Seleccionar" cancelText="Cancelar" [ngModel]="cobradorSelected" (ionChange)="setCobradorSelected()">
+              <ion-select-option *ngFor="let cobrador of cobradores" value="{{cobrador.uid}}">{{cobrador.displayName || cobrador.email}} </ion-select-option>
+            </ion-select>
+          </ion-item>
+
           <div class="ion-text-center" *ngIf="roleAutorization.canEditCustomer(authSvc.getLoggedUser())" >
             <ion-button [disabled]="customerForm.invalid" fill="outline" expand="round"  type="submit">Actualizar</ion-button>
           </div>

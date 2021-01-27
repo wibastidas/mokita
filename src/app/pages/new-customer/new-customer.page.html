@@ -102,6 +102,19 @@
       <ion-input type="text" formControlName="reference"></ion-input>
       <ion-icon size="small" name="reader-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
     </ion-item>
+
+    <ion-list-header class="ios hydrated">
+      Cobrador
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Seleccionar Cobrador</ion-label>
+      <ion-select okText="Seleccionar" cancelText="Cancelar">
+        <ion-select-option *ngFor="let cobrador of cobradores" value="{{cobrador.uid}}">{{cobrador.displayName || cobrador.email}} </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.reference">
         <div class="error-message ion-padding-start" *ngIf="customerForm.get('reference').hasError(validation.type) && (customerForm.get('reference').dirty || customerForm.get('reference').touched)">

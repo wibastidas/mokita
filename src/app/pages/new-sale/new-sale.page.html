@@ -13,7 +13,7 @@
     <ion-select okText="Seleccionar" cancelText="Cancelar" [(ngModel)]="customerId">
       <ion-select-option *ngFor="let customer of customers" value="{{customer.id}}">{{customer.name + ' ' + customer.lastName}} </ion-select-option>
     </ion-select>
-</ion-item>
+  </ion-item>
 
 <form 
 [formGroup]="saleForm" 

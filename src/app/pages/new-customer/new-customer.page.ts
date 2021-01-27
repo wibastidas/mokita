@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AlertController, ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { take } from 'rxjs/operators';
-import { Customer } from 'src/app/interfaces/interfaces';
+import { Customer, User } from 'src/app/interfaces/interfaces';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
@@ -15,7 +15,7 @@ import { EventorService } from 'src/app/services/eventor.service';
   styleUrls: ['./new-customer.page.scss'],
 })
 export class NewCustomerPage implements OnInit, OnDestroy {
-  customers: Customer[];
+  cobradores: User[];
   customerForm: FormGroup;
   validation_messages = {
     name: [

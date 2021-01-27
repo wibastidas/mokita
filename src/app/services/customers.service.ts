@@ -51,5 +51,9 @@ export class CustomersService {
     return  this.firestore.doc('customers/' + customerId).delete();
   }
 
+  getVendedoresByAdmin(adminId: string) {
+    return this.firestore.collection(`users`, ref => ref.where('createdBy', "==", adminId)).snapshotChanges();
+  }
+
   
 }

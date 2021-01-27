@@ -126,7 +126,9 @@ export class AuthService {
     }
   }
 
-  private updateUserData(user: User, isNewUserCobrador = false, createdBy = null) {
+  private updateUserData(user: User, isNewUserCobrador = false, createdBy = null, adminId = null) {
+
+
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
       uid: user.uid,
@@ -173,4 +175,5 @@ export class AuthService {
   getLoggedUser$(): Observable<User>{
     return this.loggedUser$.asObservable();
   }
+
 }
