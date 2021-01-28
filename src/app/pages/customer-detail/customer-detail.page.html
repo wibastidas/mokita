@@ -69,6 +69,8 @@
         <form  class="new-customer-page"
         [formGroup]="customerForm" 
         (ngSubmit)="updateCustomer(customerForm.value)">
+ 
+
           <ion-list-header class="ios hydrated">
             Información Personal
           </ion-list-header>
@@ -167,13 +169,9 @@
             </ng-container>
           </div>
 
-          <ion-list-header class="ios hydrated" *ngIf="isAdmin">
-            Cobrador
-          </ion-list-header>
-      
-          <ion-item *ngIf="isAdmin">
+          <ion-item *ngIf="roleAutorization.canEditCustomerVendor(authSvc.getLoggedUser())" >
             <ion-label>Seleccionar Cobrador</ion-label>
-            <ion-select okText="Seleccionar" cancelText="Cancelar" [ngModel]="cobradorSelected" (ionChange)="setCobradorSelected()">
+            <ion-select okText="Seleccionar" cancelText="Cancelar" formControlName="cobradorId">
               <ion-select-option *ngFor="let cobrador of cobradores" value="{{cobrador.uid}}">{{cobrador.displayName || cobrador.email}} </ion-select-option>
             </ion-select>
           </ion-item>

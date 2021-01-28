@@ -51,6 +51,11 @@ export class RoleBasedAutorizationService {
       const allowed = ['admin']
       return this.checkAuthorization(user, allowed)
     }
+
+    canEditCustomerVendor(user: User): boolean {
+      const allowed = ['admin']
+      return this.checkAuthorization(user, allowed)
+    }
   
     ///// Role-based Authorization for Expenses //////
 

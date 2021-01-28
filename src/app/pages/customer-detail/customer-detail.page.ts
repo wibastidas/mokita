@@ -227,8 +227,4 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  setCobradorSelected(){
-    console.log("cobradorUid: ", this.cobradorSelected)
-  }
-
 }
