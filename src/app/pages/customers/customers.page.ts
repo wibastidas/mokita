@@ -76,7 +76,14 @@ export class CustomersPage implements OnInit {
             ...e.payload.doc.data() as Customer
           } 
         });
+        this.customers = this.customers.sort(function(a, b){
+          if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;
+        })
+
         console.log("this.customers: ", this.customers)
+
         this.loading = false;
       });
     } else {

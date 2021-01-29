@@ -72,6 +72,13 @@ export class NewSalePage implements OnInit {
             ...e.payload.doc.data() as Customer
           } 
         });
+
+        this.customers = this.customers.sort(function(a, b){
+          if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;
+        })
+        
       });
     } else {
       this.customersService.getCustomersByCobrador(this.authSvc.getLoggedUser().uid).subscribe(data => {

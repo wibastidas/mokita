@@ -5,6 +5,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { Customer, Sale, User } from 'src/app/interfaces/interfaces';
+import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
@@ -58,6 +59,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
               public alertController: AlertController,
               private router: Router,
               private authSvc: AuthService, 
+              private alertService: AlertService,
               public roleAutorization: RoleBasedAutorizationService,
               public salesService: SalesService) {
 
@@ -172,6 +174,8 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
 
   updateCustomer(){
     this.customersService.updateCustomer(this.customerForm.value).then(res => res);
+    this.alertService.presentToast("Cliente Actualizado!.", 2000, "top" ,"primary");
+
   }
 
   segmentChanged(ev : any){
