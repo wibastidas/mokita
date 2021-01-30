@@ -118,7 +118,6 @@ export class RoutePage implements OnInit {
 
 
   getSalesByCustomer(){
-    console.log("today: ", this.today);
 
     if(this.customers && this.customers.length > 0){
       let cont = 0;
@@ -154,12 +153,10 @@ export class RoutePage implements OnInit {
   }
 
   calcularRecaudo(customers){
-    console.log("calcularRecaudo: ",customers);
     this.customers.forEach(customer => {
 
       if(customer.sale && customer.sale[0] && customer.sale[0].abonos && customer.sale[0].abonos[0] && customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
         && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt == this.today)){
-          console.log(customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto);
           this.totalRecaudado+=  customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto;
       }
 
