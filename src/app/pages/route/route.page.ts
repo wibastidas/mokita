@@ -17,6 +17,7 @@ export class RoutePage implements OnInit {
   public loading: Boolean= false;
   public sales: any[];
   public today = moment().format('ll');
+  public totalRecaudado = 0;
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
               private authSvc: AuthService, 
@@ -120,7 +121,8 @@ export class RoutePage implements OnInit {
     console.log("today: ", this.today);
 
     if(this.customers && this.customers.length > 0){
-      this.customers.forEach(customer => {
+      let cont = 0;
+       this.customers.forEach(customer => {
         this.customersService.getSalesByCustomerId(customer.id).subscribe(data => {
           let sale = data.map(e => {
             return {
@@ -129,19 +131,39 @@ export class RoutePage implements OnInit {
             } 
           });   
 
-          if(sale && sale[0] && sale[0].abonos && sale[0].abonos[0]) {
-            console.log("createdAt: ", sale[0].abonos[sale[0].abonos.length - 1].createdAt);
-          }
+          // if(sale && sale[0] && sale[0].abonos && sale[0].abonos[0]) {
+          //   console.log("createdAt: ", sale[0].abonos[sale[0].abonos.length - 1].createdAt);
+          // }
           customer.sale = sale;   
-          this.loading = false;
+          cont++;
+
+          if(cont == this.customers.length){
+            this.calcularRecaudo(this.customers);
+          }
         });
       })
+
+      this.loading = false;
+
 
     }
   }
 
   goSaleDetail(sale){
     this.router.navigateByUrl('/sale-detail/' + sale.id);
+  }
+
+  calcularRecaudo(customers){
+    console.log("calcularRecaudo: ",customers);
+    this.customers.forEach(customer => {
+
+      if(customer.sale && customer.sale[0] && customer.sale[0].abonos && customer.sale[0].abonos[0] && customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
+        && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt == this.today)){
+          console.log(customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto);
+          this.totalRecaudado+=  customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto;
+      }
+
+    });
   }
 
 }
