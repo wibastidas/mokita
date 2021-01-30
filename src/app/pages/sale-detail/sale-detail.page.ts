@@ -37,7 +37,6 @@ export class SaleDetailPage implements OnInit {
       this.loading = false;
       this.sale = res;
       this.sale.id = this.saleId;
-      console.log("sale: ", this.sale);
     });
   }
 
@@ -70,7 +69,7 @@ export class SaleDetailPage implements OnInit {
           text: 'Guardar',
           handler: (data) => {
             if(data.monto){
-              this.sale.abonos.push({monto: parseInt(data.monto), note: data.note, createdAt: moment().format('llll'), createdBy: this.authSvc.getLoggedUser().uid});
+              this.sale.abonos.push({monto: parseInt(data.monto), note: data.note, createdAt: moment().format('ll'), createdBy: this.authSvc.getLoggedUser().uid});
               this.updateSale();
             }
           }
@@ -99,23 +98,22 @@ export class SaleDetailPage implements OnInit {
   }
 
   async updateSale(){
-    console.log("updateSale: ", this.sale);
     this.sale.updatedAt = moment().format('llll');
     this.sale.saldo = this.calcularSaldoPendiente(this.sale);
-    console.log("this.sale.saldo : ", this.sale.saldo )
     this.sale.cuotasPendientes = this.sale.saldo/this.sale.montoCuota
     this.sale.cuotasPagadas = this.sale.numeroCuotas - this.sale.cuotasPendientes;
+    if(this.sale.cuotasPendientes == 0){
+      this.sale.estado = "Pagado"
+    }
+    console.log("this.sale:", this.sale
+    );
     await this.salesService.updateSale(this.sale).then(res => { console.log("modificado!!!") }); 
   }
 
   calcularSaldoPendiente(sale){
-    console.log("calcularSaldoPendiente")
 
     let saldo = sale.montoConInteres;
     if(sale && sale.abonos && sale.abonos.length > 0) {
-      console.log("sale: ", sale)
-      console.log("this.calcularAbonos(sale.abonos): ", this.calcularAbonos(sale.abonos))
-
       saldo = sale.montoConInteres - this.calcularAbonos(sale.abonos);
     }
     return saldo;
@@ -184,8 +182,7 @@ export class SaleDetailPage implements OnInit {
           text: 'Guardar',
           handler: (data) => {
             if(data.monto){
-              console.log("data: ", data)
-              this.sale.abonos[index] = { monto: parseInt(data.monto), note: data.note, createdAt: this.sale.abonos[index].createdAt ,updated: moment().format('llll')}
+              this.sale.abonos[index] = { monto: parseInt(data.monto), note: data.note, createdAt: this.sale.abonos[index].createdAt ,updated: moment().format('ll')}
               this.updateSale();
             }
           }

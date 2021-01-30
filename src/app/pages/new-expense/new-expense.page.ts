@@ -43,7 +43,7 @@ export class NewExpensePage implements OnInit, OnDestroy {
       description: new FormControl("", Validators.compose([
         //Validators.required
       ])),
-      createdAt: new FormControl(moment().format('llll')),
+      createdAt: new FormControl(moment().format('ll')),
       updatedAt: new FormControl(moment().format('llll'))
     })
   }

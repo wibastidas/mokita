@@ -182,7 +182,7 @@ export class EditSalePage implements OnInit, OnDestroy {
       if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'domingo'){
         dates.push({
           cuota: dates.length + 1,
-          date: moment().add(cont,'days').format('llll'),
+          date: moment().add(cont,'days').format('ll'),
           fechaPago: null,
         });
       } else {

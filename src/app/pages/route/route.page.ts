@@ -16,7 +16,7 @@ export class RoutePage implements OnInit {
   public customers: Customer[];
   public loading: Boolean= false;
   public sales: any[];
-  public today = moment().format('llll');
+  public today = moment().format('ll');
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
               private authSvc: AuthService, 
@@ -42,7 +42,6 @@ export class RoutePage implements OnInit {
       text: 'Cerrar Sesión',
       icon: 'log-out-outline',
       handler: () => {
-        console.log('Cerrar sesion clicked');
         this.authSvc.logout();
         this.router.navigate(['/login']);
       }
@@ -118,28 +117,28 @@ export class RoutePage implements OnInit {
 
 
   getSalesByCustomer(){
-    console.log("getSalesByCustomer");
+    console.log("today: ", this.today);
 
     if(this.customers && this.customers.length > 0){
       this.customers.forEach(customer => {
         this.customersService.getSalesByCustomerId(customer.id).subscribe(data => {
-          customer.sale = data.map(e => {
+          let sale = data.map(e => {
             return {
               id: e.payload.doc.id,
               ...e.payload.doc.data() as any
             } 
-          });          
+          });   
+
+          if(sale && sale[0] && sale[0].abonos && sale[0].abonos[0]) {
+            console.log("createdAt: ", sale[0].abonos[sale[0].abonos.length - 1].createdAt);
+          }
+          customer.sale = sale;   
           this.loading = false;
         });
       })
-      console.log("customers: ", this.customers);
 
     }
   }
-
-  // goCustomerDetail(customer){
-  //   this.router.navigateByUrl('/customer-detail/' + customer.id);
-  // }
 
   goSaleDetail(sale){
     this.router.navigateByUrl('/sale-detail/' + sale.id);

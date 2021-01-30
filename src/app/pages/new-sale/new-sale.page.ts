@@ -143,7 +143,7 @@ export class NewSalePage implements OnInit {
 
   async createSale(sale){
   
-    sale.createdAt = moment().format('llll');
+    sale.createdAt = moment().format('ll');
     sale.updatedAt = moment().format('llll');
     sale.cuotas = this.createCuotas(sale.numeroCuotas);
     sale.customerId = this.customerId
@@ -185,7 +185,7 @@ export class NewSalePage implements OnInit {
       if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'domingo'){
         dates.push({
           cuota: dates.length + 1,
-          date: moment().add(cont,'days').format('llll'),
+          date: moment().add(cont,'days').format('ll'),
           fechaPago: null,
         });
       } else {

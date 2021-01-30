@@ -22,7 +22,18 @@
             <ion-icon name="checkmark-outline"></ion-icon>
           </ion-avatar> -->
           <ion-avatar>
-            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+            
+            
+            <ion-icon *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
+                                         && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt != today) 
+                                         || (!customer.sale[0].abonos[0])" name="shield-outline"></ion-icon>
+
+            <ion-icon color="success" *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
+                                         && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt == today)
+                                         && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto > 0)" name="shield-checkmark-outline"></ion-icon>
+            <ion-icon color="warning" *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
+                                         && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt == today)
+                                         && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto == 0)" name="shield-outline"></ion-icon>
           </ion-avatar>
   
           <ion-label style="margin-left: 12px;">
