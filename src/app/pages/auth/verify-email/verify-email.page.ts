@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class VerifyEmailPage {
   user$: Observable<User> = this.authSvc.afAuth.user;
-  constructor(private authSvc: AuthService) {}
+  constructor(public authSvc: AuthService) {}
 
   async onSendEmail(): Promise<void> {
     try {

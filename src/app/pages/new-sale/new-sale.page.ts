@@ -38,7 +38,7 @@ export class NewSalePage implements OnInit {
               public alertController: AlertController,
               public alertService: AlertService,
               private customersService: CustomersService, 
-              private authSvc: AuthService,
+              public authSvc: AuthService,
               public salesService: SalesService,
               private location: Location) {
 

@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  constructor(private authSvc: AuthService, private router: Router) {}
+  constructor(public authSvc: AuthService, private router: Router) {}
 
   async onLogin(email, password) {
     try {

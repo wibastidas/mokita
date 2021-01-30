@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./forgot-password.page.scss'],
 })
 export class ForgotPasswordPage {
-  constructor(private authSvc: AuthService, private router: Router) {}
+  constructor(public authSvc: AuthService, private router: Router) {}
 
   async onResetPassword(email) {
     try {

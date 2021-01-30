@@ -29,7 +29,7 @@ export class ExpenseDetailPage implements OnInit, OnDestroy {
   constructor(public modalCtrl: ModalController,
               public expenseService: ExpensesService,
               private alertService: AlertService,
-              private authSvc: AuthService, 
+              public authSvc: AuthService, 
               public roleAutorization: RoleBasedAutorizationService,
               private formBuilder: FormBuilder) {
 

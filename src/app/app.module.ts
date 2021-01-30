@@ -12,6 +12,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -23,7 +24,8 @@ registerLocaleData(localeEs, 'es');
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,

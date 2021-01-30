@@ -30,7 +30,7 @@ export class NewExpensePage implements OnInit, OnDestroy {
               public eventorService: EventorService,
               private expensesService: ExpensesService,
               private alertService: AlertService,
-              private authSvc: AuthService,
+              public authSvc: AuthService,
               public modalCtrl: ModalController) {
 
     this.expenseForm = this.formBuilder.group({

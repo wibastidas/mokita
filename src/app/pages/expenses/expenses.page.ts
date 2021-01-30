@@ -18,7 +18,7 @@ export class ExpensesPage implements OnInit {
 
   constructor(private expensesService: ExpensesService,
               public alertController: AlertController,
-              private authSvc: AuthService, 
+              public authSvc: AuthService, 
               public roleAutorization: RoleBasedAutorizationService,
               private modalController: ModalController) { }
 

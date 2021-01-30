@@ -58,7 +58,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
               private route: ActivatedRoute, 
               public alertController: AlertController,
               private router: Router,
-              private authSvc: AuthService, 
+              public authSvc: AuthService, 
               private alertService: AlertService,
               public roleAutorization: RoleBasedAutorizationService,
               public salesService: SalesService) {

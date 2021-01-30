@@ -23,7 +23,7 @@ export class SaleDetailPage implements OnInit {
               public alertController: AlertController,
               public alertService: AlertService,
               public salesService: SalesService,
-              private authSvc: AuthService, 
+              public authSvc: AuthService, 
               public roleAutorization: RoleBasedAutorizationService,
               private modalController: ModalController) {
     this.saleId = this.route.snapshot.paramMap.get('id');

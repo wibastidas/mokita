@@ -11,7 +11,7 @@ export class RegisterPage implements OnInit {
   public isNewUserCobrador: any = null;
   public user;
 
-  constructor(private authSvc: AuthService, private router: Router) {}
+  constructor(public authSvc: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.getCurrentUser();

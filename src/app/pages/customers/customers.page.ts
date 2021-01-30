@@ -21,7 +21,7 @@ export class CustomersPage implements OnInit {
   constructor(private customersService: CustomersService,
               public alertController: AlertController,
               private router: Router,
-              private authSvc: AuthService, 
+              public authSvc: AuthService, 
               private modalController: ModalController,
               public roleAutorization: RoleBasedAutorizationService) { }
 

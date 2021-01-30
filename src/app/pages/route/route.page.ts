@@ -20,7 +20,7 @@ export class RoutePage implements OnInit {
   public totalRecaudado = 0;
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
-              private authSvc: AuthService, 
+              public authSvc: AuthService, 
               private customersService: CustomersService,
               public roleAutorization: RoleBasedAutorizationService) { }
 

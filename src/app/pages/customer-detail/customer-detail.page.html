@@ -68,7 +68,7 @@
       <ion-list *ngSwitchCase="'customerInformation'">
         <form  class="new-customer-page"
         [formGroup]="customerForm" 
-        (ngSubmit)="updateCustomer(customerForm.value)">
+        (ngSubmit)="updateCustomer()">
  
 
           <ion-list-header class="ios hydrated">
