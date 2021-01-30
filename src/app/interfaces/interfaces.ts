@@ -11,7 +11,8 @@ export interface Customer {
     userUid?: string;
     createdBy?: string,
     adminId?: string,
-    cobradorId?: string
+    cobradorId?: string,
+    sale?: any
 }
 
 export interface Sale {

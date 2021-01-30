@@ -10,7 +10,39 @@
 </ion-header>
 
 <ion-content>
+  <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
 
+  <app-skeleton *ngIf="loading"></app-skeleton>
+
+  <ion-list *ngIf="!loading && roleAutorization.canReadCustomer(authSvc.getLoggedUser())">
+    <ion-item-sliding  *ngFor="let customer of customers">
+      <div *ngIf="customer && customer.sale && customer.sale[0]">
+        <ion-item (click)="goSaleDetail(customer.sale[0])">
+          <!-- <ion-avatar slot="start">
+            <ion-icon name="checkmark-outline"></ion-icon>
+          </ion-avatar> -->
+          <ion-avatar>
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-avatar>
+  
+          <ion-label style="margin-left: 12px;">
+            <ion-text>
+              <h3>{{ customer.name }} {{ customer.lastName }}</h3>
+            </ion-text>
+    
+          <h3>Saldo Pendiente: {{customer.sale[0].saldo | currency:'$'}}</h3>
+          <h3>Cuotas Pendientes: {{customer.sale[0].cuotasPendientes | number}}</h3>
+          <h3 *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] && customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt" >{{customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt}}</h3>
+          <h3>{{today}}</h3>
+
+          </ion-label>
+          <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+          <!-- <ion-button  fill="outline" slot="end">Ver &nbsp; <ion-icon name="eye-outline"> </ion-icon> </ion-button> -->
+        </ion-item>
+      </div>
+    </ion-item-sliding>
+  </ion-list>
+  
  <ion-fab *ngIf="roleAutorization.canCreateSale(authSvc.getLoggedUser())" (click)="goNewSale()" style="padding-bottom: 40px;padding-right: 10px;"  vertical="bottom" horizontal="end" edge slot="fixed">
   <ion-fab-button>
     <ion-icon name="add"></ion-icon>

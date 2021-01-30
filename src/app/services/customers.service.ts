@@ -55,5 +55,9 @@ export class CustomersService {
     return this.firestore.collection(`users`, ref => ref.where('createdBy', "==", adminId)).snapshotChanges();
   }
 
+  getSalesByCustomerId(customerId){
+    return this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId).where('estado', "==", 'Active')).snapshotChanges();
+  }
+
   
 }
