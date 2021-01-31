@@ -31,7 +31,7 @@
             <ion-icon color="success" *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
                                          && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt == today)
                                          && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto > 0)" name="shield-checkmark-outline"></ion-icon>
-            <ion-icon color="warning" *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
+            <ion-icon color="danger" *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
                                          && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt == today)
                                          && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto == 0)" name="shield-outline"></ion-icon>
           </ion-avatar>
@@ -41,7 +41,7 @@
               <h3>{{ customer.name }} {{ customer.lastName }}</h3>
             </ion-text>
     
-          <h3>Saldo Pendiente: {{customer.sale[0].saldo | currency:'$'}}</h3>
+          <h3>Saldo Pendiente: {{customer.sale[0].saldo | currency:'$' : 'symbol' : '1.0-0'}}</h3>
           <h3>Cuotas Pendientes: {{customer.sale[0].cuotasPendientes | number}}</h3>
           <!-- <h3 *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] && customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt" >{{customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt}}</h3>
           <h3>{{today}}</h3> -->

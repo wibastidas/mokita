@@ -17,12 +17,13 @@ export class RoutePage implements OnInit {
   public loading: Boolean= false;
   public sales: any[];
   public today = moment().format('ll');
-  public totalRecaudado = 0;
+  public totalRecaudado;
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
               public authSvc: AuthService, 
               private customersService: CustomersService,
-              public roleAutorization: RoleBasedAutorizationService) { }
+              public roleAutorization: RoleBasedAutorizationService) {
+              }
 
   ngOnInit() {
     if (this.authSvc.getLoggedUser()) {
@@ -119,6 +120,8 @@ export class RoutePage implements OnInit {
 
   getSalesByCustomer(){
 
+    this.totalRecaudado = 0;
+
     if(this.customers && this.customers.length > 0){
       let cont = 0;
        this.customers.forEach(customer => {
@@ -144,7 +147,6 @@ export class RoutePage implements OnInit {
 
       this.loading = false;
 
-
     }
   }
 
@@ -156,7 +158,8 @@ export class RoutePage implements OnInit {
     this.customers.forEach(customer => {
 
       if(customer.sale && customer.sale[0] && customer.sale[0].abonos && customer.sale[0].abonos[0] && customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
-        && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt == this.today)){
+        && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt == this.today) 
+        && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto > 0) ){
           this.totalRecaudado+=  customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto;
       }
 
