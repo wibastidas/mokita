@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Mi Ruta</ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="showOptions()" fill="clear">
@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar color="secondary" *ngIf="loading" type="indeterminate"></ion-progress-bar>
 
   <app-skeleton *ngIf="loading"></app-skeleton>
 
@@ -60,7 +60,7 @@
   </ion-item-divider>
   
  <ion-fab *ngIf="roleAutorization.canCreateSale(authSvc.getLoggedUser())" (click)="goNewSale()" style="padding-bottom: 40px;padding-right: 10px;"  vertical="bottom" horizontal="end" edge slot="fixed">
-  <ion-fab-button>
+  <ion-fab-button color="secondary">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>

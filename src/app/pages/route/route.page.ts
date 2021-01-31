@@ -14,7 +14,7 @@ import { RoleBasedAutorizationService } from 'src/app/services/role-based-autori
 })
 export class RoutePage implements OnInit {
   public customers: Customer[];
-  public loading: Boolean= false;
+  public loading: Boolean= true;
   public sales: any[];
   public today = moment().format('ll');
   public totalRecaudado;
