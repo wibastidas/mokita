@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
@@ -16,7 +17,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {    
     this.initializeApp();
   }
@@ -35,6 +37,8 @@ export class AppComponent {
           this.authService.setLoggedUser(user);
           this.authService.saveLoggedUser(user);
         })
+      } else {
+        this.router.navigate(['login']);
       }
     })
 

@@ -76,7 +76,7 @@ export class RoutePage implements OnInit {
 
   getCustomers(){
     this.loading = true;
-
+    this.customers = [];
     let isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
     if (isAdmin) {
       this.customersService.getCustomersByAdmin(this.authSvc.getLoggedUser().uid).subscribe(data => {

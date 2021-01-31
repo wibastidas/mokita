@@ -10,47 +10,58 @@ const routes: Routes = [
   },
   {
     path: 'new-customer',
-    loadChildren: () => import('./pages/new-customer/new-customer.module').then( m => m.NewCustomerPageModule)
+    loadChildren: () => import('./pages/new-customer/new-customer.module').then( m => m.NewCustomerPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'customers',
-    loadChildren: () => import('./pages/customers/customers.module').then( m => m.CustomersPageModule)
+    loadChildren: () => import('./pages/customers/customers.module').then( m => m.CustomersPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'stats',
-    loadChildren: () => import('./pages/stats/stats.module').then( m => m.StatsPageModule)
+    loadChildren: () => import('./pages/stats/stats.module').then( m => m.StatsPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'expenses',
-    loadChildren: () => import('./pages/expenses/expenses.module').then( m => m.ExpensesPageModule)
+    loadChildren: () => import('./pages/expenses/expenses.module').then( m => m.ExpensesPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'route',
-    loadChildren: () => import('./pages/route/route.module').then( m => m.RoutePageModule)
+    loadChildren: () => import('./pages/route/route.module').then( m => m.RoutePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'customer-detail/:id',
-    loadChildren: () => import('./pages/customer-detail/customer-detail.module').then( m => m.CustomerDetailPageModule)
+    loadChildren: () => import('./pages/customer-detail/customer-detail.module').then( m => m.CustomerDetailPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'new-expense',
-    loadChildren: () => import('./pages/new-expense/new-expense.module').then( m => m.NewExpensePageModule)
+    loadChildren: () => import('./pages/new-expense/new-expense.module').then( m => m.NewExpensePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'expense-detail',
-    loadChildren: () => import('./pages/expense-detail/expense-detail.module').then( m => m.ExpenseDetailPageModule)
+    loadChildren: () => import('./pages/expense-detail/expense-detail.module').then( m => m.ExpenseDetailPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'sale-detail/:id',
-    loadChildren: () => import('./pages/sale-detail/sale-detail.module').then( m => m.SaleDetailPageModule)
+    loadChildren: () => import('./pages/sale-detail/sale-detail.module').then( m => m.SaleDetailPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'new-sale',
-    loadChildren: () => import('./pages/new-sale/new-sale.module').then( m => m.NewSalePageModule)
+    loadChildren: () => import('./pages/new-sale/new-sale.module').then( m => m.NewSalePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'edit-sale',
-    loadChildren: () => import('./pages/edit-sale/edit-sale.module').then( m => m.EditSalePageModule)
+    loadChildren: () => import('./pages/edit-sale/edit-sale.module').then( m => m.EditSalePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'register',
@@ -73,7 +84,8 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
+    canActivate: [AuthGuard]
   }
 ];
 @NgModule({
