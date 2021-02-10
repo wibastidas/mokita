@@ -18,18 +18,18 @@
           <ng-container>
             <ion-item *ngIf="customer && customer.sale" (click)="goSaleDetail(customer.sale)">
 
-              <!-- <ion-avatar>
-                <ion-icon *ngIf="sale.abonos[sale.abonos.length - 1] 
-                                            && (sale.abonos[sale.abonos.length - 1].createdAt != today) 
-                                            || (!sale.abonos[0])" name="shield-outline"></ion-icon>
+              <ion-avatar>
+                <ion-icon *ngIf="customer.sale.abonos[customer.sale.abonos.length - 1] 
+                                            && (customer.sale.abonos[customer.sale.abonos.length - 1].createdAt != today) 
+                                            || (!customer.sale.abonos[0])" name="shield-outline"></ion-icon>
   
-                <ion-icon color="success" *ngIf="sale.abonos[sale.abonos.length - 1] 
-                                            && (sale.abonos[sale.abonos.length - 1].createdAt == today)
-                                            && (sale.abonos[sale.abonos.length - 1].monto > 0)" name="shield-checkmark-outline"></ion-icon>
-                <ion-icon color="danger" *ngIf="sale.abonos[sale.abonos.length - 1] 
-                                            && (sale.abonos[sale.abonos.length - 1].createdAt == today)
-                                            && (sale.abonos[sale.abonos.length - 1].monto == 0)" name="shield-outline"></ion-icon>
-              </ion-avatar> -->
+                <ion-icon color="success" *ngIf="customer.sale.abonos[customer.sale.abonos.length - 1] 
+                                            && (customer.sale.abonos[customer.sale.abonos.length - 1].createdAt == today)
+                                            && (customer.sale.abonos[customer.sale.abonos.length - 1].monto > 0)" name="shield-checkmark-outline"></ion-icon>
+                <ion-icon color="danger" *ngIf="customer.sale.abonos[customer.sale.abonos.length - 1] 
+                                            && (customer.sale.abonos[customer.sale.abonos.length - 1].createdAt == today)
+                                            && (customer.sale.abonos[customer.sale.abonos.length - 1].monto == 0)" name="shield-outline"></ion-icon>
+              </ion-avatar>
       
               <ion-label style="margin-left: 12px;">
                 <ion-text>
@@ -48,13 +48,13 @@
         </ion-item-sliding>
   </ng-container>
 
-  <ion-item-divider>
+  <ion-item-divider *ngIf="customers$ | async">
     <ion-label>
       Total Recaudado: {{totalRecaudado}}
     </ion-label>
   </ion-item-divider>
 
-  <ion-item-divider *ngIf="isAdmin">
+  <ion-item-divider *ngIf="isAdmin && customers$ | async">
     <ion-label>
       Total Saldo: {{totalSaldo}}
     </ion-label>
@@ -66,26 +66,10 @@
   </ion-fab-button>
 </ion-fab>
 
+</ion-content>
+
 <ng-template #loading>
   <ion-progress-bar color="secondary" *ngIf="loading" type="indeterminate"></ion-progress-bar>
 
   <app-skeleton *ngIf="loading"></app-skeleton>
 </ng-template>
-
-</ion-content>
-
-
-
-<!-- <ion-content>
-  <h3>Joining data between collections</h3>
-
-  <ng-container *ngIf="customers$ | async; else loading; let customers">
-    <div class="card m-2" style="width: 18rem;" *ngFor="let sale of customers">
-      <div class="card-body">
-        <h5 class="card-title">{{ sale.estado }}</h5>
-        <p class="card-text">{{ sale.saldo }}</p>
-       <small>{{ sale.customer.name }}</small> 
-      </div>
-    </div>
-  </ng-container>
-</ion-content> -->

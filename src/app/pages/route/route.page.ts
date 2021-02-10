@@ -14,7 +14,7 @@ import { RoleBasedAutorizationService } from 'src/app/services/role-based-autori
 })
 export class RoutePage implements OnInit, OnDestroy {
   //public customers: Customer[];
-  public loading: Boolean= false;
+  public loading;
   public sales: any[];
   public today = moment().format('ll');
   public totalRecaudado;
@@ -81,8 +81,7 @@ export class RoutePage implements OnInit, OnDestroy {
   }
 
   getCustomers(){
-    //this.loading = true;
-    //this.customers = [];
+    this.loading = true;
     this.totalRecaudado = 0;
     this.totalSaldo = 0;
     this.isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
@@ -95,37 +94,6 @@ export class RoutePage implements OnInit, OnDestroy {
     }
   }
 
-
-  // getSalesByCustomer() {
-
-  //   this.totalRecaudado = 0;
-  //   this.totalSaldo = 0;
-
-  //   if(this.customers && this.customers.length > 0){
-  //     let cont = 0;
-  //      this.customers.forEach(customer => {
-  //       this.customersService.getSalesByCustomerId(customer.id).subscribe(data => {
-  //         let sale = data.map(e => {
-  //           return {
-  //             id: e.payload.doc.id,
-  //             ...e.payload.doc.data() as any
-  //           } 
-  //         });   
-
-
-  //         customer.sale = sale;   
-  //         cont++;
-
-  //         if(cont == this.customers.length){
-  //           this.calcularRecaudo(this.customers);
-  //         }
-  //       });
-  //     })
-
-  //     this.loading = false;
-
-  //   }
-  // }
 
   goSaleDetail(sale){
     this.router.navigateByUrl('/sale-detail/' + sale.id);
@@ -151,6 +119,9 @@ export class RoutePage implements OnInit, OnDestroy {
       if(customer.sale && customer.sale.saldo){
         this.totalSaldo+= customer.sale.saldo;
       }
+
+      this.loading = false;
+
     });
   }
 
