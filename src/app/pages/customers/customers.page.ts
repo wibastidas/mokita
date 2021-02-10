@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
-import { Customer } from 'src/app/interfaces/interfaces';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
@@ -13,9 +13,7 @@ import { NewCustomerPage } from '../new-customer/new-customer.page';
   styleUrls: ['./customers.page.scss'],
 })
 export class CustomersPage implements OnInit {
-  public customers: Customer[];
-
-  public loading: Boolean= false;
+  public customers$: Observable<any>
   public user;
 
   constructor(private customersService: CustomersService,
@@ -36,39 +34,11 @@ export class CustomersPage implements OnInit {
   }
 
   getCustomers(){
-    this.loading = true;
-
     let isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
-    if (isAdmin) {
-      this.customersService.getCustomersByAdmin(this.authSvc.getLoggedUser().uid).subscribe(data => {
-        this.customers = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            ...e.payload.doc.data() as Customer
-          } 
-        });
-        this.customers = this.customers.sort(function(a, b){
-          if(a.name < b.name) { return -1; }
-          if(a.name > b.name) { return 1; }
-          return 0;
-        })
-        this.loading = false;
-      });
+    if (isAdmin) { 
+      this.customers$ = this.customersService.getCustomersByAdmin(this.authSvc.getLoggedUser().uid);
     } else {
-      this.customersService.getCustomersByCobrador(this.authSvc.getLoggedUser().uid).subscribe(data => {
-        this.customers = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            ...e.payload.doc.data() as Customer
-          } 
-        });
-        this.customers = this.customers.sort(function(a, b){
-          if(a.name < b.name) { return -1; }
-          if(a.name > b.name) { return 1; }
-          return 0;
-        })
-        this.loading = false;
-      });
+      this.customers$ = this.customersService.getCustomersByCobrador(this.authSvc.getLoggedUser().uid);
     }
   }
 

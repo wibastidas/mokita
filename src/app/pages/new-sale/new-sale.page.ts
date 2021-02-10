@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import * as moment from 'moment';
-import { Customer } from 'src/app/interfaces/interfaces';
+import { Observable } from 'rxjs';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
@@ -15,10 +15,11 @@ import { SalesService } from 'src/app/services/sales.service';
   styleUrls: ['./new-sale.page.scss'],
 })
 export class NewSalePage implements OnInit {
-  saleForm: FormGroup;
-  customers: Customer[];
-  customerId: string;
-  montoCuota;
+  public saleForm: FormGroup;
+  public customers$: Observable<any>
+  public customerId: string;
+  public montoCuota;
+
   validation_messages = {
     amount: [
       { type:"required", message: "El monto es requerido."}
@@ -57,7 +58,6 @@ export class NewSalePage implements OnInit {
       ])),
       vencimiento: new FormControl(""),
       updatedAt: new FormControl(""),
-
     })
   }
 
@@ -65,47 +65,10 @@ export class NewSalePage implements OnInit {
     
     let isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
     if (isAdmin) { 
-      this.customersService.getCustomersByAdmin(this.authSvc.getLoggedUser().uid).subscribe(data => {
-        this.customers = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            ...e.payload.doc.data() as Customer
-          } 
-        });
-
-        this.customers = this.customers.sort(function(a, b){
-          if(a.name < b.name) { return -1; }
-          if(a.name > b.name) { return 1; }
-          return 0;
-        })
-        
-      });
+      this.customers$ = this.customersService.getCustomersByAdmin(this.authSvc.getLoggedUser().uid);
     } else {
-      this.customersService.getCustomersByCobrador(this.authSvc.getLoggedUser().uid).subscribe(data => {
-        this.customers = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            ...e.payload.doc.data() as Customer
-          } 
-        });
-      });
+      this.customers$ = this.customersService.getCustomersByCobrador(this.authSvc.getLoggedUser().uid);
     }
-
-    // this.customersService.getCustomers().pipe(take(1)).subscribe((customers: Customer[]) => {
-    //   console.log('customers: ', customers);
-    //   this.customers = customers;
-    //   //DD/MM/YYYY HH:mm:ss"
-    //   const format1 = "MMMM Do YYYY, h:mm:ss a"
-    //   const format2 = "YYYY-MM-DD"
-
-    //   let dateTime1A = moment(customers[1].createdAt).format(format1);
-    //   let dateTime2B = moment(customers[1].createdAt).format(format2);
-
-    //   console.log("dateTime1A: ", dateTime1A);
-    //   console.log("dateTime2B: ", dateTime2B);
-
-    //   // console.log("moment(): ", moment(customers[0].date).format('MM/DD/YYYY'));
-    // });
 
     this.saleForm.valueChanges.subscribe(selectedValue => {
       if(this.saleForm.get('amount') && this.saleForm.get('numeroCuotas') && this.saleForm.get('porcentaje')){
@@ -164,19 +127,15 @@ export class NewSalePage implements OnInit {
       sale.adminId = this.authSvc.getLoggedUser().uid;
     }
     await this.salesService.createNewSale(sale).then(res => { this.showConfirmation() });
-    
   }
 
   showConfirmation(){
-    //this.saleForm.reset();
-    //this.customerId = null;
     this.alertService.presentAlert("Préstamo creado satisfactoriamente!", "Puede ver el prestamo en la información del cliente", ['Ok'])
     this.location.back();
   }
 
   createCuotas(numeroCuotas){
     let dates = [];
-
     let cont;
     let numeroCuotasTmp = numeroCuotas;
 
@@ -200,12 +159,6 @@ export class NewSalePage implements OnInit {
     let montoConInteres = this.saleForm.get('amount').value + intereses;
     this.montoCuota = montoConInteres/this.saleForm.get('numeroCuotas').value;
   }
-
-  // addDays(days : number): Date{
-  //   var futureDate = Date.now();
-  //   futureDate.setDate(futureDate.getDate() + days);
-  //   return futureDate;
-  // }
 
 } 
 

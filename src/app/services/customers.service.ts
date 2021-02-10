@@ -25,11 +25,19 @@ export class CustomersService {
   }
 
   getCustomersByAdmin(adminId) {
-    return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).snapshotChanges();
+    return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges().pipe(
+      map(customers => {
+        return customers.sort((a: any, b: any) => {
+          if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;
+        })
+      })
+    )
   }
 
   getCustomersByCobrador(cobradorId) {
-    return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).snapshotChanges();
+    return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).valueChanges();
   }
 
   getCustomerByDocument(document){
