@@ -6,32 +6,43 @@
 
 <ion-content>
 
-  <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+  <ion-list *ngIf="roleAutorization.canReadExpense(authSvc.getLoggedUser())" >
 
-  <app-skeleton *ngIf="loading"></app-skeleton>
+    <ng-container *ngIf="expenses$ | async; else loading; let expenses">
+      <ion-item-sliding  *ngFor="let expense of expenses">
+        <ion-item (click)="goExpenseDetail(expense)">
+          <ion-label>
+            <ion-text>
+              <h3>{{ expense.concept }} </h3>
+            </ion-text>
+    
+            <p>{{ expense.amount }}</p>
+          </ion-label>
+          <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger" *ngIf="roleAutorization.canDeleteExpense(authSvc.getLoggedUser())" (click)="deleteExpense(expense)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ng-container>
 
-  <ion-list *ngIf="!loading && roleAutorization.canReadExpense(authSvc.getLoggedUser())" >
-    <ion-item-sliding  *ngFor="let expense of expenses">
-      <ion-item (click)="goExpenseDetail(expense)">
-        <ion-label>
-          <ion-text>
-            <h3>{{ expense.concept }} </h3>
-          </ion-text>
-  
-          <p>{{ expense.amount }}</p>
-        </ion-label>
-        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-      </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option color="danger" *ngIf="roleAutorization.canDeleteExpense(authSvc.getLoggedUser())" (click)="deleteExpense(expense)">
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
   </ion-list>
 
 
-  <div class="ion-text-center"  *ngIf="!loading && roleAutorization.canCreateExpense(authSvc.getLoggedUser())">
-    <ion-button *ngIf="!loading"  (click)="createExpense()" expand="round">Cargar Gasto</ion-button>
-  </div>
+  <ion-fab *ngIf="roleAutorization.canCreateExpense(authSvc.getLoggedUser())" (click)="createExpense()" style="padding-bottom: 40px;padding-right: 10px;"  vertical="bottom" horizontal="end" edge slot="fixed">
+    <ion-fab-button color="secondary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- <div class="ion-text-center"  *ngIf="roleAutorization.canCreateExpense(authSvc.getLoggedUser())">
+    <ion-button  (click)="createExpense()" expand="round">Cargar Gasto</ion-button>
+  </div> -->
 </ion-content>
+
+<ng-template #loading>
+  <ion-progress-bar color="secondary" type="indeterminate"></ion-progress-bar>
+  <app-skeleton></app-skeleton>
+</ng-template>

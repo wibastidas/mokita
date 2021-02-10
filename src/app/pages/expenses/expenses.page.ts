@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
-import { Expense } from 'src/app/interfaces/interfaces';
+import * as moment from 'moment';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ExpensesService } from 'src/app/services/expenses.service';
 import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
@@ -13,8 +14,9 @@ import { NewExpensePage } from '../new-expense/new-expense.page';
   styleUrls: ['./expenses.page.scss'],
 })
 export class ExpensesPage implements OnInit {
-  expenses: Expense[];
-  loading: Boolean= false;
+  public loading: Boolean= false;
+  public today = moment().format('ll');
+  public expenses$: Observable<any>
 
   constructor(private expensesService: ExpensesService,
               public alertController: AlertController,
@@ -33,30 +35,11 @@ export class ExpensesPage implements OnInit {
   }
 
   getExpenses(){
-    this.loading = true;
     let isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
     if (isAdmin) {
-      this.expensesService.getExpensesByAdmin(this.authSvc.getLoggedUser().uid).subscribe(data => {
-        this.expenses = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            ...e.payload.doc.data() as Expense
-          } 
-        });
-        console.log("this.expenses: ", this.expenses)
-        this.loading = false;
-      });
+      this.expenses$ = this.expensesService.getExpensesByAdmin(this.authSvc.getLoggedUser().uid, this.today);
     } else {
-      this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid).subscribe(data => {
-        this.expenses = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            ...e.payload.doc.data() as Expense
-          } 
-        });
-        console.log("this.expenses: ", this.expenses)
-        this.loading = false;
-      });
+      this.expenses$ = this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid, this.today);     
     }
   }
 
@@ -86,6 +69,7 @@ export class ExpensesPage implements OnInit {
   }
 
   async deleteExpense(expense) {
+    console.log("expense: ", expense);
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',

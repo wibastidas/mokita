@@ -31,14 +31,16 @@
     </ng-container>
   </ion-list>
 
-  <div class="ion-text-center"  *ngIf="roleAutorization.canReadCustomer(authSvc.getLoggedUser())">
-    <ion-button  (click)="createCustomer()" expand="round">Crear Cliente</ion-button>
-  </div>
+  <ion-fab *ngIf="roleAutorization.canReadCustomer(authSvc.getLoggedUser())" (click)="createCustomer()" style="padding-bottom: 40px;padding-right: 10px;"  vertical="bottom" horizontal="end" edge slot="fixed">
+    <ion-fab-button color="secondary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>
 
 
 <ng-template #loading>
   <ion-progress-bar color="secondary" type="indeterminate"></ion-progress-bar>
-
   <app-skeleton></app-skeleton>
 </ng-template>
