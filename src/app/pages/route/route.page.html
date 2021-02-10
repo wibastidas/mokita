@@ -1,3 +1,4 @@
+
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Mi Ruta</ion-title>
@@ -10,52 +11,52 @@
 </ion-header>
 
 <ion-content>
-  <ion-progress-bar color="secondary" *ngIf="loading" type="indeterminate"></ion-progress-bar>
 
-  <app-skeleton *ngIf="loading"></app-skeleton>
-
-  <ion-list *ngIf="!loading && roleAutorization.canReadCustomer(authSvc.getLoggedUser())">
-    <ion-item-sliding  *ngFor="let customer of customers">
-      <div *ngIf="customer && customer.sale && customer.sale[0]">
-        <ion-item (click)="goSaleDetail(customer.sale[0])">
-          <!-- <ion-avatar slot="start">
-            <ion-icon name="checkmark-outline"></ion-icon>
-          </ion-avatar> -->
-          <ion-avatar>
-            
-            
-            <ion-icon *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
-                                         && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt != today) 
-                                         || (!customer.sale[0].abonos[0])" name="shield-outline"></ion-icon>
-
-            <ion-icon color="success" *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
-                                         && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt == today)
-                                         && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto > 0)" name="shield-checkmark-outline"></ion-icon>
-            <ion-icon color="danger" *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
-                                         && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt == today)
-                                         && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto == 0)" name="shield-outline"></ion-icon>
-          </ion-avatar>
-  
-          <ion-label style="margin-left: 12px;">
-            <ion-text>
-              <h3>{{ customer.name }} {{ customer.lastName }}</h3>
-            </ion-text>
+  <ng-container *ngIf="customers$ | async; else loading; let customers">
     
-          <h3>Saldo Pendiente: {{customer.sale[0].saldo | currency:'$' : 'symbol' : '1.0-0'}}</h3>
-          <h3>Cuotas Pendientes: {{customer.sale[0].cuotasPendientes | number}}</h3>
-          <!-- <h3 *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] && customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt" >{{customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt}}</h3>
-          <h3>{{today}}</h3> -->
-          </ion-label>
-          <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-          <!-- <ion-button  fill="outline" slot="end">Ver &nbsp; <ion-icon name="eye-outline"> </ion-icon> </ion-button> -->
-        </ion-item>
-      </div>
-    </ion-item-sliding>
-  </ion-list>
+      <ion-item-sliding  *ngFor="let customer of customers">
+          <ng-container>
+            <ion-item *ngIf="customer && customer.sale" (click)="goSaleDetail(customer.sale)">
 
-  <ion-item-divider *ngIf="customers && customers.length > 0">
+              <!-- <ion-avatar>
+                <ion-icon *ngIf="sale.abonos[sale.abonos.length - 1] 
+                                            && (sale.abonos[sale.abonos.length - 1].createdAt != today) 
+                                            || (!sale.abonos[0])" name="shield-outline"></ion-icon>
+  
+                <ion-icon color="success" *ngIf="sale.abonos[sale.abonos.length - 1] 
+                                            && (sale.abonos[sale.abonos.length - 1].createdAt == today)
+                                            && (sale.abonos[sale.abonos.length - 1].monto > 0)" name="shield-checkmark-outline"></ion-icon>
+                <ion-icon color="danger" *ngIf="sale.abonos[sale.abonos.length - 1] 
+                                            && (sale.abonos[sale.abonos.length - 1].createdAt == today)
+                                            && (sale.abonos[sale.abonos.length - 1].monto == 0)" name="shield-outline"></ion-icon>
+              </ion-avatar> -->
+      
+              <ion-label style="margin-left: 12px;">
+                <ion-text>
+                  <h3>{{ customer.name }} {{ customer.lastName }}</h3>
+                </ion-text>
+        
+              <h3 *ngIf="customer && customer.sale">Saldo Pendiente: {{customer.sale.saldo | currency:'$' : 'symbol' : '1.0-0'}}</h3>
+              <h3 *ngIf="customer && customer.sale">Cuotas Pendientes: {{customer.sale.cuotasPendientes | number}}</h3>
+              <!-- <h3 *ngIf="customer.sale[0].abonos[customer.sale[0].abonos.length - 1] && customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt" >{{customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt}}</h3>
+              <h3>{{today}}</h3> -->
+              </ion-label>
+              <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+              <!-- <ion-button  fill="outline" slot="end">Ver &nbsp; <ion-icon name="eye-outline"> </ion-icon> </ion-button> -->
+            </ion-item>
+          </ng-container>
+        </ion-item-sliding>
+  </ng-container>
+
+  <ion-item-divider>
     <ion-label>
       Total Recaudado: {{totalRecaudado}}
+    </ion-label>
+  </ion-item-divider>
+
+  <ion-item-divider *ngIf="isAdmin">
+    <ion-label>
+      Total Saldo: {{totalSaldo}}
     </ion-label>
   </ion-item-divider>
   
@@ -64,4 +65,27 @@
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>
+
+<ng-template #loading>
+  <ion-progress-bar color="secondary" *ngIf="loading" type="indeterminate"></ion-progress-bar>
+
+  <app-skeleton *ngIf="loading"></app-skeleton>
+</ng-template>
+
 </ion-content>
+
+
+
+<!-- <ion-content>
+  <h3>Joining data between collections</h3>
+
+  <ng-container *ngIf="customers$ | async; else loading; let customers">
+    <div class="card m-2" style="width: 18rem;" *ngFor="let sale of customers">
+      <div class="card-body">
+        <h5 class="card-title">{{ sale.estado }}</h5>
+        <p class="card-text">{{ sale.saldo }}</p>
+       <small>{{ sale.customer.name }}</small> 
+      </div>
+    </div>
+  </ng-container>
+</ion-content> -->

@@ -149,7 +149,7 @@ export class EditSalePage implements OnInit, OnDestroy {
     sale.montoCuota = sale.montoConInteres/sale.numeroCuotas;
     sale.cuotasPagadas = 0;
     sale.cuotasPendientes = sale.numeroCuotas; 
-    sale.estado = 'Active';
+    sale.estado = 'Activo';
     sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
     sale.cuotasPendientes = sale.saldo/sale.montoCuota
     sale.cuotasPagadas = sale.numeroCuotas - sale.cuotasPendientes;

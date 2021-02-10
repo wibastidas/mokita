@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { uniq } from 'lodash';
+import { combineLatest, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { Customer } from '../interfaces/interfaces';
 
 @Injectable({
@@ -56,8 +59,131 @@ export class CustomersService {
   }
 
   getSalesByCustomerId(customerId){
-    return this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId).where('estado', "==", 'Active')).snapshotChanges();
+    return this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId).where('estado', "==", 'Activo')).snapshotChanges();
   }
+
+  getSalesActive(adminId) {
+    return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).snapshotChanges();
+  }
+
+  // getSalesAndCustomersByAdmin(){
+
+  //   return this.firestore.collection(`sales`, ref => ref.where('estado', "==", 'Activo')).valueChanges()
+  //   .pipe(
+  //     switchMap(sales => {
+  //       const customerIds = uniq(sales.map((bp:any) => bp.customerId))
+
+  //       return combineLatest([ 
+  //         of(sales),
+  //         combineLatest(
+  //           customerIds.map(customerId =>
+  //             this.firestore.collection<Customer>('customers', ref => ref.where('id', '==', customerId)).valueChanges().pipe(
+  //               map(customers => customers[0])
+  //             )
+  //           )
+  //         )
+  //       ])
+  //     }),
+  //     map(([sales, customers]) => {
+
+  //       let customersSort = customers.sort((a: any, b: any) => {
+  //         if(a.name < b.name) { return -1; }
+  //         if(a.name > b.name) { return 1; }
+  //         return 0;
+  //       })
+
+  //       return customersSort.map((customer: any) => {
+  //         return {
+  //           ...customer,
+  //           sale: sales.find((a:any) => a.customerId === customer.id)
+  //         }
+  //       })
+  //     })
+  //   )
+
+  // }
+
+  getSalesAndCustomersByAdmin(adminId){
+
+    return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges()
+    .pipe(
+      switchMap(customers => {
+        const customerIds = uniq(customers.map((bp:any) => bp.id))
+
+        return combineLatest([ 
+          of(customers),
+          combineLatest( 
+            customerIds.map((customerId) =>
+              this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId).where('estado', "==", 'Activo')).valueChanges().pipe(
+                map(sales => {
+                  if (sales && sales[0]) return  sales[0]
+                })
+              )
+            )
+          )
+        ])
+      }),
+      map(([customers, sales]) => {
+
+        let customersSort = customers.sort((a: any, b: any) => {
+          if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;
+        })
+
+
+        return customersSort.map((customer: any) => {
+          return {
+            ...customer,
+           sale: sales.find((a:any) => a && a.customerId === customer.id)
+          }
+        })
+      })
+    )
+
+  }
+
+  getSalesAndCustomersByCobrador(cobradorId){
+
+    return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).valueChanges()
+    .pipe(
+      switchMap(customers => {
+        const customerIds = uniq(customers.map((bp:any) => bp.id))
+
+        return combineLatest([ 
+          of(customers),
+          combineLatest( 
+            customerIds.map((customerId) =>
+              this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId).where('estado', "==", 'Activo')).valueChanges().pipe(
+                map(sales => {
+                  if (sales && sales[0]) return  sales[0]
+                })
+              )
+            )
+          )
+        ])
+      }),
+      map(([customers, sales]) => {
+
+        let customersSort = customers.sort((a: any, b: any) => {
+          if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;
+        })
+
+
+        return customersSort.map((customer: any) => {
+          return {
+            ...customer,
+           sale: sales.find((a:any) => a && a.customerId === customer.id)
+          }
+        })
+      })
+    )
+
+  }
+
+
 
   
 }

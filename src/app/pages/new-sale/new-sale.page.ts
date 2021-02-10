@@ -150,7 +150,7 @@ export class NewSalePage implements OnInit {
     sale.intereses = sale.amount * sale.porcentaje/100;
     sale.montoConInteres = sale.amount + sale.intereses;
     sale.montoCuota = sale.montoConInteres/sale.numeroCuotas;
-    sale.estado = 'Active';
+    sale.estado = 'Activo';
     sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
     sale.abonos = [];
     sale.cuotasPendientes = sale.numeroCuotas; 

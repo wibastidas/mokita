@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 import * as moment from 'moment';
-import { Customer } from 'src/app/interfaces/interfaces';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
@@ -12,12 +12,17 @@ import { RoleBasedAutorizationService } from 'src/app/services/role-based-autori
   templateUrl: './route.page.html',
   styleUrls: ['./route.page.scss'],
 })
-export class RoutePage implements OnInit {
-  public customers: Customer[];
-  public loading: Boolean= true;
+export class RoutePage implements OnInit, OnDestroy {
+  //public customers: Customer[];
+  public loading: Boolean= false;
   public sales: any[];
   public today = moment().format('ll');
   public totalRecaudado;
+  public totalSaldo;
+  public customers$: Observable<any>
+  private subscription = new Subscription();
+  public isAdmin;
+
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
               public authSvc: AuthService, 
@@ -26,6 +31,7 @@ export class RoutePage implements OnInit {
               }
 
   ngOnInit() {
+
     if (this.authSvc.getLoggedUser()) {
       this.getCustomers(); 
     } else {
@@ -75,95 +81,81 @@ export class RoutePage implements OnInit {
   }
 
   getCustomers(){
-    this.loading = true;
-    this.customers = [];
-    let isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
-    if (isAdmin) {
-      this.customersService.getCustomersByAdmin(this.authSvc.getLoggedUser().uid).subscribe(data => {
-        this.customers = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            ...e.payload.doc.data() as Customer
-          } 
-        });
-        this.customers = this.customers.sort(function(a, b){
-          if(a.name < b.name) { return -1; }
-          if(a.name > b.name) { return 1; }
-          return 0;
-        })
-
-        this.getSalesByCustomer();
-
-        this.loading = false;
-      });
-    } else {
-      this.customersService.getCustomersByCobrador(this.authSvc.getLoggedUser().uid).subscribe(data => {
-        this.customers = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            ...e.payload.doc.data() as Customer
-          } 
-        });
-        this.getSalesByCustomer();
-
-        this.customers = this.customers.sort(function(a, b){
-          if(a.name < b.name) { return -1; }
-          if(a.name > b.name) { return 1; }
-          return 0;
-        })
-
-        this.loading = false;
-      });
-    }
-  }
-
-
-  getSalesByCustomer(){
-
+    //this.loading = true;
+    //this.customers = [];
     this.totalRecaudado = 0;
-
-    if(this.customers && this.customers.length > 0){
-      let cont = 0;
-       this.customers.forEach(customer => {
-        this.customersService.getSalesByCustomerId(customer.id).subscribe(data => {
-          let sale = data.map(e => {
-            return {
-              id: e.payload.doc.id,
-              ...e.payload.doc.data() as any
-            } 
-          });   
-
-          // if(sale && sale[0] && sale[0].abonos && sale[0].abonos[0]) {
-          //   console.log("createdAt: ", sale[0].abonos[sale[0].abonos.length - 1].createdAt);
-          // }
-          customer.sale = sale;   
-          cont++;
-
-          if(cont == this.customers.length){
-            this.calcularRecaudo(this.customers);
-          }
-        });
-      })
-
-      this.loading = false;
-
+    this.totalSaldo = 0;
+    this.isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
+    if (this.isAdmin) {
+      this.customers$ = this.customersService.getSalesAndCustomersByAdmin(this.authSvc.getLoggedUser().uid);
+      this.subscription.add(this.customers$.subscribe(res => this.calcularRecaudoYsaldo(res)));
+    } else {
+      this.customers$ = this.customersService.getSalesAndCustomersByCobrador(this.authSvc.getLoggedUser().uid);
+      this.subscription.add(this.customers$.subscribe(res => this.calcularRecaudoYsaldo(res)));
     }
   }
+
+
+  // getSalesByCustomer() {
+
+  //   this.totalRecaudado = 0;
+  //   this.totalSaldo = 0;
+
+  //   if(this.customers && this.customers.length > 0){
+  //     let cont = 0;
+  //      this.customers.forEach(customer => {
+  //       this.customersService.getSalesByCustomerId(customer.id).subscribe(data => {
+  //         let sale = data.map(e => {
+  //           return {
+  //             id: e.payload.doc.id,
+  //             ...e.payload.doc.data() as any
+  //           } 
+  //         });   
+
+
+  //         customer.sale = sale;   
+  //         cont++;
+
+  //         if(cont == this.customers.length){
+  //           this.calcularRecaudo(this.customers);
+  //         }
+  //       });
+  //     })
+
+  //     this.loading = false;
+
+  //   }
+  // }
 
   goSaleDetail(sale){
     this.router.navigateByUrl('/sale-detail/' + sale.id);
   }
 
-  calcularRecaudo(customers){
-    this.customers.forEach(customer => {
+  calcularRecaudoYsaldo(customers){
+    this.totalRecaudado = 0;
+    this.totalSaldo = 0;
+    
+    customers.forEach(customer => {
 
-      if(customer.sale && customer.sale[0] && customer.sale[0].abonos && customer.sale[0].abonos[0] && customer.sale[0].abonos[customer.sale[0].abonos.length - 1] 
-        && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].createdAt == this.today) 
-        && (customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto > 0) ){
-          this.totalRecaudado+=  customer.sale[0].abonos[customer.sale[0].abonos.length - 1].monto;
+      if(customer.sale && customer.sale.abonos && customer.sale.abonos[0] && customer.sale.abonos[customer.sale.abonos.length - 1] 
+        && (customer.sale.abonos[customer.sale.abonos.length - 1].createdAt == this.today) 
+        && (customer.sale.abonos[customer.sale.abonos.length - 1].monto > 0) ){
+
+          customer.sale.abonos.forEach(abono => {
+            if(abono.createdAt == this.today){
+              this.totalRecaudado+=  abono.monto;
+            }
+          });
       }
 
+      if(customer.sale && customer.sale.saldo){
+        this.totalSaldo+= customer.sale.saldo;
+      }
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
