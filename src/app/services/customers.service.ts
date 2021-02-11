@@ -85,7 +85,6 @@ export class CustomersService {
   }
 
   getSalesAndCustomersByAdmin(adminId){
-    console.log("getSalesAndCustomersByAdmin: ", adminId);
 
     return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges({idField: 'id'})
     .pipe(
@@ -101,16 +100,22 @@ export class CustomersService {
                   if (sales && sales[0]) return  sales[0]
                 })
               )
-              // this.firestore.collection(`sales`, ref => ref.where('fechaUltimoPago', "==", this.today).where('estado', "==", 'Pagado')).valueChanges({idField: 'id'}).pipe(
-              //   map(sales => {
-              //     if (sales && sales[0]) return  sales[0]
-              //   })
-              // )
             )
+          ),
+          combineLatest( 
+            customerIds.map((customerId) =>
+              this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId).where('fechaUltimoPago', "==", this.today).where('estado', "==", 'Pagado')).valueChanges({idField: 'id'}).pipe(
+                  map(salesPagadas => {
+                        if (salesPagadas && salesPagadas[0]) return  salesPagadas[0]
+                  })
+                )
+              )
           )
         ])
       }),
-      map(([customers, sales]) => {
+      map(([customers, sales, salesPagadas]) => {
+
+        let salesFiltered = sales.concat(salesPagadas).filter(sale => sale != undefined)
 
         let customersSort = customers.sort((a: any, b: any) => {
           if(a.name < b.name) { return -1; }
@@ -118,21 +123,17 @@ export class CustomersService {
           return 0;
         })
 
-
         return customersSort.map((customer: any) => {
           return {
             ...customer,
-           sale: sales.find((a:any) => a && a.customerId === customer.id)
+           sale: salesFiltered.find((a:any) => a && a.customerId === customer.id)
           }
         })
       })
     )
-
   }
 
   getSalesAndCustomersByCobrador(cobradorId){
-    console.log("getSalesAndCustomersByCobrador: ", cobradorId);
-
 
     return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).valueChanges({idField: 'id'})
     .pipe(
@@ -149,10 +150,21 @@ export class CustomersService {
                 })
               )
             )
+          ),
+          combineLatest( 
+            customerIds.map((customerId) =>
+              this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId).where('fechaUltimoPago', "==", this.today).where('estado', "==", 'Pagado')).valueChanges({idField: 'id'}).pipe(
+                  map(salesPagadas => {
+                        if (salesPagadas && salesPagadas[0]) return  salesPagadas[0]
+                  })
+                )
+              )
           )
         ])
       }),
-      map(([customers, sales]) => {
+      map(([customers, sales, salesPagadas]) => {
+
+        let salesFiltered = sales.concat(salesPagadas).filter(sale => sale != undefined)
 
         let customersSort = customers.sort((a: any, b: any) => {
           if(a.name < b.name) { return -1; }
@@ -160,19 +172,14 @@ export class CustomersService {
           return 0;
         })
 
-
         return customersSort.map((customer: any) => {
           return {
             ...customer,
-           sale: sales.find((a:any) => a && a.customerId === customer.id)
+           sale: salesFiltered.find((a:any) => a && a.customerId === customer.id)
           }
         })
       })
     )
-
   }
-
-
-
   
 }

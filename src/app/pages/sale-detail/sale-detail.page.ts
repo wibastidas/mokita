@@ -105,6 +105,9 @@ export class SaleDetailPage implements OnInit {
     if(this.sale.cuotasPendientes == 0){
       this.sale.estado = "Pagado"
       this.sale.fechaUltimoPago = moment().format('ll');
+    } else {
+      this.sale.estado = "Active"
+      this.sale.fechaUltimoPago = "";
     }
     console.log("this.sale:", this.sale
     );
