@@ -102,11 +102,11 @@ export class SaleDetailPage implements OnInit {
     this.sale.saldo = this.calcularSaldoPendiente(this.sale);
     this.sale.cuotasPendientes = this.sale.saldo/this.sale.montoCuota
     this.sale.cuotasPagadas = this.sale.numeroCuotas - this.sale.cuotasPendientes;
-    if(this.sale.cuotasPendientes == 0){
+    if(this.sale.cuotasPendientes <= 0){
       this.sale.estado = "Pagado"
       this.sale.fechaUltimoPago = moment().format('ll');
     } else {
-      this.sale.estado = "Active"
+      this.sale.estado = "Activo"
       this.sale.fechaUltimoPago = "";
     }
     console.log("this.sale:", this.sale

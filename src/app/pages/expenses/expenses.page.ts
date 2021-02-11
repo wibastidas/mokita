@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import * as moment from 'moment';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ExpensesService } from 'src/app/services/expenses.service';
 import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
@@ -17,6 +17,8 @@ export class ExpensesPage implements OnInit {
   public loading: Boolean= false;
   public today = moment().format('ll');
   public expenses$: Observable<any>
+  private subscription = new Subscription();
+  public gastosDelDia;
 
   constructor(private expensesService: ExpensesService,
               public alertController: AlertController,
@@ -38,8 +40,10 @@ export class ExpensesPage implements OnInit {
     let isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
     if (isAdmin) {
       this.expenses$ = this.expensesService.getExpensesByAdmin(this.authSvc.getLoggedUser().uid, this.today);
+      this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));
     } else {
-      this.expenses$ = this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid, this.today);     
+      this.expenses$ = this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid, this.today); 
+      this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));    
     }
   }
 
@@ -54,7 +58,7 @@ export class ExpensesPage implements OnInit {
 
     modal.onDidDismiss()
     .then((data) => {
-      if (data['data'].dismissed)  this.getExpenses();
+      //if (data['data'].dismissed)  this.getExpenses();
     });
 
     return await modal.present();
@@ -86,7 +90,7 @@ export class ExpensesPage implements OnInit {
         }, {
           text: 'Ok',
           handler: () => {
-            this.expensesService.deleteExpense(expense.id).then(m => this.getExpenses());
+            this.expensesService.deleteExpense(expense.id);
           }
         }
       ]
@@ -94,6 +98,15 @@ export class ExpensesPage implements OnInit {
 
     await alert.present();
     
+  }
+
+  calcularGastos(gastos){
+    this.gastosDelDia = 0;
+    this.gastosDelDia = gastos.reduce((prev, cur) => prev + cur.amount, 0);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

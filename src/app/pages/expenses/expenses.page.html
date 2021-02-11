@@ -30,6 +30,11 @@
 
   </ion-list>
 
+  <ion-item-divider *ngIf="expenses$ | async; let expenses">
+    <ion-label>
+      Gastos del día: {{gastosDelDia | currency :'$':'symbol':'1.2-2'}}  
+    </ion-label>
+  </ion-item-divider>
 
   <ion-fab *ngIf="roleAutorization.canCreateExpense(authSvc.getLoggedUser())" (click)="createExpense()" style="padding-bottom: 40px;padding-right: 10px;"  vertical="bottom" horizontal="end" edge slot="fixed">
     <ion-fab-button color="secondary">
@@ -37,9 +42,6 @@
     </ion-fab-button>
   </ion-fab>
 
-  <!-- <div class="ion-text-center"  *ngIf="roleAutorization.canCreateExpense(authSvc.getLoggedUser())">
-    <ion-button  (click)="createExpense()" expand="round">Cargar Gasto</ion-button>
-  </div> -->
 </ion-content>
 
 <ng-template #loading>

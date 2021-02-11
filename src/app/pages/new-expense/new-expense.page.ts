@@ -88,7 +88,7 @@ export class NewExpensePage implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  async createExpense(expense: Expense){
+  createExpense(expense: Expense){
   
     console.log('expense: ', expense);
 
@@ -100,7 +100,7 @@ export class NewExpensePage implements OnInit, OnDestroy {
       expense.adminId = this.authSvc.getLoggedUser().uid;
     }
 
-    await this.expensesService.createNewExpense(expense).then(res => { console.log('res: ', res) });
+    this.expensesService.createNewExpense(expense);
 
     this.dismissModal();
     

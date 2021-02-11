@@ -50,13 +50,13 @@
 
   <ion-item-divider *ngIf="customers$ | async">
     <ion-label>
-      Total Recaudado: {{totalRecaudado}}
+      Total Recaudado: {{totalRecaudado | currency :'$':'symbol':'1.2-2'}}  
     </ion-label>
   </ion-item-divider>
 
   <ion-item-divider *ngIf="isAdmin && customers$ | async">
     <ion-label>
-      Total Saldo: {{totalSaldo}}
+      Total Saldo: {{totalSaldo | currency :'$':'symbol':'1.2-2'}}  
     </ion-label>
   </ion-item-divider>
   

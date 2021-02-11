@@ -5,5 +5,27 @@
 </ion-header>
 
 <ion-content>
+  <ion-item-divider *ngIf="customers$ | async">
+    <ion-label>
+      Total a recaudar: {{totalRecaudar | currency :'$':'symbol':'1.2-2'}}  
+    </ion-label>
+  </ion-item-divider>
 
+  <ion-item-divider *ngIf="customers$ | async">
+    <ion-label>
+      Total Recaudado: {{totalRecaudado | currency :'$':'symbol':'1.2-2'}}  
+    </ion-label>
+  </ion-item-divider>
+
+  <ion-item-divider *ngIf="isAdmin && customers$ | async">
+    <ion-label>
+      Total Saldo: {{totalSaldo | currency :'$':'symbol':'1.2-2'}}  
+    </ion-label>
+  </ion-item-divider>
+
+  <ion-item-divider *ngIf="expenses$ | async; let expenses">
+    <ion-label>
+      Gastos del día: {{gastosDelDia | currency :'$':'symbol':'1.2-2'}}  
+    </ion-label>
+  </ion-item-divider>
 </ion-content>

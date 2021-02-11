@@ -14,7 +14,7 @@ export class ExpensesService {
   }
 
   getExpensesByAdmin(adminId, day) {
-    return this.firestore.collection(`expenses`, ref => ref.where('adminId', "==", adminId).where('createdAt', "==", day)).valueChanges({idField: 'eventId'})
+    return this.firestore.collection(`expenses`, ref => ref.where('adminId', "==", adminId).where('createdAt', "==", day)).valueChanges({idField: 'id'})
   }
 
   getExpensesByCobrador(cobradorId, day) {

@@ -43,6 +43,8 @@ export class ExpenseDetailPage implements OnInit, OnDestroy {
       description: new FormControl("", Validators.compose([
         //Validators.required
       ])),
+      adminId: "",
+      createdBy: "",
       createdAt: new FormControl(moment().format('ll')),
       updatedAt: new FormControl(moment().format('llll')),
       id: new FormControl("")
