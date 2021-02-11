@@ -13,15 +13,14 @@ import { RoleBasedAutorizationService } from 'src/app/services/role-based-autori
   styleUrls: ['./route.page.scss'],
 })
 export class RoutePage implements OnInit, OnDestroy {
-  //public customers: Customer[];
   public loading;
   public sales: any[];
   public today = moment().format('ll');
   public totalRecaudado;
   public totalSaldo;
   public customers$: Observable<any>
-  private subscription = new Subscription();
   public isAdmin;
+  private subscription = new Subscription();
 
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
@@ -31,7 +30,6 @@ export class RoutePage implements OnInit, OnDestroy {
               }
 
   ngOnInit() {
-
     if (this.authSvc.getLoggedUser()) {
       this.getCustomers(); 
     } else {
@@ -100,7 +98,6 @@ export class RoutePage implements OnInit, OnDestroy {
   }
 
   calcularRecaudoYsaldo(customers){
-    console.log("customers: ",customers );
     this.totalRecaudado = 0;
     this.totalSaldo = 0;
     
