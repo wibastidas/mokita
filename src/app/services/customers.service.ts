@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { uniq } from 'lodash';
+import * as moment from 'moment';
 import { combineLatest, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Customer } from '../interfaces/interfaces';
@@ -9,15 +10,16 @@ import { Customer } from '../interfaces/interfaces';
   providedIn: 'root'
 })
 export class CustomersService {
+  public today = moment().format('ll');
 
   constructor(public firestore: AngularFirestore) { }
 
   // getCustomers() {
-  //   return this.firestore.collection('customers').valueChanges();
+  //   return this.firestore.collection('customers').valueChanges({idField: 'id'});
   // }
 
   getCustomerById(id: string) {
-    return this.firestore.doc('/customers/' + id).valueChanges();
+    return this.firestore.doc('/customers/' + id).valueChanges({idField: 'id'});
   }
 
   getCustomersNew() {
@@ -25,7 +27,7 @@ export class CustomersService {
   }
 
   getCustomersByAdmin(adminId) {
-    return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges().pipe(
+    return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges({idField: 'id'}).pipe(
       map(customers => {
         return customers.sort((a: any, b: any) => {
           if(a.name < b.name) { return -1; }
@@ -37,7 +39,15 @@ export class CustomersService {
   }
 
   getCustomersByCobrador(cobradorId) {
-    return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).valueChanges();
+    return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).valueChanges({idField: 'id'}).pipe(
+      map(customers => {
+        return customers.sort((a: any, b: any) => {
+          if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;
+        })
+      })
+    )
   }
 
   getCustomerByDocument(document){
@@ -75,8 +85,9 @@ export class CustomersService {
   }
 
   getSalesAndCustomersByAdmin(adminId){
+    console.log("getSalesAndCustomersByAdmin: ", adminId);
 
-    return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges()
+    return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges({idField: 'id'})
     .pipe(
       switchMap(customers => {
         const customerIds = uniq(customers.map((bp:any) => bp.id))
@@ -85,11 +96,16 @@ export class CustomersService {
           of(customers),
           combineLatest( 
             customerIds.map((customerId) =>
-              this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId).where('estado', "==", 'Activo')).valueChanges().pipe(
+              this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId).where('estado', "==", 'Activo')).valueChanges({idField: 'id'}).pipe(
                 map(sales => {
                   if (sales && sales[0]) return  sales[0]
                 })
               )
+              // this.firestore.collection(`sales`, ref => ref.where('fechaUltimoPago', "==", this.today).where('estado', "==", 'Pagado')).valueChanges({idField: 'id'}).pipe(
+              //   map(sales => {
+              //     if (sales && sales[0]) return  sales[0]
+              //   })
+              // )
             )
           )
         ])
@@ -115,8 +131,10 @@ export class CustomersService {
   }
 
   getSalesAndCustomersByCobrador(cobradorId){
+    console.log("getSalesAndCustomersByCobrador: ", cobradorId);
 
-    return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).valueChanges()
+
+    return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).valueChanges({idField: 'id'})
     .pipe(
       switchMap(customers => {
         const customerIds = uniq(customers.map((bp:any) => bp.id))
@@ -125,7 +143,7 @@ export class CustomersService {
           of(customers),
           combineLatest( 
             customerIds.map((customerId) =>
-              this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId).where('estado', "==", 'Activo')).valueChanges().pipe(
+              this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId).where('estado', "==", 'Activo')).valueChanges({idField: 'id'}).pipe(
                 map(sales => {
                   if (sales && sales[0]) return  sales[0]
                 })

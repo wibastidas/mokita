@@ -23,7 +23,7 @@ export class AuthService {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+          return this.afs.doc<User>(`users/${user.uid}`).valueChanges({idField: 'id'});
         }
         return of(null);
       })
@@ -75,7 +75,7 @@ export class AuthService {
     try {
       const { user } = await this.afAuth.signInWithEmailAndPassword(email, password);
 
-      this.afs.doc('/users/' + user.uid).valueChanges().pipe(take(1)).subscribe((user: any) => {
+      this.afs.doc('/users/' + user.uid).valueChanges({idField: 'id'}).pipe(take(1)).subscribe((user: any) => {
         if(user.roles) {
           this.updateUserData(user, user.roles, user.createdBy);
         } else {
@@ -157,7 +157,7 @@ export class AuthService {
   }
 
   getUser(userUid){
-    return this.afs.doc<User>(`users/${userUid}`).valueChanges();
+    return this.afs.doc<User>(`users/${userUid}`).valueChanges({idField: 'id'});
   }
 
   setLoggedUser(user){

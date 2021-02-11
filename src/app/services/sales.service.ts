@@ -14,7 +14,7 @@ export class SalesService {
   }
 
   getSaleById(saleId: string) {
-    return this.firestore.doc('/sales/' + saleId).valueChanges();
+    return this.firestore.doc('/sales/' + saleId).valueChanges({idField: 'id'});
   }
 
   getSalesByCustomerId(customerId){
@@ -22,7 +22,6 @@ export class SalesService {
   }
 
   createNewSale(sale: Sale){
-    console.log("createNewSale", sale);
     let id = this.firestore.createId();
     return this.firestore.collection('sales').doc( id ).set(sale);
   }

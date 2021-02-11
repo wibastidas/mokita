@@ -104,6 +104,7 @@ export class SaleDetailPage implements OnInit {
     this.sale.cuotasPagadas = this.sale.numeroCuotas - this.sale.cuotasPendientes;
     if(this.sale.cuotasPendientes == 0){
       this.sale.estado = "Pagado"
+      this.sale.fechaUltimoPago = moment().format('ll');
     }
     console.log("this.sale:", this.sale
     );

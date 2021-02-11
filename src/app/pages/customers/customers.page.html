@@ -31,6 +31,7 @@
     </ng-container>
   </ion-list>
 
+
   <ion-fab *ngIf="roleAutorization.canReadCustomer(authSvc.getLoggedUser())" (click)="createCustomer()" style="padding-bottom: 40px;padding-right: 10px;"  vertical="bottom" horizontal="end" edge slot="fixed">
     <ion-fab-button color="secondary">
       <ion-icon name="add"></ion-icon>

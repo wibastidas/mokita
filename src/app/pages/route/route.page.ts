@@ -100,6 +100,7 @@ export class RoutePage implements OnInit, OnDestroy {
   }
 
   calcularRecaudoYsaldo(customers){
+    console.log("customers: ",customers );
     this.totalRecaudado = 0;
     this.totalSaldo = 0;
     

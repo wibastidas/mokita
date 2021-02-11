@@ -35,7 +35,8 @@ export interface Sale {
     saldo: any,
     userUid?: string,
     createdBy?: string,
-    adminId?: string
+    adminId?: string,
+    fechaUltimoPago?: any
 }
 
 export interface Expense {
