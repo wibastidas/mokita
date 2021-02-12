@@ -5,27 +5,55 @@
 </ion-header>
 
 <ion-content>
-  <ion-item-divider *ngIf="customers$ | async">
-    <ion-label>
-      Total a recaudar: {{totalRecaudar | currency :'$':'symbol':'1.2-2'}}  
-    </ion-label>
-  </ion-item-divider>
 
-  <ion-item-divider *ngIf="customers$ | async">
-    <ion-label>
-      Total Recaudado: {{totalRecaudado | currency :'$':'symbol':'1.2-2'}}  
-    </ion-label>
-  </ion-item-divider>
+  <ion-card *ngIf="customers$ | async; else loading">
+    <ion-item>
+      <ion-icon color="tertiary" name="wallet-outline" slot="start"></ion-icon>
+      <ion-label>Total a recaudar</ion-label>
+      <!-- <ion-button fill="outline" slot="end">Ver</ion-button> -->
+    </ion-item>
+  
+    <ion-card-content class="ion-text-center">
+      <h1>{{totalRecaudar | currency :'$':'symbol':'1.2-2'}} </h1>
+    </ion-card-content>
+  </ion-card>
 
-  <ion-item-divider *ngIf="isAdmin && customers$ | async">
-    <ion-label>
-      Total Saldo: {{totalSaldo | currency :'$':'symbol':'1.2-2'}}  
-    </ion-label>
-  </ion-item-divider>
+  <ion-card *ngIf="customers$ | async">
+    <ion-item>
+      <ion-icon color="secondary" name="cash-outline" slot="start"></ion-icon>
+      <ion-label>Total Recaudado</ion-label>
+    </ion-item>
+  
+    <ion-card-content class="ion-text-center">
+      <h1>{{totalRecaudado | currency :'$':'symbol':'1.2-2'}} </h1>
+    </ion-card-content>
+  </ion-card>
 
-  <ion-item-divider *ngIf="expenses$ | async; let expenses">
-    <ion-label>
-      Gastos del día: {{gastosDelDia | currency :'$':'symbol':'1.2-2'}}  
-    </ion-label>
-  </ion-item-divider>
+  <ion-card *ngIf="isAdmin && customers$ | async">
+    <ion-item>
+      <ion-icon color="primary" name="reader-outline" slot="start"></ion-icon>
+      <ion-label>Total Saldo</ion-label>
+    </ion-item>
+  
+    <ion-card-content class="ion-text-center">
+      <h1>{{totalSaldo | currency :'$':'symbol':'1.2-2'}} </h1>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="expenses$ | async; let expenses">
+    <ion-item>
+      <ion-icon color="warning" name="color-fill-outline" slot="start"></ion-icon>
+      <ion-label>Gastos del día</ion-label>
+    </ion-item>
+  
+    <ion-card-content class="ion-text-center">
+      <h1>{{gastosDelDia | currency :'$':'symbol':'1.2-2'}} </h1>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
+
+<ng-template #loading>
+  <ion-progress-bar color="secondary" type="indeterminate"></ion-progress-bar>
+  <app-skeleton></app-skeleton>
+</ng-template>
