@@ -24,3 +24,334 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+.modal-wrapper
+{
+    background: transparent !important;
+}
+
+.searchbar-input-container
+{
+       // padding-left: 10px !important;
+}
+
+
+ion-title 
+{
+    font-family: 'AvenirH' !important;
+    span
+    {
+        color: #77869E !important;
+        font-family: 'AvenirR' !important;
+        font-size: .9rem !important;
+    }
+}
+ion-tab-bar 
+{
+    --ion-tab-bar-color-activated: #267DCE;
+  ion-tab-button{
+    text-align: center !important;
+    margin-top: -20px !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 25px !important;
+    ion-label{
+        padding-top: 40px !important;
+    }
+    &:nth-child(1) {
+        background: url(./assets/imgs/tabicn/home.svg);
+    }
+    &:nth-child(2) {
+        background: url(./assets/imgs/tabicn/profile.svg);
+    }
+    &:nth-child(3) {
+        // background: url(./assets/imgs/tabicn/Wallet.svg);
+    }
+    &:nth-child(4) {
+        background: url(./assets/imgs/tabicn/Wallet.svg);
+    }
+    &:nth-child(5) {
+        background: url(./assets/imgs/tabicn/Expenses.svg);
+    }
+
+    &[aria-selected=true] {
+        &:nth-child(1) {
+            background: url(./assets/imgs/tabicn/Homea.svg);
+        }
+        &:nth-child(2) {
+            background: url(./assets/imgs/tabicn/profilea.svg);
+        }
+        &:nth-child(3) {
+            // background: url(./assets/imgs/tabicn/Walleta.svg);
+        }
+        &:nth-child(4) {
+            background: url(./assets/imgs/tabicn/Walleta.svg);
+        }
+        &:nth-child(5) {
+            background: url(./assets/imgs/tabicn/Expensesa.svg);
+        }
+    }
+  }
+}
+
+ion-button
+{
+    --border-radius: 0.5rem;
+    font-family: 'AvenirH' !important;
+    text-transform: none !important;
+}
+
+.absolute
+{
+    left: 0;
+    position: absolute;
+    right: 0;
+}
+
+.the-title
+{
+    h2{
+        font-family: 'AvenirH' !important;
+        margin-top: 0 !important;
+    }
+
+    h3{
+        color: #042C5C;
+        font-family: "AvenirH" !important;
+        font-size: 1.25rem;
+        margin-top: 0 !important;
+
+    }
+}
+
+
+form
+{
+    .details
+    {
+        .detail-item
+        {
+            --highlight-color-invalid:red;
+            --highlight-color-valid: #2AD95A;
+
+            margin: 1rem 0 !important;
+
+            ion-label
+            {
+                color: #77869E !important;
+                font-family: 'AvenirR' !important;
+                font-size: .9rem !important;
+            }
+
+            .icn-holder
+            {
+                ion-icon
+                {
+                    color: #2AD95A !important;
+                    font-size: 1.5rem !important;
+                }
+            }
+
+            ion-input
+            {
+                font-family: 'AvenirM' !important;
+            }
+        }
+
+        .col-forgot
+        {
+            p{
+                font-family: 'AvenirH' !important;
+                font-size: 0.9rem !important;
+                color: #0047CC !important;
+            }
+        }
+
+        .agreement-holder
+        {
+            ion-item
+            {
+                ion-checkbox
+                {
+                    margin-right: 10px !important;
+                }
+                ion-label
+                {
+                    color: #77869E !important;
+                    font-family: 'AvenirR' !important;
+                    font-size: 0.9rem !important;
+                }
+            }
+        }
+
+        #remember-holder
+        {
+            ion-label
+            {
+                color: #77869E !important;
+                font-family: 'AvenirR' !important;
+                font-size: 0.9rem !important;
+            }
+        }
+
+      
+
+        ion-checkbox
+        {
+            margin-right: 5px !important;  
+        }
+
+
+        .error-messages
+        {
+            color: red;
+            font-size: 0.7em;
+            margin-top: 10px;
+            text-align:center;
+        }
+      
+    }
+
+    .btn-holder
+    {
+        ion-button
+        {
+            height: 3rem !important;
+        }
+    }
+}
+
+.signup-holder
+{
+    margin-top: 20px;
+
+    p
+    {
+    color: #77869E;
+    font-family: 'AvenirR' !important;
+
+        span
+        {
+            color: #042C5C;
+            font-family: 'AvenirH' !important;
+            font-weight: bolder !important;
+           
+        
+        }
+    }
+}
+
+.ngx-gauge-meter
+{
+    height: 250px !important;
+
+    .reading-block
+    {
+        font-family: 'AvenirB' !important;
+    }
+
+    .reading-label
+    {
+        color: #77869E !important;
+        font-family: 'AvenirH' !important;
+    }
+}
+
+.segments-holder 
+{
+    padding: 0 10px !important;
+    ion-segment
+    {
+        ion-segment-button
+        {
+            --background-checked: #DFE7F5;
+            font-family: 'AvenirH' !important;
+            font-size: 0.8rem !important;
+            min-height: 3rem !important;
+            ion-label {
+                margin: 0 !important;
+            }
+            //margin: 0 10px !important;
+        }
+    }
+}
+
+.details {
+    h3 
+    {
+        color: #042C5C;
+        font-family: 'AvenirH' !important;
+        font-size: 1.25rem;
+        margin-top: 0 !important;
+    }
+
+    .the-list {
+
+        ion-item
+        {
+            margin: 10px 0 !important;
+            
+            ion-label
+            {
+                h4
+                {
+                    color: #042C5C !important;
+                    font-family: 'AvenirH' !important;
+                
+                }
+
+                p
+                {
+                    color: #77869E !important;
+                    font-family: 'AvenirR' !important;
+                
+                }
+            }
+
+            h5 {
+                color: #ee5a55 !important;
+                font-family: 'AvenirH' !important;
+            }
+        }
+    }
+}
+
+.cat-holder
+{
+   overflow-x: scroll !important;
+   overflow-y: hidden !important;
+   white-space: nowrap !important;
+   &::-webkit-scrollbar
+   {
+     display: none !important;
+    }
+   ion-radio-group
+   {
+     .rad-item
+     {
+         margin: 0 10px !important;
+         width: 70px;
+        display: inline-block !important;
+        ion-item
+        {
+            --min-height:70px;
+            --border-radius:50% !important;
+            ion-radio
+            {
+                opacity: 0 !important;
+            }
+        }
+     }
+       
+    }
+
+    .item-radio-checked
+    {
+    --background: #dfe7f5 !important;
+    --color:var(--ion-color-primary) !important;
+    }
+}
+
+
+
