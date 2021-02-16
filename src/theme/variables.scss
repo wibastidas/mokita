@@ -75,33 +75,11 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
-
-  /** facebook **/
-  --ion-color-facebook: #3b5998;
-  --ion-color-facebook-rgb: 59,89,152;
-  --ion-color-facebook-contrast: #ffffff;
-  --ion-color-facebook-contrast-rgb: 255,255,255;
-  --ion-color-facebook-shade: #344e86;
-  --ion-color-facebook-tint: #4f6aa2;
-  
-  /** google **/
-  --ion-color-google: #dd4b39;
-  --ion-color-google-rgb: 221,75,57;
-  --ion-color-google-contrast: #ffffff;
-  --ion-color-google-contrast-rgb: 255,255,255;
-  --ion-color-google-shade: #c24232;
-  --ion-color-google-tint: #e05d4d;
 }
 
 
 
-@media (prefers-color-scheme: dark) {
-  /*
-   * Dark Colors
-   * -------------------------------------------
-   */
-
-  body {
+.dark-theme {
   --ion-color-primary: #0047CC;
   --ion-color-primary-rgb: 0,71,204;
   --ion-color-primary-contrast: #ffffff;
@@ -171,7 +149,7 @@
  * ----------------------------------------------------------------------------
  */
 
- .ios body {
+.dark-theme.ios {
   --ion-background-color: #000000;
   --ion-background-color-rgb: 0,0,0;
 
@@ -201,8 +179,6 @@
   --ion-toolbar-background: #0d0d0d;
 
   --ion-item-background: #000000;
-  --ion-card-background: #1c1c1d;
-
 }
 
 
@@ -211,7 +187,7 @@
  * ----------------------------------------------------------------------------
  */
 
- .md body {
+.dark-theme.md {
   --ion-background-color: #121212;
   --ion-background-color-rgb: 18,18,18;
 
@@ -245,10 +221,8 @@
   --ion-toolbar-background: #1f1f1f;
 
   --ion-tab-bar-background: #1f1f1f;
-  --ion-card-background: #1e1e1e;
-
-  }
 }
+
 
 @font-face {
   font-family: 'AvenirB';

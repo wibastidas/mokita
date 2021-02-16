@@ -16,12 +16,20 @@ export class RoutePage implements OnInit, OnDestroy {
   public loading;
   public sales: any[];
   public today = moment().format('ll');
+  public dayToday = moment().format('llll');
   public totalRecaudado;
   public totalSaldo;
   public customers$: Observable<any>
   public isAdmin;
   private subscription = new Subscription();
+  public totalRecaudar;
 
+  category:any = "day";
+  gaugeLabel = "de $1000";
+  gaugePrependText = "$"
+  gaugeType = "arch";
+  gaugeValue = 10.5;
+  
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
               public authSvc: AuthService, 
@@ -100,25 +108,26 @@ export class RoutePage implements OnInit, OnDestroy {
   calcularRecaudoYsaldo(customers){
     this.totalRecaudado = 0;
     this.totalSaldo = 0;
-    
+    this.totalRecaudar = 0;
+
     customers.forEach(customer => {
-
-      if(customer.sale && customer.sale.abonos && customer.sale.abonos[0] && customer.sale.abonos[customer.sale.abonos.length - 1] 
-        && (customer.sale.abonos[customer.sale.abonos.length - 1].createdAt == this.today) 
-        && (customer.sale.abonos[customer.sale.abonos.length - 1].monto > 0) ){
-
-          customer.sale.abonos.forEach(abono => {
-            if(abono.createdAt == this.today){
-              this.totalRecaudado+=  abono.monto;
-            }
-          });
+      if(customer.sale && customer.sale.abonos && customer.sale.abonos.length > 0) {
+        customer.sale.abonos.forEach(abono => {
+          if(abono.createdAt == this.today && abono.monto > 0) {
+            this.totalRecaudado+=  abono.monto;
+          }
+        })
       }
 
-      if(customer.sale && customer.sale.saldo){
+      if(customer.sale && customer.sale.saldo) {
         this.totalSaldo+= customer.sale.saldo;
-      }
 
-      this.loading = false;
+        if(customer.sale.montoCuota <= customer.sale.saldo) {
+          this.totalRecaudar+= customer.sale.montoCuota;
+        } else {
+          this.totalRecaudar+= customer.sale.saldo;
+        }
+      }
 
     });
   }

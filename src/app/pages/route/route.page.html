@@ -1,5 +1,5 @@
 
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-title>Mi Ruta</ion-title>
     <ion-buttons slot="primary">
@@ -13,6 +13,45 @@
 <ion-content>
 
   <ng-container *ngIf="customers$ | async; else loading; let customers">
+
+    <div class="background-holder">
+
+    </div>
+    <div class="top-card absolute ion-text-center ion-padding-vertical">
+      <ion-row class="top-row">
+        <ion-col size="auto" class="ion-text-left">
+          <p>Resumen de <strong> recaudo </strong></p>
+        </ion-col>
+        <ion-col class="ion-text-right" id="right-col">
+          <p>{{today}}</p>
+        </ion-col>
+      </ion-row>
+      <ngx-gauge [type]="gaugeType" size="250" [value]="totalRecaudado" [label]=" 'de $' + totalRecaudar" [prepend]="gaugePrependText"
+        thick="12" cap="round" foregroundColor="rgb(0, 71, 204)">
+  
+      </ngx-gauge>
+  
+      <div class="guage-top-content absolute ion-text-center">
+        <img src="assets/imgs/Walleta.svg" alt="">
+        <p>Total recaudado</p>
+      </div>
+      <div class="precentage-row">
+        <ion-row>
+          <ion-col class="col-left ion-text-left">
+            <p>0%</p>
+          </ion-col>
+          <ion-col class="col-right ion-text-right">
+            <p>100%</p>
+          </ion-col>
+        </ion-row>
+      </div>
+  
+    </div>
+  
+  
+    <div class="bottom-section ">
+  
+    </div>
     
       <ion-item-sliding  *ngFor="let customer of customers">
           <ng-container>
