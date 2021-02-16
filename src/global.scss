@@ -47,53 +47,53 @@ ion-title
         font-size: .9rem !important;
     }
 }
-ion-tab-bar 
-{
-    --ion-tab-bar-color-activated: #267DCE;
-  ion-tab-button{
-    text-align: center !important;
-    margin-top: -20px !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    background-size: 25px !important;
-    ion-label{
-        padding-top: 40px !important;
-    }
-    &:nth-child(1) {
-        background: url(./assets/imgs/tabicn/home.svg);
-    }
-    &:nth-child(2) {
-        background: url(./assets/imgs/tabicn/profile.svg);
-    }
-    &:nth-child(3) {
-        // background: url(./assets/imgs/tabicn/Wallet.svg);
-    }
-    &:nth-child(4) {
-        background: url(./assets/imgs/tabicn/Wallet.svg);
-    }
-    &:nth-child(5) {
-        background: url(./assets/imgs/tabicn/Expenses.svg);
-    }
+// ion-tab-bar 
+// {
+//     --ion-tab-bar-color-activated: #267DCE;
+//   ion-tab-button{
+//     text-align: center !important;
+//     margin-top: -20px !important;
+//     background-repeat: no-repeat !important;
+//     background-position: center !important;
+//     background-size: 25px !important;
+//     ion-label{
+//         padding-top: 40px !important;
+//     }
+//     &:nth-child(1) {
+//         background: url(./assets/imgs/tabicn/home.svg);
+//     }
+//     &:nth-child(2) {
+//         background: url(./assets/imgs/tabicn/profile.svg);
+//     }
+//     &:nth-child(3) {
+//         // background: url(./assets/imgs/tabicn/Wallet.svg);
+//     }
+//     &:nth-child(4) {
+//         background: url(./assets/imgs/tabicn/Wallet.svg);
+//     }
+//     &:nth-child(5) {
+//         background: url(./assets/imgs/tabicn/profile.svg);
+//     }
 
-    &[aria-selected=true] {
-        &:nth-child(1) {
-            background: url(./assets/imgs/tabicn/Homea.svg);
-        }
-        &:nth-child(2) {
-            background: url(./assets/imgs/tabicn/profilea.svg);
-        }
-        &:nth-child(3) {
-            // background: url(./assets/imgs/tabicn/Walleta.svg);
-        }
-        &:nth-child(4) {
-            background: url(./assets/imgs/tabicn/Walleta.svg);
-        }
-        &:nth-child(5) {
-            background: url(./assets/imgs/tabicn/Expensesa.svg);
-        }
-    }
-  }
-}
+//     &[aria-selected=true] {
+//         &:nth-child(1) {
+//             background: url(./assets/imgs/tabicn/Homea.svg);
+//         }
+//         &:nth-child(2) {
+//             background: url(./assets/imgs/tabicn/profilea.svg);
+//         }
+//         &:nth-child(3) {
+//             // background: url(./assets/imgs/tabicn/Walleta.svg);
+//         }
+//         &:nth-child(4) {
+//             background: url(./assets/imgs/tabicn/Walleta.svg);
+//         }
+//         &:nth-child(5) {
+//             background: url(./assets/imgs/tabicn/Expensesa.svg);
+//         }
+//     }
+//   }
+// }
 
 ion-button
 {
