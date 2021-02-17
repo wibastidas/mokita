@@ -1,7 +1,7 @@
 {
   "name": "Mokita",
   "short_name": "Mokita",
-  "theme_color": "#007965",
+  "theme_color": "#0047CC",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
