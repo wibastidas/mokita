@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
+import { SalesService } from 'src/app/services/sales.service';
 
 @Component({
   selector: 'app-route',
@@ -34,6 +35,8 @@ export class RoutePage implements OnInit, OnDestroy {
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
               public authSvc: AuthService, 
+              public salesService: SalesService,
+              public alertController: AlertController,
               private customersService: CustomersService,
               public roleAutorization: RoleBasedAutorizationService) {
               }
@@ -65,7 +68,7 @@ export class RoutePage implements OnInit, OnDestroy {
       icon: 'close',
       role: 'cancel',
       handler: () => {
-        console.log('Cancelar clicked');
+        //console.log('Cancelar clicked');
       }
     }];
 
@@ -131,6 +134,78 @@ export class RoutePage implements OnInit, OnDestroy {
       }
 
     });
+  }
+
+  async agregarAbono(sale, montoCuota) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Realizar Abono!',
+      inputs: [
+        {
+          name: 'monto',
+          type: 'number',
+          placeholder: 'Monto',
+          value: montoCuota
+        },
+        {
+          name: 'note',
+          type: 'textarea',
+          placeholder: 'Notas'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            //console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            let monto = 0;
+            if(data.monto){
+              monto = data.monto;
+            }
+            sale.abonos.push({monto, note: data.note, createdAt: moment().format('ll'), createdBy: this.authSvc.getLoggedUser().uid});
+            this.updateSale(sale);
+            
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async updateSale(sale){
+    sale.updatedAt = moment().format('llll');
+    sale.saldo = this.calcularSaldoPendiente(sale);
+    sale.cuotasPendientes = sale.saldo/sale.montoCuota
+    sale.cuotasPagadas = sale.numeroCuotas - sale.cuotasPendientes;
+    if(sale.cuotasPendientes <= 0){
+      sale.estado = "Pagado"
+      sale.fechaUltimoPago = moment().format('ll');
+    } else {
+      sale.estado = "Activo"
+      sale.fechaUltimoPago = "";
+    }
+    await this.salesService.updateSale(sale);
+  }
+
+
+  calcularSaldoPendiente(sale){
+
+    let saldo = sale.montoConInteres;
+    if(sale && sale.abonos && sale.abonos.length > 0) {
+      saldo = sale.montoConInteres - this.calcularAbonos(sale.abonos);
+    }
+    return saldo;
+  }
+
+  calcularAbonos(abonos){
+    return abonos.reduce((total, abono) => total + abono.monto, 0);
   }
 
   ngOnDestroy() {

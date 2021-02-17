@@ -63,7 +63,7 @@ export class SaleDetailPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Confirm Cancel');
+            //console.log('Confirm Cancel');
           }
         }, {
           text: 'Guardar',
@@ -109,9 +109,7 @@ export class SaleDetailPage implements OnInit {
       this.sale.estado = "Activo"
       this.sale.fechaUltimoPago = "";
     }
-    console.log("this.sale:", this.sale
-    );
-    await this.salesService.updateSale(this.sale).then(res => { console.log("modificado!!!") }); 
+    await this.salesService.updateSale(this.sale);
   }
 
   calcularSaldoPendiente(sale){
@@ -180,7 +178,7 @@ export class SaleDetailPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Confirm Cancel');
+            //console.log('Confirm Cancel');
           }
         }, {
           text: 'Guardar',

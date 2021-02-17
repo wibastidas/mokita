@@ -26,7 +26,7 @@
           <p class="ion-text-capitalize">{{dayName}} <strong>{{dayToday}} </strong></p>
         </ion-col>
       </ion-row>
-      <ngx-gauge [max]='totalRecaudar' [type]="gaugeType" size="250" [value]="totalRecaudado" [label]=" 'de $' + totalRecaudar" [prepend]="gaugePrependText"
+      <ngx-gauge [max]='totalRecaudar' [type]="gaugeType" size="250" [value]="totalRecaudado" [label]="totalRecaudar | currency:'$' : 'symbol' : '1.0-0'" [prepend]="gaugePrependText"
         thick="12" cap="round" foregroundColor="rgb(0, 71, 204)">
   
       </ngx-gauge>
@@ -89,11 +89,11 @@
               </ion-item>
 
               <ion-item-options>
-                <ion-item-option color="danger">
+                <ion-item-option (click)="agregarAbono(customer.sale, 0)" color="danger">
                   <ion-icon slot="bottom" name="close-circle-outline"></ion-icon>
                   No Abonado
                 </ion-item-option>
-                <ion-item-option color="secondary">
+                <ion-item-option (click)="agregarAbono(customer.sale, customer.sale.montoCuota)" color="secondary">
                   <ion-icon slot="bottom" name="cash"></ion-icon>
                   Abonar
                 </ion-item-option>
