@@ -1,55 +1,97 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Reportes</ion-title>
+    <ion-title>Expenses</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding-horizontal" *ngIf="customers$ | async; else loading">
 
-  <ion-card *ngIf="customers$ | async; else loading">
-    <ion-item>
-      <ion-icon color="tertiary" name="wallet-outline" slot="start"></ion-icon>
-      <ion-label>Total a recaudar</ion-label>
-      <!-- <ion-button fill="outline" slot="end">Ver</ion-button> -->
+  <div class="top-item">
+    <ion-item lines="none">
+      <div slot='start' class="left-section">
+        <p>Balance</p>
+        <h1>{{(totalRecaudado - gastosDelDia) | currency :'$':'symbol':'1.0-2'}}</h1>
+      </div>
+      <!-- <div slot='end' class="right-section">
+        <p id="up"> <img src="assets/imgs/Up.svg" alt=""> &nbsp;$3,214</p>
+        <p id="down"> <img src="assets/imgs/Down.svg" alt=""> &nbsp;$3,214</p>
+      </div> -->
     </ion-item>
-  
-    <ion-card-content class="ion-text-center">
-      <h1>{{totalRecaudar | currency :'$':'symbol':'1.2-2'}} </h1>
-    </ion-card-content>
-  </ion-card>
+  </div>
 
-  <ion-card *ngIf="customers$ | async">
-    <ion-item>
-      <ion-icon color="secondary" name="cash-outline" slot="start"></ion-icon>
-      <ion-label>Total Recaudado</ion-label>
-    </ion-item>
-  
-    <ion-card-content class="ion-text-center">
-      <h1>{{totalRecaudado | currency :'$':'symbol':'1.2-2'}} </h1>
-    </ion-card-content>
-  </ion-card>
+  <div class="statics">
+    <ion-row>
+      <ion-col text-left>
+        <ion-item lines="none">
+          <div class="thumb" slot="start" style="margin-right: 12px;" >
+            <img src="assets/imgs/Up1.svg" alt="">
+          </div>
+          <ion-label>
+            <p>Recaudo</p>
+            <h3>{{totalRecaudado | currency :'$':'symbol':'1.0-2'}}</h3>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col text-left>
+        <ion-item lines="none">
+          <div class="thumb" slot="start" style="margin-right: 12px;" >
+            <img src="assets/imgs/Down1.svg" alt="">
+          </div>
+          <ion-label>
+            <p>Gastos</p>
+            <h3>{{gastosDelDia | currency :'$':'symbol':'1.0-2'}}</h3>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
 
-  <ion-card *ngIf="isAdmin && customers$ | async">
-    <ion-item>
-      <ion-icon color="primary" name="reader-outline" slot="start"></ion-icon>
-      <ion-label>Total Saldo</ion-label>
-    </ion-item>
-  
-    <ion-card-content class="ion-text-center">
-      <h1>{{totalSaldo | currency :'$':'symbol':'1.2-2'}} </h1>
-    </ion-card-content>
-  </ion-card>
 
-  <ion-card *ngIf="expenses$ | async; let expenses">
-    <ion-item>
-      <ion-icon color="warning" name="color-fill-outline" slot="start"></ion-icon>
-      <ion-label>Gastos del día</ion-label>
-    </ion-item>
-  
-    <ion-card-content class="ion-text-center">
-      <h1>{{gastosDelDia | currency :'$':'symbol':'1.2-2'}} </h1>
-    </ion-card-content>
-  </ion-card>
+
+  <div class="top-card absolute ion-text-center ion-padding-vertical">
+    <ion-row class="top-row">
+      <ion-col size="auto" class="ion-text-left">
+        <!-- <p>Resumen <strong> </strong></p> -->
+      </ion-col>
+      <ion-col class="ion-text-right" id="right-col">
+        <!-- <p class="ion-text-capitalize">sdf<strong>asdasd</strong></p> -->
+      </ion-col>
+    </ion-row>
+
+    <ngx-gauge  [type]="gaugeType"  [value]="totalRecaudado"  [label]="totalRecaudar | currency:'$' : 'symbol' : '1.0-0'"  [append]="gaugeAppendText" [max]='totalRecaudar' 
+     foregroundColor="rgb(0, 71, 204)">
+    </ngx-gauge>
+
+    <div class="guage-top-content absolute ion-text-center">
+      <!-- <img src="assets/imgs/Walleta.svg" alt=""> -->
+      <p>Total recaudado</p>
+    </div>
+    <div class="precentage-row">
+      <ion-row>
+        <ion-col class="col-left ion-text-left">
+          <!-- <p>0%</p> -->
+        </ion-col>
+        <ion-col class="col-right ion-text-right">
+          <!-- <p>100%</p> -->
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+
+  <div class="bottom-section" *ngIf="customers$ | async; else loading; let customers">
+    <ion-row class="btns-holder">
+      <ion-col>
+        <ion-button expand="block">
+          Número de Clientes 
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block">
+          {{customers.length}} &nbsp;
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
 
 </ion-content>
 

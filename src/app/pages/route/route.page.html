@@ -45,7 +45,6 @@
           </ion-col>
         </ion-row>
       </div>
-  
     </div>
   
     <div class="bottom-section ">
@@ -58,7 +57,7 @@
         </div>
        
         <div class="list-holder ion-padding-horizontal">
-          <div class="the-list" *ngIf="category == 'day'">
+          <div class="the-list">
 
             <ion-item-sliding  *ngFor="let customer of customers">
               <ion-item lines="none" *ngIf="customer && customer.sale" (click)="goSaleDetail(customer.sale)">
@@ -89,11 +88,11 @@
               </ion-item>
 
               <ion-item-options>
-                <ion-item-option (click)="agregarAbono(customer.sale, 0)" color="danger">
+                <ion-item-option (click)="agregarAbono(customer.sale, 0)" color="danger" style="border-radius: 5px;">
                   <ion-icon slot="bottom" name="close-circle-outline"></ion-icon>
                   No Abonado
                 </ion-item-option>
-                <ion-item-option (click)="agregarAbono(customer.sale, customer.sale.montoCuota)" color="secondary">
+                <ion-item-option (click)="agregarAbono(customer.sale, customer.sale.montoCuota)" color="secondary" style="border-radius: 5px;">
                   <ion-icon slot="bottom" name="cash"></ion-icon>
                   Abonar
                 </ion-item-option>

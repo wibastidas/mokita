@@ -21,6 +21,9 @@ export class StatsPage implements OnInit, OnDestroy {
   public customers$: Observable<any>;
   public expenses$: Observable<any>
 
+  gaugeType = "full";
+  gaugeAppendText = "$";
+
   constructor(public authSvc: AuthService, private customersService: CustomersService, private expensesService: ExpensesService,) { }
 
   ngOnInit() {

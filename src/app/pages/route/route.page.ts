@@ -27,10 +27,8 @@ export class RoutePage implements OnInit, OnDestroy {
   public totalRecaudar;
 
   category:any = "day";
-  gaugeLabel = "de $1000";
   gaugePrependText = "$"
   gaugeType = "arch";
-  gaugeValue = 10.5;
   
   constructor(private router: Router,
               private actionSheetController: ActionSheetController,
