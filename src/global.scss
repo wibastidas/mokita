@@ -288,9 +288,9 @@ form
 
     .the-list {
 
-        ion-item
+        ion-item 
         {
-            margin: 10px 0 !important;
+            margin: 5px 0 !important;
             
             ion-label
             {
@@ -307,12 +307,30 @@ form
                     font-family: 'AvenirR' !important;
                 
                 }
+                .less-important {
+                    font-size: 10px;
+                }
             }
 
             h5 {
                 color: #ee5a55 !important;
                 font-family: 'AvenirH' !important;
+                margin-top: 1px;
+                margin-bottom: 1px;
             }
+            .pending-text {
+                color: #77869E !important;
+                font-family: 'AvenirR' !important;
+                font-size: 12px;
+                margin-top: 0px;
+                margin-bottom: 0px;
+                font-weight: bold;
+            }
+        }
+
+        ion-item-options ion-item-option {
+            margin-top: 5px !important;
+            margin-bottom: 5px !important;
         }
     }
 }

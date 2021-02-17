@@ -16,7 +16,8 @@ export class RoutePage implements OnInit, OnDestroy {
   public loading;
   public sales: any[];
   public today = moment().format('ll');
-  public dayToday = moment().format('llll');
+  public dayName = moment().format('dddd') ;
+  public dayToday = moment(new Date()).format("DD/MM/YYYY")
   public totalRecaudado;
   public totalSaldo;
   public customers$: Observable<any>
