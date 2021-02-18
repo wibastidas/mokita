@@ -1,47 +1,115 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-title>Clientes</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title></ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="customer-page">
-  <ion-list *ngIf="roleAutorization.canReadCustomer(authSvc.getLoggedUser())">
-    <ng-container *ngIf="customers$ | async; else loading; let customers">
-      <ion-item-sliding  *ngFor="let customer of customers">
-        <ion-item (click)="goCustomerDetail(customer)">
-          <ion-avatar slot="start">
+
+<ion-content class="customer-page" *ngIf="roleAutorization.canReadCustomer(authSvc.getLoggedUser())">
+
+  <div class="background-holder"></div>
+
+  <ng-container *ngIf="customers$ | async; else loading; let customers">
+
+    <div class="top-card ion-text-center ion-padding-vertical">
+      <div class="img-holder">
+        <ion-avatar>
+          <img src="assets/imgs/badge3.svg" alt="">
+        </ion-avatar>
+
+      </div>
+      <div class="details">
+        <h5> {{customers.length}}<span> &nbsp;<img src="assets/imgs/verified.svg" alt=""></span> </h5>
+        <p>Total Clientes</p>
+      </div>
+      <!-- <div class="ion-padding-horiozntal">
+        <div class="badge-holder">
+          <div class="badge">
+            <img src="assets/imgs/badge1.svg">
+          </div>
+          <div class="badge">
+            <img src="assets/imgs/badge2.svg">
+          </div>
+          <div class="badge">
+            <img src="assets/imgs/badge3.svg">
+          </div>
+          <div class="badge">
+            <img src="assets/imgs/badge4.svg">
+          </div>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="send-money">
+      <div class="the-title  ion-padding-horizontal">
+        <h3>Clientes</h3>
+      </div>
+      <div class="contact-holder  ion-padding-horizontal" scrollX="true">
+
+        <div class="recip-card ion-text-center" *ngIf="roleAutorization.canReadCustomer(authSvc.getLoggedUser())" (click)="createCustomer()">
+          <div class="add-btn-holder">
+            <img src="assets/imgs/plus.svg" alt="">
+          </div>
+          <p class="ion-text-wrap">
+            Crear nuevo <br> cliente
+          </p>
+        </div>
+        <div class="recip-card ion-text-center" *ngFor="let customer of customers" (click)="goCustomerDetail(customer)">
+          <ion-avatar>
             <text-avatar [text]="customer.name"></text-avatar>
           </ion-avatar>
-          <ion-label>
-            <ion-text>
-              <h3>{{ customer.name }} {{ customer.lastName }}</h3>
-            </ion-text>
-    
-            <p>{{ customer.reference }}</p>
-          </ion-label>
-          <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-          <!-- <ion-button  fill="outline" slot="end">Ver &nbsp; <ion-icon name="eye-outline"> </ion-icon> </ion-button> -->
-        </ion-item>
-        <ion-item-options side="end" *ngIf="roleAutorization.canDeleteCustomer(authSvc.getLoggedUser())">
-          <ion-item-option color="danger"  (click)="deleteCustomer(customer)">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ng-container>
-  </ion-list>
 
-  <ion-item-divider *ngIf="customers$ | async; let customers">
-    <ion-label>
-      Total Clientes: {{customers.length}}
-    </ion-label>
-  </ion-item-divider>
+          <p class="ion-text-wrap">
+            {{ customer.name }} <br> {{ customer.lastName }}
+          </p>
+        </div>
+       
+      </div>
+    </div>
+<!-- 
+    <ion-list>
+      <ng-container>
+        <ion-item-sliding  *ngFor="let customer of customers">
+          <ion-item (click)="goCustomerDetail(customer)">
+            <ion-avatar slot="start">
+              <text-avatar [text]="customer.name"></text-avatar>
+            </ion-avatar>
+            <ion-label>
+              <ion-text>
+                <h3>{{ customer.name }} {{ customer.lastName }}</h3>
+              </ion-text>
+      
+              <p>{{ customer.reference }}</p>
+            </ion-label>
+            <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+          </ion-item>
+          <ion-item-options side="end" *ngIf="roleAutorization.canDeleteCustomer(authSvc.getLoggedUser())">
+            <ion-item-option color="danger"  (click)="deleteCustomer(customer)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ng-container>
+    </ion-list> -->
 
-  <ion-fab *ngIf="roleAutorization.canReadCustomer(authSvc.getLoggedUser())" (click)="createCustomer()" style="padding-bottom: 40px;padding-right: 10px;"  vertical="bottom" horizontal="end" edge slot="fixed">
-    <ion-fab-button color="secondary">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+    <!-- <ion-item-divider *ngIf="customers$ | async; let customers">
+      <ion-label>
+        Total Clientes: {{customers.length}}
+      </ion-label>
+    </ion-item-divider> -->
+
+    <!-- <ion-fab *ngIf="roleAutorization.canReadCustomer(authSvc.getLoggedUser())" (click)="createCustomer()" style="padding-bottom: 40px;padding-right: 10px;"  vertical="bottom" horizontal="end" edge slot="fixed">
+      <ion-fab-button color="secondary">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab> -->
+
+  </ng-container>
 
 </ion-content>
 

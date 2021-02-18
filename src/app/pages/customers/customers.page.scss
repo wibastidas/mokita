@@ -1,3 +1,7 @@
+ion-content {
+    --background: #f8f9f9 !important;
+}
+
 .customer-page {
     /* Custom Skeleton Line Height and Margin */
     .custom-skeleton ion-skeleton-text {
@@ -6,6 +10,128 @@
 
     .custom-skeleton ion-skeleton-text:last-child {
     margin-bottom: 5px;
+    }
+
+    ion-toolbar {
+        --border-width: 0;
+        --background: #0047CC !important;
+        --color: white !important;
+    
+    }
+    
+    ion-content{
+        --background: #F8F9F9!important;
+    }
+    
+    .background-holder
+    {
+        background: #0047CC;
+        height: 35%;
+        border-bottom-right-radius: 40px;
+    }
+    
+    .top-card
+    {
+        background: white;
+        border-radius: 12px;
+        box-shadow:0px 0px 20px rgba(0, 0, 0, 0.08);
+        width: 85%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+    
+        .img-holder
+        {
+            ion-avatar{
+                margin-left: auto;
+                margin-right: auto;
+                --border-radius:12px;
+            }
+        }
+    
+        .details
+        {
+            h5
+            {
+                color: #042C5C !important;
+                font-family: 'AvenirH' !important;
+            }
+    
+            p
+            {
+                color: #77869E !important;
+                font-family: 'AvenirM' !important;
+                margin-top: 0 !important;
+            }
+        }
+    
+        .badge-holder
+        {
+           margin: 0 20px;
+            background: #F8F9F9;
+            border-radius: 12px;
+            padding: 10px 0;
+            .badge
+            {
+                display: inline-block;
+                margin:0 5px;
+            }
+        }
+    }
+
+    .send-money
+    {
+        margin-top: 30px;
+        .contact-holder
+        {
+            margin-top: 30px;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            white-space: nowrap;
+            &::-webkit-scrollbar
+            {
+                display: none;
+            }
+            .recip-card
+            {
+                background: white;
+                border: 1px solid #DFE7F5;
+                box-shadow:0px 0px 20px rgba(0, 0, 0, 0.05);
+                border-radius: 12px;
+                display: inline-block;
+                height: 140px;
+                margin: 0 10px;
+                padding-top: 10px;
+                width: 120px;
+    
+                .add-btn-holder
+                {
+                    height: 64px;
+                    margin: 0 auto;
+                    padding-top: 10px;
+    
+                    img
+                    {
+                        height: 2.5rem;
+                    }
+                }
+                
+                ion-avatar
+                {
+                  margin: 0 auto;
+                }
+                p{
+                    color: #77869E !important;
+                    font-family: 'AvenirM' !important;
+                    font-size: 0.9rem !important;
+                    margin: 0 !important;
+                }
+            }
+    
+        }
     }
 }
 
