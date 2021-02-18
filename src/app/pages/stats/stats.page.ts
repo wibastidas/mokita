@@ -15,6 +15,7 @@ export class StatsPage implements OnInit, OnDestroy {
   public today = moment().format('ll');
   public isAdmin;
   public totalRecaudado;
+  public totalClientesActivos;
   public totalSaldo;
   public gastosDelDia;
   public totalRecaudar;
@@ -60,14 +61,20 @@ export class StatsPage implements OnInit, OnDestroy {
     this.totalRecaudado = 0;
     this.totalSaldo = 0;
     this.totalRecaudar = 0;
+    this.totalClientesActivos = 0;
 
     customers.forEach(customer => {
+
       if(customer.sale && customer.sale.abonos && customer.sale.abonos.length > 0) {
         customer.sale.abonos.forEach(abono => {
           if(abono.createdAt == this.today && abono.monto > 0) {
             this.totalRecaudado+=  abono.monto;
           }
         })
+
+        if(customer.sale.estado === 'Activo'){
+          this.totalClientesActivos+=  1;
+        }
       }
 
       if(customer.sale && customer.sale.saldo) {

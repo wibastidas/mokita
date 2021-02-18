@@ -142,16 +142,29 @@ ion-content
     .bottom-section
     {
         margin-top: 235px;
-        .btns-holder 
+        .btns-holder-1 
         {
             margin-top: 10px;
             padding: 8px 16px;
             ion-button
             {
-                --background: #dfe7f5;
+                --background: #e4e8f7;
                 --border-radius: 12px !important;
                 --box-shadow: none;
                 --color: #0047cc;
+                height: 50px !important;
+            }
+        } 
+        .btns-holder-2 
+        {
+            margin-top: 10px;
+            padding: 8px 16px;
+            ion-button
+            {
+                --background: #3dc2ff;
+                --border-radius: 12px !important;
+                --box-shadow: none;
+                --color: #ffffff;
                 height: 50px !important;
             }
         } 

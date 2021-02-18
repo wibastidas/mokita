@@ -79,15 +79,15 @@
   </div>
 
   <div class="bottom-section" *ngIf="customers$ | async; else loading; let customers">
-    <ion-row class="btns-holder">
-      <ion-col>
+    <ion-row>
+      <ion-col class="btns-holder-1">
         <ion-button expand="block">
-          Número de Clientes 
+          Clientes Activos
         </ion-button>
       </ion-col>
-      <ion-col>
+      <ion-col class="btns-holder-2">
         <ion-button expand="block">
-          {{customers.length}} &nbsp;
+          {{totalClientesActivos}} &nbsp;
         </ion-button>
       </ion-col>
     </ion-row>
