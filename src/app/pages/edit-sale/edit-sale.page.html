@@ -1,8 +1,113 @@
-<ion-header class="ion-no-border">
+
+<ion-header class="ion-no-border" >
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar Préstamo</ion-title>
+    <ion-buttons  slot="end">
+      <ion-button (click)="dismissModal()" >
+        Volver
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="sale">
+
+  <div class="details">
+
+    <div class="the-list" >
+
+      <form 
+      [formGroup]="saleForm" 
+      (ngSubmit)="updateSaleConfirm(saleForm.value)">
+
+      <ion-list-header lines="inset">
+        <ion-label>Préstamo</ion-label>
+      </ion-list-header>
+
+      <div class="sale-form-edit">
+        <ion-item lines="none">
+          <ion-label position="floating" color="primary">Estado: </ion-label>
+          <ion-input type="text"  formControlName="estado" ></ion-input>
+          <ion-icon size="small" name="shield-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+        </ion-item>
+  
+          <ion-item lines="none">
+            <ion-label position="floating" color="primary">Monto: </ion-label>
+            <ion-input type="number"  formControlName="amount"></ion-input>
+            <ion-icon size="small" name="cash-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.amount">
+              <div *ngIf="saleForm.get('amount').hasError(validation.type) && (saleForm.get('amount').dirty || saleForm.get('amount').touched)">
+                {{validation.message}}
+              </div>
+            </ng-container>
+          </div>
+  
+          <ion-item lines="none">
+            <ion-label position="floating" color="primary">% Interés: </ion-label>
+            <ion-input type="number"  formControlName="porcentaje"></ion-input>
+            <ion-icon size="small" name="wallet-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.porcentaje">
+              <div *ngIf="saleForm.get('porcentaje').hasError(validation.type) && (saleForm.get('porcentaje').dirty || saleForm.get('porcentaje').touched)">
+                {{validation.message}}
+              </div>
+            </ng-container>
+          </div>
+  
+          <ion-item lines="none">
+            <ion-label position="floating" color="primary">Número de cuotas: </ion-label>
+            <ion-input type="number"  formControlName="numeroCuotas"></ion-input>
+            <ion-icon size="small" name="sync-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.numeroCuotas">
+              <div *ngIf="saleForm.get('numeroCuotas').hasError(validation.type) && (saleForm.get('numeroCuotas').dirty || saleForm.get('numeroCuotas').touched)">
+                {{validation.message}}
+              </div>
+            </ng-container>
+          </div>
+  
+          <ion-item lines="none">
+            <ion-label position="floating" color="primary">Monto de la Cuota: </ion-label>
+            <ion-input type="text" [value]="montoCuota"  formControlName="montoCuota" ></ion-input>
+            <ion-icon size="small" name="card-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+          </ion-item>
+
+          <div class="bottom-section">
+            <ion-row>
+              <ion-col class="btns-holder">
+                <ion-button [disabled]="saleForm.invalid" type="submit" expand="block">
+                  Actualizar
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </div>
+
+      </div>
+
+      </form>
+    </div>
+  </div>
+</ion-content>
+
+<ng-template #loading>
+  <ion-progress-bar color="secondary" type="indeterminate"></ion-progress-bar>
+  <app-skeleton></app-skeleton>
+</ng-template>
+
+
+
+<!-- <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title>Editar Préstamo</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" (click)="dismissModal()">Cerrar</ion-button>
+      <ion-button color="primary" (click)="dismissModal()">Volver</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -14,28 +119,16 @@
   (ngSubmit)="updateSaleConfirm(saleForm.value)">
 
   <ion-list-header lines="inset">
-    <ion-label>Préstamo</ion-label>
+    <ion-label position="floating" color="primary">Préstamo</ion-label>
   </ion-list-header>
 
-  <ion-item>
+  <ion-item lines="none">
     <ion-label>Estado: </ion-label>
     <ion-input type="text"  formControlName="estado" ></ion-input>
     <ion-icon size="small" name="shield-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
   </ion-item>
 
-  <!-- <ion-item>
-    <ion-label>Creado: </ion-label>
-    <ion-input type="text" formControlName="createdAt" ></ion-input>
-    <ion-icon size="small" name="calendar-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-  </ion-item> -->
-
-  <!-- <ion-item>
-    <ion-label>Vencimiento: </ion-label>
-    <ion-input type="text"  formControlName="vencimiento" ></ion-input>
-    <ion-icon size="small" name="calendar-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-  </ion-item> -->
-
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>Monto: </ion-label>
       <ion-input type="number"  formControlName="amount"></ion-input>
       <ion-icon size="small" name="cash-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
@@ -48,7 +141,7 @@
       </ng-container>
     </div>
 
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>% Interés: </ion-label>
       <ion-input type="number"  formControlName="porcentaje"></ion-input>
       <ion-icon size="small" name="wallet-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
@@ -61,7 +154,7 @@
       </ng-container>
     </div>
 
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>Número de cuotas: </ion-label>
       <ion-input type="number"  formControlName="numeroCuotas"></ion-input>
       <ion-icon size="small" name="sync-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
@@ -74,7 +167,7 @@
       </ng-container>
     </div>
 
-    <ion-item>
+    <ion-item lines="none">
       <ion-label>Monto de la Cuota: </ion-label>
       <ion-input type="text" [value]="montoCuota"  formControlName="montoCuota" ></ion-input>
       <ion-icon size="small" name="card-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
@@ -85,4 +178,4 @@
     </div>
   </form>
  
-</ion-content>
+</ion-content> -->

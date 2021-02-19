@@ -82,6 +82,10 @@ export class EditSalePage implements OnInit, OnDestroy {
       id: new FormControl(""),
       abonos: new FormControl(""),
       saldo: new FormControl(""),
+      createdBy: "",
+      porcentajePagado: "",
+      adminId: "",
+      fechaUltimoPago: "",
       vencimiento: new FormControl({ value: "", disabled: true }, Validators.compose([
         Validators.required
       ]))
@@ -102,7 +106,7 @@ export class EditSalePage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.saleForm.setValue(this.sale);
+    this.saleForm.patchValue(this.sale);
     this.montoCuota = this.saleForm.get('montoCuota').value;
 
     this.saleForm.valueChanges.subscribe(selectedValue => {

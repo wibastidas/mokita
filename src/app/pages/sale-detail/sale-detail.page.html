@@ -1,5 +1,5 @@
 
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border" *ngIf="sale$ | async; let sale">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
