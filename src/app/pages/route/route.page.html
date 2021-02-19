@@ -79,6 +79,7 @@
                   <h4>{{ customer.name }} {{ customer.lastName }}</h4>
                   <p>Cuotas Pendiente: {{customer.sale.cuotasPendientes | number: '1.0-2'}}</p>
                   <p class="less-important">Saldo Pendiente: {{customer.sale.saldo | currency:'$' : 'symbol' : '1.0-0'}}</p>
+                  <p *ngIf="customer.sale.abonos && customer.sale.abonos.length  > 0 && customer.sale.abonos[customer.sale.abonos.length - 1].createdAt == today"  class="less-important">Abono del día: {{customer.sale.abonos[customer.sale.abonos.length - 1].monto | currency:'$' : 'symbol' : '1.0-0'}}</p>
                 </ion-label>
                 <div slot="end">
                   <h5 class="ion-text-center">{{customer.sale.cuotasPendientes | number: '1.0-1'}}</h5>

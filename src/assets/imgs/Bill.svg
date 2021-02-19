@@ -1,5 +1,5 @@
 <svg id="Bill" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
-  <rect id="Rectangle" width="40" height="40" rx="8" fill="#ffcea2"/>
+  <rect id="Rectangle" width="40" height="40" rx="8" fill="#3dc2ff"/>
   <path id="Path" d="M.962.418A.453.453,0,0,0,.481,0,.453.453,0,0,0,0,.418.453.453,0,0,0,.481.836.453.453,0,0,0,.962.418Z" transform="translate(17.613 21.216)" fill="#fff"/>
   <path id="Path-2" data-name="Path" d="M.481,0A.453.453,0,0,0,0,.418.453.453,0,0,0,.481.836.454.454,0,0,0,.962.418.453.453,0,0,0,.481,0Z" transform="translate(17.613 18.248)" fill="#fff"/>
   <path id="Path-3" data-name="Path" d="M.962.418A.453.453,0,0,0,.481,0,.453.453,0,0,0,0,.418.453.453,0,0,0,.481.836.453.453,0,0,0,.962.418Z" transform="translate(17.613 15.28)" fill="#fff"/>

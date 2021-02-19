@@ -104,6 +104,17 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    if (this.authSvc.getLoggedUser()) {
+      this.getInformation(); 
+    } else {
+      this.authSvc.getLoggedUser$().subscribe(value => {
+        this.getInformation(); 
+      });
+    }
+    
+  }
+
+  getInformation(){
     this.isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
     
     if(this.isAdmin) {
@@ -119,7 +130,6 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
       });
     }
 
-    //this.customerForm.setValue(this.customer);
     this.loadingCustomerInformation = true;
     this.customersService.getCustomerById(this.customerId).subscribe((res:Customer) => {
       this.loadingCustomerInformation = false;
@@ -128,19 +138,6 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
       this.customerForm.setValue(res);
       this.getSalesByCustomerId();
     });
-
-
-    // this.customersService.getCustomerById(this.customerId).subscribe(data => {
-    //   let customer = {
-        
-    //       id: data.payload.doc.id,
-    //       ...e.payload.doc.data() as Customer
-        
-    //   }
-    //   console.log("data: ", data)
-    // });
-
-    
   }
 
   getSalesByCustomerId() {
