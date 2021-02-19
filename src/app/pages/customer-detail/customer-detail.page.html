@@ -23,9 +23,9 @@
   </div>
 
   <div class="details" style="margin-top: 30px;">
-    <div class="the-title ion-padding-horizontal">
+    <!-- <div class="the-title ion-padding-horizontal">
       <h3>Información</h3>
-    </div>
+    </div> -->
    
     <div class="segments-holder">
       <ion-segment (ionChange)="segmentChanged($event)" [value]="type" [(ngModel)]="type">
@@ -39,11 +39,11 @@
     </div>
     <div class="list-holder ion-padding-horizontal">
       <div class="the-list" *ngIf="type == 'loansInformation'">
-        <ng-container *ngIf="!sales || sales.length == 0">
+        <!-- <ng-container *ngIf="!sales || sales.length == 0">
           <div class="ion-text-center">
             El cliente no tiene préstamos asociados.
           </div>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container *ngIf="sales && sales.length > 0">
           <ion-item-sliding *ngFor="let sale of sales" class="loan-item">
@@ -57,8 +57,16 @@
                 <p>Monto: {{sale.amount | currency :'$':'symbol':'1.2-2'}}</p>
                 <p>Cuotas: {{sale.numeroCuotas}} x {{sale.montoCuota}} </p>
               </ion-label>
-              <div slot="end">
-                <ion-button style="height: 35px;" *ngIf="roleAutorization.canReadSale(authSvc.getLoggedUser())" (click)="goSaleDetail(sale)"  fill="outline" slot="end">Ver más</ion-button> 
+              <div slot="end"   style="margin-left: 3px;">
+                <!-- <ion-row class="bottom-section" >
+                  <ion-col class="btns-holder">
+                    <ion-button [disabled]="customerForm.invalid"  ype="submit" expand="block">
+                      Ver más
+                    </ion-button>
+                  </ion-col>
+                </ion-row> -->
+
+                <ion-button style="height: 35px;" *ngIf="roleAutorization.canReadSale(authSvc.getLoggedUser())" (click)="goSaleDetail(sale)"  fill="clear" slot="end">Ver más</ion-button> 
               </div>
             </ion-item>
   
@@ -77,7 +85,10 @@
         <form  class="new-customer-page"
         [formGroup]="customerForm" 
         (ngSubmit)="updateCustomer()">
-        
+          <ion-list-header class="ios hydrated">
+            Información Personal
+          </ion-list-header>
+
           <ion-item>
             <ion-label position="floating" color="primary">Nombre: </ion-label>
             <ion-input type="text"  formControlName="name"></ion-input>
@@ -169,8 +180,14 @@
             </ion-select>
           </ion-item>
 
-          <div class="ion-text-center" *ngIf="roleAutorization.canEditCustomer(authSvc.getLoggedUser())" >
-            <ion-button [disabled]="customerForm.invalid" fill="outline" expand="round"  type="submit">Actualizar</ion-button>
+          <div class="bottom-section" *ngIf="roleAutorization.canEditCustomer(authSvc.getLoggedUser())">
+            <ion-row>
+              <ion-col class="btns-holder">
+                <ion-button [disabled]="customerForm.invalid"  ype="submit" expand="block">
+                  Actualizar
+                </ion-button>
+              </ion-col>
+            </ion-row>
           </div>
         
         </form>
@@ -180,175 +197,6 @@
   </div>
 
 </ion-content>
-  
-  <!--  
-
-
-<ion-content class="customer-detail-page" fullscreen>
-  <ion-progress-bar *ngIf="loadingLoansInformation" type="indeterminate"></ion-progress-bar>
-
-  <app-skeleton *ngIf="loadingLoansInformation"></app-skeleton>
-
-  <ion-header [translucent]="true">
-    <ion-toolbar>
-      <ion-segment (ionChange)="segmentChanged($event)"  [(ngModel)]="type">
-        <ion-segment-button value="loansInformation">
-          <ion-label>Préstamos</ion-label>
-        </ion-segment-button>
-        <ion-segment-button  value="customerInformation">
-          <ion-label>Datos Personales</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-content [fullscreen]="true">
-    <div [ngSwitch]="type">
-      <ion-list class="ion-padding" color="light" *ngSwitchCase="'loansInformation'">
-
-        <ng-container *ngIf="!loadingLoansInformation">
-          <div class="ion-text-center" *ngIf="!sales || sales.length == 0">
-            El cliente no tiene préstamos asociados.
-          </div>
-        </ng-container>
-        
-        <ng-container *ngIf="sales && sales.length > 0">
-          <ion-item-sliding *ngFor="let sale of sales" class="loan-item">
-            <ion-item>
-              <ion-label>
-                <h2>Estado: {{sale.estado}}</h2>
-                <h3>Monto: {{sale.amount | currency :'$':'symbol':'1.2-2'}}</h3>
-                <p class="ion-text-capitalize">Cuotas: {{sale.numeroCuotas}} x {{sale.montoCuota}} </p>
-              </ion-label>
-              <ion-button *ngIf="roleAutorization.canReadSale(authSvc.getLoggedUser())" (click)="goSaleDetail(sale)"  fill="outline" slot="end">Ver más</ion-button> 
-            </ion-item>
-  
-            <ion-item-options side="end" *ngIf="roleAutorization.canDeleteSale(authSvc.getLoggedUser())" >
-              <ion-item-option color="danger"  (click)="deleteSaleConfirm(sale)">
-                <ion-icon slot="icon-only" name="trash"></ion-icon>
-              </ion-item-option>
-            </ion-item-options>
-  
-          </ion-item-sliding> 
-        </ng-container>
-      </ion-list>
-
-      <ion-list *ngSwitchCase="'customerInformation'">
-        <form  class="new-customer-page"
-        [formGroup]="customerForm" 
-        (ngSubmit)="updateCustomer()">
- 
-
-          <ion-list-header class="ios hydrated">
-            Información Personal
-          </ion-list-header>
-        
-          <ion-item>
-            <ion-label position="floating" color="primary">Nombre: </ion-label>
-            <ion-input type="text"  formControlName="name"></ion-input>
-            <ion-icon size="small" name="person-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-          </ion-item>
-          <div class="validation-errors">
-            <ng-container *ngFor="let validation of validation_messages.name">
-              <div class="error-message ion-padding-start" *ngIf="customerForm.get('name').hasError(validation.type) && (customerForm.get('name').dirty || customerForm.get('name').touched)">
-                {{validation.message}} 
-              </div>
-            </ng-container>
-          </div>
-        
-          <ion-item>
-            <ion-label position="floating" color="primary">Apellido: </ion-label>
-            <ion-input type="text"  formControlName="lastName"></ion-input>
-            <ion-icon size="small" name="person-circle-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-          </ion-item>
-          <div class="validation-errors">
-            <ng-container *ngFor="let validation of validation_messages.lastName">
-              <div class="error-message ion-padding-start" *ngIf="customerForm.get('lastName').hasError(validation.type) && (customerForm.get('lastName').dirty || customerForm.get('lastName').touched)">
-                {{validation.message}}
-              </div>
-            </ng-container>
-          </div>
-        
-          <ion-item>
-            <ion-label position="floating" color="primary">Cédula: </ion-label>
-            <ion-input type="number"  formControlName="document"></ion-input>
-            <ion-icon size="small" name="wallet-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-          </ion-item>
-          <div class="validation-errors">
-            <ng-container *ngFor="let validation of validation_messages.document">
-              <div class="error-message ion-padding-start" *ngIf="customerForm.get('document').hasError(validation.type) && (customerForm.get('document').dirty || customerForm.get('document').touched)">
-                {{validation.message}}
-              </div>
-            </ng-container>
-          </div>
-        
-          <ion-list-header class="ios hydrated">
-            Datos de Contacto
-          </ion-list-header>
-        
-          <ion-item>
-            <ion-label position="floating" color="primary">Celular: </ion-label>
-            <ion-input type="tel"  formControlName="phoneNumber"></ion-input>
-            <ion-icon size="small" name="phone-portrait-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-          </ion-item>
-          <div class="validation-errors">
-            <ng-container *ngFor="let validation of validation_messages.phoneNumber">
-              <div class="error-message ion-padding-start" *ngIf="customerForm.get('phoneNumber').hasError(validation.type) && (customerForm.get('phoneNumber').dirty || customerForm.get('phoneNumber').touched)">
-                {{validation.message}}
-              </div>
-            </ng-container>
-          </div>
-        
-          <ion-item>
-            <ion-label position="floating" color="primary">Dirección: </ion-label>
-            <ion-input type="text" formControlName="address"></ion-input>
-            <ion-icon size="small" name="map-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-          </ion-item>
-          <div class="validation-errors">
-            <ng-container *ngFor="let validation of validation_messages.address">
-              <div class="error-message ion-padding-start" *ngIf="customerForm.get('address').hasError(validation.type) && (customerForm.get('address').dirty || customerForm.get('address').touched)">
-                {{validation.message}}
-              </div>
-            </ng-container>
-          </div>
-        
-    
-        
-          <ion-item>
-            <ion-label position="floating" color="primary">Referencia: </ion-label>
-            <ion-input type="text" formControlName="reference"></ion-input>
-            <ion-icon size="small" name="reader-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-          </ion-item>
-          <div class="validation-errors">
-            <ng-container *ngFor="let validation of validation_messages.reference">
-              <div class="error-message ion-padding-start" *ngIf="customerForm.get('reference').hasError(validation.type) && (customerForm.get('reference').dirty || customerForm.get('reference').touched)">
-                {{validation.message}}
-              </div>
-            </ng-container>
-          </div>
-
-          <ion-item *ngIf="roleAutorization.canEditCustomerVendor(authSvc.getLoggedUser())" >
-            <ion-label>Seleccionar Cobrador</ion-label>
-            <ion-select okText="Seleccionar" cancelText="Cancelar" formControlName="cobradorId">
-              <ion-select-option *ngFor="let cobrador of cobradores" value="{{cobrador.uid}}">{{cobrador.displayName || cobrador.email}} </ion-select-option>
-            </ion-select>
-          </ion-item>
-
-          <div class="ion-text-center" *ngIf="roleAutorization.canEditCustomer(authSvc.getLoggedUser())" >
-            <ion-button [disabled]="customerForm.invalid" fill="outline" expand="round"  type="submit">Actualizar</ion-button>
-          </div>
-        
-        </form>
-        
-         
-      </ion-list>
-    </div>
-  </ion-content>
-
-
-
-</ion-content> -->
-
 
 <ng-template #loading>
   <ion-progress-bar color="secondary" type="indeterminate"></ion-progress-bar>
