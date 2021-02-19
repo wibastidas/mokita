@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
 import { Sale } from '../interfaces/interfaces';
 
 @Injectable({
@@ -14,7 +15,13 @@ export class SalesService {
   }
 
   getSaleById(saleId: string) {
-    return this.firestore.doc('/sales/' + saleId).valueChanges({idField: 'id'});
+    return this.firestore.doc('/sales/' + saleId).valueChanges({idField: 'id'}).pipe(
+        map((response:any) => ({...response, abonos: response.abonos.reverse(), porcentajePagado: this.calcularPorcentaje(response.montoConInteres, response.montoConInteres - response.saldo)}))
+      );
+  }
+
+  calcularPorcentaje(montoConInteres, montoPagado){
+    return (montoPagado / montoConInteres)*100 ;
   }
 
   getSalesByCustomerId(customerId){

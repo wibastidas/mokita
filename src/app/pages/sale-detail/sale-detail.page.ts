@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
 import { Sale } from 'src/app/interfaces/interfaces';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,7 +18,8 @@ import { EditSalePage } from '../edit-sale/edit-sale.page';
 export class SaleDetailPage implements OnInit {
   sale: Sale;
   saleId: string;
-  loading: Boolean= false;
+  // loading: Boolean= false;
+  public sale$: Observable<any>
 
   constructor(private route: ActivatedRoute,
               public alertController: AlertController,
@@ -31,13 +33,15 @@ export class SaleDetailPage implements OnInit {
 
   ngOnInit() {
 
-    this.loading = true;
+    // this.loading = true;
+    this.sale$ = this.salesService.getSaleById(this.saleId);
 
-    this.salesService.getSaleById(this.saleId).subscribe((res: Sale) => {
-      this.loading = false;
-      this.sale = res;
-      this.sale.id = this.saleId;
-    });
+    // this.salesService.getSaleById(this.saleId).subscribe((res: Sale) => {
+    //   console.log("res:", res);
+    //   // this.loading = false;
+    //   this.sale = res;
+    //   this.sale.id = this.saleId;
+    // });
   }
 
   async agregarAbono(montoCuota) {

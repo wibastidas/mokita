@@ -126,7 +126,6 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
             ...e.payload.doc.data() as User
           } 
         });
-        console.log("this.cobradores: ", this.cobradores)
       });
     }
 

@@ -1,3 +1,89 @@
-.sale-detail-page {
-    
+ion-toolbar {
+    --border-width: 0;
+    --background: #0047CC !important;
+    --color: white !important;
+
 }
+
+ion-content{
+    --background: #F8F9F9!important;
+}
+
+.background-holder
+{
+    background: #0047CC;
+    height: 35%;
+    border-bottom-right-radius: 40px;
+}
+
+.top-card
+{
+    background: white;
+    border-radius: 12px;
+    box-shadow:0px 0px 20px rgba(0, 0, 0, 0.08);
+    width: 85%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .img-holder
+    {
+        ion-avatar{
+            margin-left: auto;
+            margin-right: auto;
+            --border-radius:12px;
+        }
+    }
+
+    .details
+    {
+        margin-left: 15px;
+        h5
+        {
+            color: #042C5C !important;
+            font-family: 'AvenirH' !important;
+        }
+
+        p
+        {
+            color: #77869E !important;
+            font-family: 'AvenirM' !important;
+            margin-top: 0 !important;
+            margin-bottom: 1px;
+            font-size: 14px;
+        }
+        .less {
+            font-size: 10px;
+        }
+   
+    }
+}
+ 
+.progress
+{
+    margin-top: 10px;
+
+    ion-label
+    {
+        color: #042C5C !important;
+        font-family: 'AvenirH' !important;
+        font-size: 0.9rem;
+    }
+    ion-progress-bar
+    {
+        --progress-background:#4DF1A1;
+        --buffer-background:#F24750;
+    }
+
+}
+
+.sale-icon
+{
+    height: 35px;
+    width: 35px;
+}
+
+ 

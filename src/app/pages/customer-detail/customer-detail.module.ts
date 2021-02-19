@@ -15,7 +15,7 @@ import { CustomerDetailPage } from './customer-detail.page';
     CustomerDetailPageRoutingModule,
     ReactiveFormsModule,
     SharedModule,
-    TextAvatarModule
+    TextAvatarModule,
   ],
   declarations: [CustomerDetailPage]
 })
