@@ -130,11 +130,13 @@ export class SaleDetailPage implements OnInit {
   }
 
   deleteAbono(index) {
+    console.log(" this.sale: ",  this.sale);
     this.sale.abonos.splice(index, 1);
     this.updateSale();
   }
 
-  async confirmDelete(index){
+  async confirmDelete(index, sale){
+    this.sale = sale;
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -158,7 +160,9 @@ export class SaleDetailPage implements OnInit {
     await alert.present();
   }
 
-  async editarAbono(index) {
+  async editarAbono(index, sale) {
+    this.sale = sale;
+
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Realizar Abono!',
