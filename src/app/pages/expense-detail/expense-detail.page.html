@@ -1,62 +1,76 @@
-<ion-header class="ion-no-border">
+
+<ion-header class="ion-no-border" >
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>Detalle del Gasto</ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="primary" (click)="dismissModal(false)">Volver</ion-button>
+    <ion-buttons  slot="end">
+      <ion-button (click)="dismissModal(false)" >
+        Volver
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
  
-  <form  class="new-expense-page"
-  [formGroup]="expenseForm" 
-  (ngSubmit)="updateExpense()">
-  
-    <ion-item>
+  <div class="expense-form-edit">
 
-      <ion-label>Concepto</ion-label>
-      <ion-select formControlName="concept" placeholder="Seleccionar">
-        <ion-select-option value="Gasolina">Gasolina</ion-select-option>
-        <ion-select-option value="Almuerzo">Almuerzo</ion-select-option>
-        <ion-select-option value="Recarga Celular">Recarga Celular</ion-select-option>
-        <ion-select-option value="Pago de Nomina">Pago de Nomina</ion-select-option>
-        <ion-select-option value="Taller">Taller</ion-select-option>
-        <ion-select-option value="Otros">Otros</ion-select-option>
-      </ion-select>
-      
-    </ion-item>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.concept">
-        <div class="error-message ion-padding-start" *ngIf="expenseForm.get('concept').hasError(validation.type) && (expenseForm.get('concept').dirty || expenseForm.get('concept').touched)">
-          {{validation.message}} 
-        </div>
-      </ng-container>
-    </div>
-  
-    <ion-item>
-      <ion-label position="floating" color="primary">Monto: </ion-label>
-      <ion-input type="number"  formControlName="amount"></ion-input>
-      <ion-icon size="small" name="cash-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-    </ion-item>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.amount">
-        <div class="error-message ion-padding-start" *ngIf="expenseForm.get('amount').hasError(validation.type) && (expenseForm.get('amount').dirty || expenseForm.get('amount').touched)">
-          {{validation.message}}
-        </div>
-      </ng-container>
-    </div>
-  
-    <ion-item>
-      <ion-label position="floating" color="primary">Descripción: </ion-label>
-      <ion-input type="text"  formControlName="description"></ion-input>
-      <ion-icon size="small" name="reader-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-    </ion-item>
+    <form  class="new-expense-page"
+    [formGroup]="expenseForm" 
+    (ngSubmit)="updateExpense()">
+    
+      <ion-item>
 
-    <div class="ion-text-center">
-      <ion-button  *ngIf="roleAutorization.canEditExpense(authSvc.getLoggedUser())"  [disabled]="expenseForm.invalid" fill="outline" expand="round"  type="submit">Actualizar</ion-button>
-    </div>
-  
-  </form>
+        <ion-label>Concepto</ion-label>
+        <ion-select formControlName="concept" placeholder="Seleccionar">
+          <ion-select-option value="Gasolina">Gasolina</ion-select-option>
+          <ion-select-option value="Almuerzo">Almuerzo</ion-select-option>
+          <ion-select-option value="Recarga Celular">Recarga Celular</ion-select-option>
+          <ion-select-option value="Pago de Nomina">Pago de Nomina</ion-select-option>
+          <ion-select-option value="Taller">Taller</ion-select-option>
+          <ion-select-option value="Otros">Otros</ion-select-option>
+        </ion-select>
+        
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.concept">
+          <div class="error-message ion-padding-start" *ngIf="expenseForm.get('concept').hasError(validation.type) && (expenseForm.get('concept').dirty || expenseForm.get('concept').touched)">
+            {{validation.message}} 
+          </div>
+        </ng-container>
+      </div>
+    
+      <ion-item>
+        <ion-label position="floating" color="primary">Monto: </ion-label>
+        <ion-input type="number"  formControlName="amount"></ion-input>
+        <ion-icon size="small" name="cash-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.amount">
+          <div class="error-message ion-padding-start" *ngIf="expenseForm.get('amount').hasError(validation.type) && (expenseForm.get('amount').dirty || expenseForm.get('amount').touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
+      </div>
+    
+      <ion-item>
+        <ion-label position="floating" color="primary">Descripción: </ion-label>
+        <ion-input type="text"  formControlName="description"></ion-input>
+        <ion-icon size="small" name="reader-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+      </ion-item>
+    
+      <div class="bottom-section">
+        <ion-row>
+          <ion-col class="btns-holder">
+            <ion-button *ngIf="roleAutorization.canEditExpense(authSvc.getLoggedUser())"  [disabled]="expenseForm.invalid" type="submit" expand="block">
+              Actualizar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
 
+    </form>
+  </div>
 </ion-content>

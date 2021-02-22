@@ -18,7 +18,7 @@ export class RoutePage implements OnInit, OnDestroy {
   public sales: any[];
   public today = moment().format('ll');
   public dayName = moment().format('dddd') ;
-  public dayToday = moment(new Date()).format("DD/MM/YYYY")
+  public dayToday = moment(new Date()).format("MM/DD/YYYY")
   public totalRecaudado;
   public totalSaldo;
   public customers$: Observable<any>
@@ -113,6 +113,11 @@ export class RoutePage implements OnInit, OnDestroy {
     this.totalRecaudar = 0;
 
     customers.forEach(customer => {
+
+      if(customer.sale){
+        customer.sale.vencido = moment(customer.sale.vencimiento).isBefore(this.dayToday);
+      }
+
       if(customer.sale && customer.sale.abonos && customer.sale.abonos.length > 0) {
         customer.sale.abonos.forEach(abono => {
           if(abono.createdAt == this.today && abono.monto > 0) {

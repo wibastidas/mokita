@@ -144,7 +144,7 @@ export class NewSalePage implements OnInit {
       if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'domingo'){
         dates.push({
           cuota: dates.length + 1,
-          date: moment().add(cont,'days').format('ll'),
+          date: moment().add(cont,'days').format('MM/DD/YYYY'),
           fechaPago: null,
         });
       } else {

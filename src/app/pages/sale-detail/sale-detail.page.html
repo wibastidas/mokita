@@ -46,9 +46,15 @@
   </div>
 
   <div class="details" style="margin-top: 30px;">
-    <div class="the-title ion-padding-horizontal">
+    <!-- <div class="the-title ion-padding-horizontal">
       <h3>Abonos</h3>
-    </div>
+      <ion-button *ngIf="roleAutorization.canCreateAbono(authSvc.getLoggedUser())" (click)="agregarAbono(sale.montoCuota)" fill="outline">Abonar</ion-button>
+    </div> -->
+
+    <ion-list-header lines="inset">
+      <ion-label>Abonos</ion-label>
+      <ion-button *ngIf="roleAutorization.canCreateAbono(authSvc.getLoggedUser())" (click)="agregarAbono(sale.montoCuota)" fill="outline">Abonar</ion-button>
+    </ion-list-header>
    
 
     <div class="list-holder ion-padding-horizontal">
