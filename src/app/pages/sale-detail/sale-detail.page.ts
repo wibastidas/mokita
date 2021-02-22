@@ -44,7 +44,9 @@ export class SaleDetailPage implements OnInit {
     // });
   }
 
-  async agregarAbono(montoCuota) {
+  async agregarAbono(montoCuota, sale) {
+    this.sale = sale;
+
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Realizar Abono!',

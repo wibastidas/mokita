@@ -51,7 +51,7 @@
 
     <ion-list-header lines="inset">
       <ion-label>Abonos</ion-label>
-      <ion-button *ngIf="roleAutorization.canCreateAbono(authSvc.getLoggedUser())" (click)="agregarAbono(sale.montoCuota)" fill="outline">Abonar</ion-button>
+      <ion-button *ngIf="roleAutorization.canCreateAbono(authSvc.getLoggedUser())" (click)="agregarAbono(sale.montoCuota, sale)" fill="outline">Abonar</ion-button>
     </ion-list-header>
    
 
