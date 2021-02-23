@@ -86,6 +86,13 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
     canActivate: [AuthGuard]
+  },{
+    path: 'addtransactions',
+    loadChildren: () => import('./pages/modals/addtransactions/addtransactions.module').then( m => m.AddtransactionsPageModule)
+  },
+  {
+    path: 'successmodal',
+    loadChildren: () => import('./pages/modals/successmodal/successmodal.module').then( m => m.SuccessmodalPageModule)
   }
 ];
 @NgModule({

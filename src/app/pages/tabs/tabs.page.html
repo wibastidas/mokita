@@ -29,12 +29,12 @@
 
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="route">
-      <ion-icon name="rocket-outline"></ion-icon>
+      <ion-icon name="rocket"></ion-icon>
       <ion-label>Mi ruta</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="customers">
-      <ion-icon name="people-outline"></ion-icon>
+      <ion-icon name="people"></ion-icon>
       <ion-label>Clientes</ion-label>
     </ion-tab-button>
 
@@ -42,19 +42,19 @@
     </ion-tab-button>
 
     <ion-tab-button tab="expenses">
-      <ion-icon name="cash-outline"></ion-icon>
+      <ion-icon name="cash"></ion-icon>
       <ion-label>Gastos</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="stats">
-      <ion-icon name="stats-chart-outline"></ion-icon>
+      <ion-icon name="stats-chart"></ion-icon>
       <ion-label>Reportes</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 
 </ion-tabs>
 <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-  <ion-fab-button>
+  <ion-fab-button (click)="openAddTransactionModal()">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>

@@ -6,13 +6,15 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { AddtransactionsPageModule } from './pages/modals/addtransactions/addtransactions.module';
+import { SuccessmodalPageModule } from './pages/modals/successmodal/successmodal.module';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -25,7 +27,9 @@ registerLocaleData(localeEs, 'es');
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    AddtransactionsPageModule,
+    SuccessmodalPageModule
   ],
   providers: [
     StatusBar,

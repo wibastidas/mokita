@@ -50,6 +50,7 @@ export class SaleDetailPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Realizar Abono!',
+      mode: "ios",
       inputs: [
         {
           name: 'monto',
@@ -143,6 +144,7 @@ export class SaleDetailPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirmar!',
+      mode: "ios",
       message: 'Eliminar <strong>abono</strong>',
       buttons: [
         {
@@ -167,7 +169,8 @@ export class SaleDetailPage implements OnInit {
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Realizar Abono!',
+      header: 'Editar Abono!',
+      mode: "ios",
       inputs: [
         {
           name: 'monto',

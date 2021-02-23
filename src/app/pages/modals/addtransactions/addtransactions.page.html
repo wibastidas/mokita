@@ -1,0 +1,54 @@
+<ion-content>
+  <ion-grid style="height: 100%">
+    <ion-row class="ion-justify-content-center ion-align-items-center" style="height: 100%">
+      <div class="the-holder ion-padding" >
+        <ion-row class="title-row">
+          <ion-col size="8" class="ion-text-left">
+            <h4>Agregar transacción</h4>
+          </ion-col>
+          <ion-col size="4" class="ion-text-right" (click)="dismiss()">
+            <p>Cancelar</p>
+          </ion-col>
+        </ion-row>
+        <div class="the-grid">
+          <ion-row class="cat-row ion-text-center">
+              <ion-col  *ngIf="roleAutorization.canCreateExpense(authSvc.getLoggedUser())"  size="6" class="cat-col">
+                <ion-button  fill="none" expand="block" (click)="goAddCustomer()">
+                  <ion-label>
+                      <img src="assets/imgs/plus.svg" alt="">
+                    <p>Crear Cliente</p>
+                  </ion-label>
+                </ion-button>
+              </ion-col>
+              <ion-col *ngIf="roleAutorization.canCreateExpense(authSvc.getLoggedUser())"  size="6" class="cat-col">
+                <ion-button  fill="none" (click)="goAddExpense()">
+                  <ion-label>
+                      <img src="assets/imgs/category-icons/addexpense.svg" alt="">
+                    <p>Cargar Gasto</p>
+                  </ion-label>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-row class="cat-row ion-text-center" *ngIf="roleAutorization.canCreateSale(authSvc.getLoggedUser())">
+              <ion-col size="12" class="cat-col">
+                <ion-button  fill="none" expand="block" (click)="goNewSale()">
+                  <ion-label>
+                      <img src="assets/imgs/category-icons/send.svg" alt="">
+                    <p>Nuevo Préstamo</p>
+                  </ion-label>
+                </ion-button>
+              </ion-col>
+              <!-- <ion-col size="6" class="cat-col">
+                <ion-button t fill="none" >
+                  <ion-label>
+                      <img src="assets/imgs/category-icons/send.svg" alt="">
+                    <p>Send</p>
+                  </ion-label>
+                </ion-button>
+              </ion-col> -->
+            </ion-row>
+        </div>
+      </div>
+    </ion-row>
+  </ion-grid>
+</ion-content>

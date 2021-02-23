@@ -143,6 +143,7 @@ export class RoutePage implements OnInit, OnDestroy {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Realizar Abono!',
+      mode: "ios",
       inputs: [
         {
           name: 'monto',
@@ -178,7 +179,6 @@ export class RoutePage implements OnInit, OnDestroy {
         }
       ]
     });
-
     await alert.present();
   }
 
