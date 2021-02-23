@@ -143,9 +143,8 @@ export class EditSalePage implements OnInit, OnDestroy {
   }
 
   async updateSale(sale){
-    console.log("sale: ", sale)
-  
-    sale.updatedAt = moment().format('llll');
+
+    sale.updatedAt = moment(new Date()).format("MM/DD/YYYY");
     sale.cuotas = this.createCuotas(sale.numeroCuotas);
     //sale.customerId = this.customerId
     sale.intereses = sale.amount * sale.porcentaje/100;

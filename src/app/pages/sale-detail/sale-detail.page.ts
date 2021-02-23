@@ -104,7 +104,7 @@ export class SaleDetailPage implements OnInit {
   }
 
   async updateSale(){
-    this.sale.updatedAt = moment().format('llll');
+    this.sale.updatedAt = moment(new Date()).format("MM/DD/YYYY")
     this.sale.saldo = this.calcularSaldoPendiente(this.sale);
     this.sale.cuotasPendientes = this.sale.saldo/this.sale.montoCuota
     this.sale.cuotasPagadas = this.sale.numeroCuotas - this.sale.cuotasPendientes;

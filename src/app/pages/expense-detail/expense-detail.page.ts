@@ -46,7 +46,7 @@ export class ExpenseDetailPage implements OnInit, OnDestroy {
       adminId: "",
       createdBy: "",
       createdAt: new FormControl(moment().format('ll')),
-      updatedAt: new FormControl(moment().format('llll')),
+      updatedAt: new FormControl(moment(new Date()).format("MM/DD/YYYY")),
       id: new FormControl("")
     })
   }
@@ -70,7 +70,7 @@ export class ExpenseDetailPage implements OnInit, OnDestroy {
   }
 
   updateExpense(){
-    this.expense.updatedAt =  moment().format('llll');
+    this.expense.updatedAt =  moment(new Date()).format("MM/DD/YYYY");
     this.expenseService.updateExpense(this.expenseForm.value).then(res => this.dismissModal(true));
   }
 

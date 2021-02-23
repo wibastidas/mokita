@@ -183,7 +183,7 @@ export class RoutePage implements OnInit, OnDestroy {
   }
 
   async updateSale(sale){
-    sale.updatedAt = moment().format('llll');
+    sale.updatedAt = moment(new Date()).format("MM/DD/YYYY");
     sale.saldo = this.calcularSaldoPendiente(sale);
     sale.cuotasPendientes = sale.saldo/sale.montoCuota
     sale.cuotasPagadas = sale.numeroCuotas - sale.cuotasPendientes;

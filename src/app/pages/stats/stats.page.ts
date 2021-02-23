@@ -46,9 +46,20 @@ export class StatsPage implements OnInit, OnDestroy {
       this.subscription.add(this.customers$.subscribe(res => this.calcularRecaudoYsaldo(res)));
 
       this.expenses$ = this.expensesService.getExpensesByAdmin(this.authSvc.getLoggedUser().uid, this.today);
+      this.customersService.getSalesAndCustomersByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/23/2021').subscribe(res => {
+        console.log("Créditos finalizados: ", res);
+      })
+
+
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));
 
     } else {
+
+      
+      this.customersService.getSalesAndCustomersByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/23/2021').subscribe(res => {
+        console.log("Créditos finalizados: ", res);
+      })
+
       this.customers$ = this.customersService.getSalesAndCustomersByCobrador(this.authSvc.getLoggedUser().uid);
       this.subscription.add(this.customers$.subscribe(res => this.calcularRecaudoYsaldo(res)));
 

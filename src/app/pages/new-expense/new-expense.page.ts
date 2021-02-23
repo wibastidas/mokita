@@ -44,7 +44,7 @@ export class NewExpensePage implements OnInit, OnDestroy {
         //Validators.required
       ])),
       createdAt: new FormControl(moment().format('ll')),
-      updatedAt: new FormControl(moment().format('llll'))
+      updatedAt: new FormControl(moment(new Date()).format("MM/DD/YYYY"))
     })
   }
 

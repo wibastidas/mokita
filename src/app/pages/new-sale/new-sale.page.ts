@@ -107,7 +107,7 @@ export class NewSalePage implements OnInit {
   async createSale(sale){
   
     sale.createdAt = moment().format('ll');
-    sale.updatedAt = moment().format('llll');
+    sale.updatedAt = moment(new Date()).format("MM/DD/YYYY");
     sale.cuotas = this.createCuotas(sale.numeroCuotas);
     sale.customerId = this.customerId
     sale.intereses = sale.amount * sale.porcentaje/100;
