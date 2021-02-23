@@ -12,7 +12,7 @@ import { ExpensesService } from 'src/app/services/expenses.service';
 })
 export class StatsPage implements OnInit, OnDestroy {
   private subscription = new Subscription();
-  public today = moment().format('ll');
+  public today = moment(new Date()).format("MM/DD/YYYY");
   public isAdmin;
   public totalRecaudado;
   public totalClientesActivos;
@@ -46,18 +46,19 @@ export class StatsPage implements OnInit, OnDestroy {
       this.subscription.add(this.customers$.subscribe(res => this.calcularRecaudoYsaldo(res)));
 
       this.expenses$ = this.expensesService.getExpensesByAdmin(this.authSvc.getLoggedUser().uid, this.today);
-      this.customersService.getSalesAndCustomersByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/23/2021').subscribe(res => {
+      this.customersService.getPrestamosPagadosByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/23/2021').subscribe(res => {
         console.log("Créditos finalizados: ", res);
       })
-
-
+      this.customersService.getPrestamosNuevosByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/23/2021').subscribe(res => {
+        console.log("Créditos Nuevos: ", res);
+      })
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));
-
     } else {
-
-      
-      this.customersService.getSalesAndCustomersByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/23/2021').subscribe(res => {
+      this.customersService.getPrestamosPagadosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/23/2021').subscribe(res => {
         console.log("Créditos finalizados: ", res);
+      })
+      this.customersService.getPrestamosNuevosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/23/2021').subscribe(res => {
+        console.log("Créditos Nuevos: ", res);
       })
 
       this.customers$ = this.customersService.getSalesAndCustomersByCobrador(this.authSvc.getLoggedUser().uid);

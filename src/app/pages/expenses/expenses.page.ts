@@ -15,7 +15,7 @@ import { NewExpensePage } from '../new-expense/new-expense.page';
 })
 export class ExpensesPage implements OnInit {
   public loading: Boolean= false;
-  public today = moment().format('ll');
+  public today = moment(new Date()).format("MM/DD/YYYY");
   public expenses$: Observable<any>
   private subscription = new Subscription();
   public gastosDelDia;

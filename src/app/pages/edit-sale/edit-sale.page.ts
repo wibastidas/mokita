@@ -153,7 +153,7 @@ export class EditSalePage implements OnInit, OnDestroy {
     sale.cuotasPagadas = 0;
     sale.cuotasPendientes = sale.numeroCuotas; 
     sale.estado = 'Activo';
-    sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
+    sale.vencimiento = this.calcularFechaVencimiento(sale.numeroCuotas);
     sale.cuotasPendientes = sale.saldo/sale.montoCuota
     sale.cuotasPagadas = sale.numeroCuotas - sale.cuotasPendientes;
     sale.saldo = this.calcularSaldoPendiente(sale);
@@ -185,7 +185,7 @@ export class EditSalePage implements OnInit, OnDestroy {
       if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'domingo'){
         dates.push({
           cuota: dates.length + 1,
-          date: moment().add(cont,'days').format('ll'),
+          date: moment().add(cont,'days').format("MM/DD/YYYY"),
           fechaPago: null,
         });
       } else {
@@ -193,6 +193,27 @@ export class EditSalePage implements OnInit, OnDestroy {
       }
     }
     return dates;
+  }
+
+  calcularFechaVencimiento(numeroCuotas){
+    let dates = [];
+
+    let cont;
+    let numeroCuotasTmp = numeroCuotas;
+
+    for(cont=1; cont <= numeroCuotasTmp; cont++ ) {
+
+      if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'domingo'){
+        dates.push({
+          cuota: dates.length + 1,
+          date: moment().add(cont,'days').format("MM/DD/YYYY"),
+          fechaPago: null,
+        });
+      } else {
+        numeroCuotasTmp = numeroCuotasTmp + 1;
+      }
+    }
+    return dates[numeroCuotas - 1].date;
   }
 
   // showConfirmation(){

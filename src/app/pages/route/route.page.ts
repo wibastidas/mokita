@@ -16,7 +16,7 @@ import { SalesService } from 'src/app/services/sales.service';
 export class RoutePage implements OnInit, OnDestroy {
   public loading;
   public sales: any[];
-  public today = moment().format('ll');
+  public today = moment(new Date()).format("MM/DD/YYYY");
   public dayName = moment().format('dddd') ;
   public dayToday = moment(new Date()).format("MM/DD/YYYY")
   public totalRecaudado;
@@ -171,7 +171,7 @@ export class RoutePage implements OnInit, OnDestroy {
             if(data.monto){
               monto = data.monto;
             }
-            sale.abonos.push({monto, note: data.note, createdAt: moment().format('ll'), createdBy: this.authSvc.getLoggedUser().uid});
+            sale.abonos.push({monto, note: data.note, createdAt: moment(new Date()).format("MM/DD/YYYY"), createdBy: this.authSvc.getLoggedUser().uid});
             this.updateSale(sale);
             
           }
@@ -189,7 +189,7 @@ export class RoutePage implements OnInit, OnDestroy {
     sale.cuotasPagadas = sale.numeroCuotas - sale.cuotasPendientes;
     if(sale.cuotasPendientes <= 0){
       sale.estado = "Pagado"
-      sale.fechaUltimoPago = moment().format('ll');
+      sale.fechaUltimoPago = moment(new Date()).format("MM/DD/YYYY");
     } else {
       sale.estado = "Activo"
       sale.fechaUltimoPago = "";

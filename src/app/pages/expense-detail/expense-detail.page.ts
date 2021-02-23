@@ -45,7 +45,7 @@ export class ExpenseDetailPage implements OnInit, OnDestroy {
       ])),
       adminId: "",
       createdBy: "",
-      createdAt: new FormControl(moment().format('ll')),
+      createdAt: new FormControl(moment(new Date()).format("MM/DD/YYYY")),
       updatedAt: new FormControl(moment(new Date()).format("MM/DD/YYYY")),
       id: new FormControl("")
     })

@@ -106,7 +106,7 @@ export class NewSalePage implements OnInit {
 
   async createSale(sale){
   
-    sale.createdAt = moment().format('ll');
+    sale.createdAt = moment(new Date()).format("MM/DD/YYYY");
     sale.updatedAt = moment(new Date()).format("MM/DD/YYYY");
     sale.cuotas = this.createCuotas(sale.numeroCuotas);
     sale.customerId = this.customerId
@@ -114,7 +114,7 @@ export class NewSalePage implements OnInit {
     sale.montoConInteres = sale.amount + sale.intereses;
     sale.montoCuota = sale.montoConInteres/sale.numeroCuotas;
     sale.estado = 'Activo';
-    sale.vencimiento = sale.cuotas[sale.numeroCuotas - 1].date;
+    sale.vencimiento = this.calcularFechaVencimiento(sale.numeroCuotas);
     sale.abonos = [];
     sale.cuotasPendientes = sale.numeroCuotas; 
     sale.cuotasPagadas = 0
@@ -158,6 +158,27 @@ export class NewSalePage implements OnInit {
     let intereses = this.saleForm.get('amount').value * this.saleForm.get('porcentaje').value/100;
     let montoConInteres = this.saleForm.get('amount').value + intereses;
     this.montoCuota = montoConInteres/this.saleForm.get('numeroCuotas').value;
+  }
+
+  calcularFechaVencimiento(numeroCuotas){
+    let dates = [];
+
+    let cont;
+    let numeroCuotasTmp = numeroCuotas;
+
+    for(cont=1; cont <= numeroCuotasTmp; cont++ ) {
+
+      if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'domingo'){
+        dates.push({
+          cuota: dates.length + 1,
+          date: moment().add(cont,'days').format("MM/DD/YYYY"),
+          fechaPago: null,
+        });
+      } else {
+        numeroCuotasTmp = numeroCuotasTmp + 1;
+      }
+    }
+    return dates[numeroCuotas - 1].date;
   }
 
 } 

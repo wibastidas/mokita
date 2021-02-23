@@ -75,7 +75,7 @@ export class SaleDetailPage implements OnInit {
           text: 'Guardar',
           handler: (data) => {
             if(data.monto){
-              this.sale.abonos.push({monto: parseInt(data.monto), note: data.note, createdAt: moment().format('ll'), createdBy: this.authSvc.getLoggedUser().uid});
+              this.sale.abonos.push({monto: parseInt(data.monto), note: data.note, createdAt: moment(new Date()).format("MM/DD/YYYY"), createdBy: this.authSvc.getLoggedUser().uid});
               this.updateSale();
             }
           }
@@ -110,7 +110,7 @@ export class SaleDetailPage implements OnInit {
     this.sale.cuotasPagadas = this.sale.numeroCuotas - this.sale.cuotasPendientes;
     if(this.sale.cuotasPendientes <= 0){
       this.sale.estado = "Pagado"
-      this.sale.fechaUltimoPago = moment().format('ll');
+      this.sale.fechaUltimoPago = moment(new Date()).format("MM/DD/YYYY");
     } else {
       this.sale.estado = "Activo"
       this.sale.fechaUltimoPago = "";
@@ -194,7 +194,7 @@ export class SaleDetailPage implements OnInit {
           text: 'Guardar',
           handler: (data) => {
             if(data.monto){
-              this.sale.abonos[index] = { monto: parseInt(data.monto), note: data.note, createdAt: this.sale.abonos[index].createdAt ,updated: moment().format('ll')}
+              this.sale.abonos[index] = { monto: parseInt(data.monto), note: data.note, createdAt: this.sale.abonos[index].createdAt ,updated: moment(new Date()).format("MM/DD/YYYY")}
               this.updateSale();
             }
           }

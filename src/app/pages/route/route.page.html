@@ -23,7 +23,7 @@
           <p>Resumen <strong> </strong></p>
         </ion-col>
         <ion-col class="ion-text-right" id="right-col">
-          <p class="ion-text-capitalize">{{dayName}} <strong>{{dayToday}} </strong></p>
+          <p class="ion-text-capitalize">{{dayName}} <strong>{{dayToday | date:'dd/MM/yyyy'}} </strong></p>
         </ion-col>
       </ion-row>
       <ngx-gauge [max]='totalRecaudar' [type]="gaugeType" size="250" [value]="totalRecaudado" [label]="totalRecaudar | currency:'$' : 'symbol' : '1.0-0'" [prepend]="gaugePrependText"
