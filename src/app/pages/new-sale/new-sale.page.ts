@@ -108,7 +108,7 @@ export class NewSalePage implements OnInit {
   
     sale.createdAt = moment(new Date()).format("MM/DD/YYYY");
     sale.updatedAt = moment(new Date()).format("MM/DD/YYYY");
-    sale.cuotas = this.createCuotas(sale.numeroCuotas);
+    sale.cuotas = "";//this.createCuotas(sale.numeroCuotas);
     sale.customerId = this.customerId
     sale.intereses = sale.amount * sale.porcentaje/100;
     sale.montoConInteres = sale.amount + sale.intereses;
@@ -134,25 +134,25 @@ export class NewSalePage implements OnInit {
     this.location.back();
   }
 
-  createCuotas(numeroCuotas){
-    let dates = [];
-    let cont;
-    let numeroCuotasTmp = numeroCuotas;
+  // createCuotas(numeroCuotas){
+  //   let dates = [];
+  //   let cont;
+  //   let numeroCuotasTmp = numeroCuotas;
 
-    for(cont=1; cont <= numeroCuotasTmp; cont++ ) {
+  //   for(cont=1; cont <= numeroCuotasTmp; cont++ ) {
 
-      if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'domingo'){
-        dates.push({
-          cuota: dates.length + 1,
-          date: moment().add(cont,'days').format('MM/DD/YYYY'),
-          fechaPago: null,
-        });
-      } else {
-        numeroCuotasTmp = numeroCuotasTmp + 1;
-      }
-    }
-    return dates;
-  }
+  //     if(moment(moment().add(cont,'days').format('YYYY-MM-DD')).format('dddd') !== 'domingo'){
+  //       dates.push({
+  //         cuota: dates.length + 1,
+  //         date: moment().add(cont,'days').format('MM/DD/YYYY'),
+  //         fechaPago: null,
+  //       });
+  //     } else {
+  //       numeroCuotasTmp = numeroCuotasTmp + 1;
+  //     }
+  //   }
+  //   return dates;
+  // }
 
   calcularMontoCuota(){
     let intereses = this.saleForm.get('amount').value * this.saleForm.get('porcentaje').value/100;
