@@ -125,7 +125,7 @@
     </ion-label>
   </ion-item-divider> -->
 
-  <ion-item-divider *ngIf="isAdmin && customers$ | async">
+  <ion-item-divider >
     <ion-label>
       Total Saldo: {{totalSaldo | currency :'$':'symbol':'1.2-2'}}  
     </ion-label>

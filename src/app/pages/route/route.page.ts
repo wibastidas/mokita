@@ -83,7 +83,8 @@ export class RoutePage implements OnInit, OnDestroy {
     const actionSheet = await this.actionSheetController.create({
       header: this.authSvc.getLoggedUser().displayName || this.authSvc.getLoggedUser().email,
       cssClass: 'my-custom-class',
-      buttons: buttonsActionSheet
+      buttons: buttonsActionSheet,
+      mode: "ios"
     });
     await actionSheet.present();
   }

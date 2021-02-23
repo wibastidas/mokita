@@ -77,6 +77,7 @@ export class ExpensesPage implements OnInit {
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
+      mode: "ios",
       header: 'Eliminar Gasto!',
       message: 'El gasto será eliminado ',
       buttons: [
