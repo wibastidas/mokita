@@ -175,7 +175,7 @@
 
           <ion-item *ngIf="roleAutorization.canEditCustomerVendor(authSvc.getLoggedUser())" >
             <ion-label>Seleccionar Cobrador</ion-label>
-            <ion-select okText="Seleccionar" cancelText="Cancelar" formControlName="cobradorId">
+            <ion-select mode="ios" okText="Seleccionar" cancelText="Cancelar" formControlName="cobradorId">
               <ion-select-option *ngFor="let cobrador of cobradores" value="{{cobrador.uid}}">{{cobrador.displayName || cobrador.email}} </ion-select-option>
             </ion-select>
           </ion-item>
@@ -183,7 +183,7 @@
           <div class="bottom-section" *ngIf="roleAutorization.canEditCustomer(authSvc.getLoggedUser())">
             <ion-row>
               <ion-col class="btns-holder">
-                <ion-button [disabled]="customerForm.invalid"  ype="submit" expand="block">
+                <ion-button [disabled]="customerForm.invalid"  type="submit" expand="block">
                   Actualizar
                 </ion-button>
               </ion-col>

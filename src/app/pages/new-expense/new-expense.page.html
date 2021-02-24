@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Cargar Gasto</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" (click)="dismissModal()">Volver</ion-button>
+      <ion-button (click)="dismissModal()">Cancelar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -15,11 +15,11 @@
       Información del Gasto
     </ion-list-header>
 
-    <ion-item>
+    <ion-item lines="none">
       <!-- <ion-label position="floating" color="primary">Concepto: </ion-label> -->
 
       <ion-label>Concepto</ion-label>
-      <ion-select formControlName="concept" placeholder="Seleccionar">
+      <ion-select mode="ios" formControlName="concept" placeholder="Seleccionar">
         <ion-select-option value="Gasolina">Gasolina</ion-select-option>
         <ion-select-option value="Almuerzo">Almuerzo</ion-select-option>
         <ion-select-option value="Recarga Celular">Recarga Celular</ion-select-option>
@@ -39,7 +39,7 @@
       </ng-container>
     </div>
   
-    <ion-item>
+    <ion-item lines="none">
       <ion-label position="floating" color="primary">Monto: </ion-label>
       <ion-input type="number"  formControlName="amount"></ion-input>
       <ion-icon size="small" name="cash-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
@@ -52,14 +52,20 @@
       </ng-container>
     </div>
   
-    <ion-item>
+    <ion-item lines="none">
       <ion-label position="floating" color="primary">Descripción: </ion-label>
       <ion-input type="text"  formControlName="description"></ion-input>
       <ion-icon size="small" name="reader-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
     </ion-item>
 
-    <div class="ion-text-center">
-      <ion-button [disabled]="expenseForm.invalid" fill="outline" expand="round" type="submit">Guardar</ion-button>
+    <div class="bottom-section">
+      <ion-row>
+        <ion-col class="btns-holder">
+          <ion-button  [disabled]="expenseForm.invalid"  type="submit" expand="block">
+            Guardar
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </div>
   
   </form>

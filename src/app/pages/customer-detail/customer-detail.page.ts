@@ -170,8 +170,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
 
   updateCustomer(){
     this.customersService.updateCustomer(this.customerForm.value).then(res => res);
-    this.alertService.presentToast("Cliente Actualizado!.", 2000, "top" ,"primary");
-
+    this.alertService.presentToast("Cliente Actualizado!.", 2000, "top" ,"secondary");
   }
 
   segmentChanged(ev : any){
@@ -205,6 +204,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
+      mode:"ios",
       header: 'Eliminar!',
       message: 'Eliminar <strong>préstamo</strong>',
       buttons: [

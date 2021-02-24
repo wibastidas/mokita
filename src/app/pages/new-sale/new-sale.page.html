@@ -8,65 +8,76 @@
 </ion-header>
 
 <ion-content>
-  <ion-item *ngIf="customers$ | async; let customers"> 
-    <ion-label>Seleccionar Cliente</ion-label>
-    <ion-select okText="Seleccionar" cancelText="Cancelar" [(ngModel)]="customerId">
-      <ion-select-option *ngFor="let customer of customers" value="{{customer.id}}">{{customer.name + ' ' + customer.lastName}} </ion-select-option>
-    </ion-select>
-  </ion-item>
 
-<form 
-[formGroup]="saleForm" 
-(ngSubmit)="registerSale(saleForm.value)">
-  <ion-item>
-    <ion-label>Monto: </ion-label>
-    <ion-input type="number"  formControlName="amount"></ion-input>
-    <ion-icon size="small" name="cash-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-  </ion-item>
-  <div class="validation-errors">
-    <ng-container *ngFor="let validation of validation_messages.amount">
-      <div *ngIf="saleForm.get('amount').hasError(validation.type) && (saleForm.get('amount').dirty || saleForm.get('amount').touched)">
-        {{validation.message}}
+  <div class="new-sale-page">
+    <ion-item lines="none" *ngIf="customers$ | async; let customers"> 
+      <ion-label>Seleccionar Cliente</ion-label>
+      <ion-select mode="ios" okText="Seleccionar" cancelText="Cancelar" [(ngModel)]="customerId">
+        <ion-select-option *ngFor="let customer of customers" value="{{customer.id}}">{{customer.name + ' ' + customer.lastName}} </ion-select-option>
+      </ion-select>
+    </ion-item>
+  
+    <form  
+    [formGroup]="saleForm" 
+    (ngSubmit)="registerSale(saleForm.value)">
+      <ion-item lines="none">
+        <ion-label>Monto: </ion-label>
+        <ion-input type="number"  formControlName="amount"></ion-input>
+        <ion-icon size="small" name="cash-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.amount">
+          <div class="error-message ion-padding-start" *ngIf="saleForm.get('amount').hasError(validation.type) && (saleForm.get('amount').dirty || saleForm.get('amount').touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
       </div>
-    </ng-container>
-  </div>
-
-  <ion-item>
-    <ion-label>% Interés: </ion-label>
-    <ion-input type="number"  formControlName="porcentaje"></ion-input>
-    <ion-icon size="small" name="wallet-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-  </ion-item>
-  <div class="validation-errors">
-    <ng-container *ngFor="let validation of validation_messages.porcentaje">
-      <div *ngIf="saleForm.get('porcentaje').hasError(validation.type) && (saleForm.get('porcentaje').dirty || saleForm.get('porcentaje').touched)">
-        {{validation.message}}
+  
+      <ion-item lines="none" >
+        <ion-label>% Interés: </ion-label>
+        <ion-input type="number"  formControlName="porcentaje"></ion-input>
+        <ion-icon size="small" name="wallet-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.porcentaje">
+          <div class="error-message ion-padding-start" *ngIf="saleForm.get('porcentaje').hasError(validation.type) && (saleForm.get('porcentaje').dirty || saleForm.get('porcentaje').touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
       </div>
-    </ng-container>
-  </div>
-
-  <ion-item>
-    <ion-label>Número de cuotas: </ion-label>
-    <ion-input type="number"  formControlName="numeroCuotas"></ion-input>
-    <ion-icon size="small" name="sync-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-  </ion-item>
-  <div class="validation-errors">
-    <ng-container *ngFor="let validation of validation_messages.numeroCuotas">
-      <div *ngIf="saleForm.get('numeroCuotas').hasError(validation.type) && (saleForm.get('numeroCuotas').dirty || saleForm.get('numeroCuotas').touched)">
-        {{validation.message}}
+  
+      <ion-item lines="none">
+        <ion-label>Número de cuotas: </ion-label>
+        <ion-input type="number"  formControlName="numeroCuotas"></ion-input>
+        <ion-icon size="small" name="sync-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.numeroCuotas">
+          <div class="error-message ion-padding-start" *ngIf="saleForm.get('numeroCuotas').hasError(validation.type) && (saleForm.get('numeroCuotas').dirty || saleForm.get('numeroCuotas').touched)">
+            {{validation.message}}
+          </div>
+        </ng-container>
       </div>
-    </ng-container>
+  
+      <ion-item lines="none">
+        <ion-label>Monto de la Cuota: </ion-label>
+        <ion-input type="text" [value]="montoCuota" formControlName="montoCuota" ></ion-input>
+        <ion-icon size="small" name="card-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
+      </ion-item>
+  
+      <div class="bottom-section">
+        <ion-row>
+          <ion-col class="btns-holder">
+            <ion-button  [disabled]="saleForm.invalid || !customerId"  type="submit" expand="block">
+              Registrar Préstamo
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+      
+    </form>
+  
   </div>
-
-  <ion-item>
-    <ion-label>Monto de la Cuota: </ion-label>
-    <ion-input type="text" [value]="montoCuota" formControlName="montoCuota" ></ion-input>
-    <ion-icon size="small" name="card-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
-  </ion-item>
-
-  <div class="ion-text-center">
-    <ion-button [disabled]="saleForm.invalid || !customerId" expand="round" type="submit">Registrar Préstamo</ion-button>
-  </div>
-</form>
 
 </ion-content>
 

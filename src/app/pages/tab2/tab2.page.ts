@@ -32,7 +32,7 @@ export class Tab2Page  implements OnInit {
       'Cliente creado satisfactoriamente!',
       4000,
       "top",
-      "primary",
+      "secondary",
       [
          {
           text: 'X',

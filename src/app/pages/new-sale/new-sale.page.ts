@@ -62,6 +62,19 @@ export class NewSalePage implements OnInit {
   }
 
   ngOnInit() {
+
+    if (this.authSvc.getLoggedUser()) {
+      this.getInformation(); 
+    } else {
+      this.authSvc.getLoggedUser$().subscribe(value => {
+        this.getInformation(); 
+      });
+    }
+    
+  }
+
+
+  getInformation() {
     
     let isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
     if (isAdmin) { 

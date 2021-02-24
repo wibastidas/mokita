@@ -8,6 +8,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { EventorService } from 'src/app/services/eventor.service';
+import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
 
 @Component({
   selector: 'app-new-customer',
@@ -17,6 +18,7 @@ import { EventorService } from 'src/app/services/eventor.service';
 export class NewCustomerPage implements OnInit, OnDestroy {
   cobradores: User[];
   customerForm: FormGroup;
+  isAdmin: boolean = false;
   validation_messages = {
     name: [
       { type:"required", message: "El nombre es requerido."}
@@ -43,6 +45,7 @@ export class NewCustomerPage implements OnInit, OnDestroy {
   }
   constructor(private formBuilder: FormBuilder, 
               public alertController: AlertController,
+              public roleAutorization: RoleBasedAutorizationService,
               public eventorService: EventorService,
               private customersService: CustomersService,
               private alertService: AlertService,
@@ -90,9 +93,32 @@ export class NewCustomerPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.customersService.getCustomers().pipe(take(1)).subscribe(clientes => {
-    //   console.log('clientes: ', clientes);
-    // });
+
+    if (this.authSvc.getLoggedUser()) {
+      this.getInformation(); 
+    } else {
+      this.authSvc.getLoggedUser$().subscribe(value => {
+        this.getInformation(); 
+      });
+    }
+    
+  }
+
+  getInformation(){
+    this.isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
+    
+    if(this.isAdmin) {
+      this.customersService.getVendedoresByAdmin(this.authSvc.getLoggedUser().uid).subscribe((data) => {
+ 
+        this.cobradores = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data() as User
+          } 
+        });
+      });
+    }
+ 
   }
   
   async alertConfirm(customer: Customer){
@@ -100,6 +126,7 @@ export class NewCustomerPage implements OnInit, OnDestroy {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirmar!',
+      mode:"ios",
       message: 'Registrar <strong>nuevo cliente</strong>',
       buttons: [
         {
@@ -136,7 +163,7 @@ export class NewCustomerPage implements OnInit, OnDestroy {
     .subscribe(async cliente => {
       console.log('cliente: ', cliente);
       if(cliente.length > 0) {
-        this.alertService.presentToast("El numero de cédula ya fue registrado.", 2000, "top" ,"primary");
+        this.alertService.presentToast("El numero de cédula ya fue registrado.", 2000, "top" ,"secondary");
       } else {
         await this.customersService.createNewCustomer(customer).then(res => { console.log('res: ', res) });
 

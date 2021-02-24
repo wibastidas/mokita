@@ -2,7 +2,7 @@
 <ion-header class="ion-no-border" *ngIf="sale$ | async; let sale">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button  color="light" ></ion-back-button>
     </ion-buttons>
     <ion-title>Detalle de Préstamo</ion-title>
     <ion-buttons *ngIf="roleAutorization.canEditSale(authSvc.getLoggedUser())" slot="end">

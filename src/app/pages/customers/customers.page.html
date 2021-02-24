@@ -38,6 +38,17 @@
           </p>
         </div>
       </div>
+      <div class="contact-holder  ion-padding-horizontal" scrollX="true">
+        <div class="recip-card ion-text-center" *ngFor="let customer of customers.reverse()" (click)="goCustomerDetail(customer)">
+          <ion-avatar>
+            <text-avatar [text]="customer.name"></text-avatar>
+          </ion-avatar>
+
+          <p class="ion-text-wrap">
+            {{ customer.name }} <br> {{ customer.lastName }}
+          </p>
+        </div>
+      </div>
     </div>
   </ng-container>
 

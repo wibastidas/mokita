@@ -1,8 +1,8 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Crear Cliente</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" (click)="dismissModal()">Cerrar</ion-button>
+      <ion-button (click)="dismissModal()">Cancelar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -15,7 +15,7 @@
       Información Personal
     </ion-list-header>
   
-    <ion-item>
+    <ion-item lines="none">
       <ion-label position="floating" color="primary">Nombre: </ion-label>
       <ion-input type="text"  formControlName="name"></ion-input>
       <ion-icon size="small" name="person-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
@@ -28,7 +28,7 @@
       </ng-container>
     </div>
   
-    <ion-item>
+    <ion-item lines="none">
       <ion-label position="floating" color="primary">Apellido: </ion-label>
       <ion-input type="text"  formControlName="lastName"></ion-input>
       <ion-icon size="small" name="person-circle-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
@@ -41,7 +41,7 @@
       </ng-container>
     </div>
   
-    <ion-item>
+    <ion-item lines="none">
       <ion-label position="floating" color="primary">Cédula: </ion-label>
       <ion-input type="number"  formControlName="document"></ion-input>
       <ion-icon size="small" name="wallet-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
@@ -58,7 +58,7 @@
       Datos de Contacto
     </ion-list-header>
   
-    <ion-item>
+    <ion-item lines="none">
       <ion-label position="floating" color="primary">Celular: </ion-label>
       <ion-input type="tel"  formControlName="phoneNumber"></ion-input>
       <ion-icon size="small" name="phone-portrait-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
@@ -72,7 +72,7 @@
       </ng-container>
     </div>
   
-    <ion-item>
+    <ion-item lines="none"> 
       <ion-label position="floating" color="primary">Dirección: </ion-label>
       <ion-input type="text" formControlName="address"></ion-input>
       <ion-icon size="small" name="map-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
@@ -97,7 +97,7 @@
       </ng-container>
     </div> -->
   
-    <ion-item>
+    <ion-item lines="none">
       <ion-label position="floating" color="primary">Referencia: </ion-label>
       <ion-input type="text" formControlName="reference"></ion-input>
       <ion-icon size="small" name="reader-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
@@ -107,9 +107,9 @@
       Cobrador
     </ion-list-header>
 
-    <ion-item>
-      <ion-label>Seleccionar Cobrador</ion-label>
-      <ion-select okText="Seleccionar" cancelText="Cancelar">
+    <ion-item lines="none" *ngIf="roleAutorization.canEditCustomerVendor(authSvc.getLoggedUser())">
+      <ion-label color="primary">Seleccionar Cobrador</ion-label>
+      <ion-select mode="ios" okText="Seleccionar" cancelText="Cancelar">
         <ion-select-option *ngFor="let cobrador of cobradores" value="{{cobrador.uid}}">{{cobrador.displayName || cobrador.email}} </ion-select-option>
       </ion-select>
     </ion-item>
@@ -122,9 +122,17 @@
         </div>
       </ng-container>
     </div>
-    <div class="ion-text-center">
-      <ion-button [disabled]="customerForm.invalid" expand="round"  fill="outline" type="submit">Guardar</ion-button>
+
+    <div class="bottom-section">
+      <ion-row>
+        <ion-col class="btns-holder">
+          <ion-button  [disabled]="customerForm.invalid"  type="submit" expand="block">
+            Guardar
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </div>
+
   </form>
 </ion-content>
 
