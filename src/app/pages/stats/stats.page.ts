@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
@@ -21,11 +22,24 @@ export class StatsPage implements OnInit, OnDestroy {
   public totalRecaudar;
   public customers$: Observable<any>;
   public expenses$: Observable<any>
+  public expensesMonth$: Observable<any>
+  public prestamosNuevos$: Observable<any>
+  public prestamosPagados$: Observable<any>
+  public cantidadPrestamosNuevos = 0;
+  public cantidadPrestamosCobrados = 0;
+  public montoPrestamosNuevos = 0;
+  public montoPrestamosPagados = 0;
+  public cantidadTotalGastos = 0;
+  public montoTotalGastos = 0;
+
 
   gaugeType = "full";
   gaugeAppendText = "$";
 
-  constructor(public authSvc: AuthService, private customersService: CustomersService, private expensesService: ExpensesService,) { }
+  constructor(public authSvc: AuthService, 
+              private customersService: CustomersService, 
+              public popoverController: PopoverController,
+              private expensesService: ExpensesService,) { }
 
   ngOnInit() {
     if (this.authSvc.getLoggedUser()) {
@@ -46,26 +60,33 @@ export class StatsPage implements OnInit, OnDestroy {
       this.subscription.add(this.customers$.subscribe(res => this.calcularRecaudoYsaldo(res)));
 
       this.expenses$ = this.expensesService.getExpensesByAdmin(this.authSvc.getLoggedUser().uid, this.today);
-      this.customersService.getPrestamosPagadosByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/23/2021').subscribe(res => {
-        console.log("Créditos finalizados: ", res);
-      })
-      this.customersService.getPrestamosNuevosByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/23/2021').subscribe(res => {
-        console.log("Créditos Nuevos: ", res);
-      })
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));
-    } else {
-      this.customersService.getPrestamosPagadosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/23/2021').subscribe(res => {
-        console.log("Créditos finalizados: ", res);
-      })
-      this.customersService.getPrestamosNuevosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/23/2021').subscribe(res => {
-        console.log("Créditos Nuevos: ", res);
-      })
 
+      this.prestamosPagados$ = this.customersService.getPrestamosPagadosByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/25/2021');
+      this.subscription.add(this.prestamosPagados$.subscribe(res => this.calcularPrestamosPagados(res)));
+
+      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/25/2021');
+      this.subscription.add(this.prestamosNuevos$.subscribe(res => this.calcularPrestamosNuevos(res)));
+
+      this.expensesMonth$ = this.expensesService.getExpensesByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/25/2021');
+      this.subscription.add(this.expensesMonth$.subscribe(res => this.calcularGastosDelMes(res)));
+
+    } else {
       this.customers$ = this.customersService.getSalesAndCustomersByCobrador(this.authSvc.getLoggedUser().uid);
       this.subscription.add(this.customers$.subscribe(res => this.calcularRecaudoYsaldo(res)));
 
       this.expenses$ = this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid, this.today); 
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res))); 
+
+      this.prestamosPagados$  = this.customersService.getPrestamosPagadosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/25/2021');
+      this.subscription.add(this.prestamosPagados$.subscribe(res => this.calcularPrestamosPagados(res)));
+
+      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/25/2021');
+      this.subscription.add(this.prestamosNuevos$.subscribe(res => this.calcularPrestamosNuevos(res)));
+
+
+      this.expensesMonth$ = this.expensesService.getExpensesByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/25/2021');
+      this.subscription.add(this.expensesMonth$.subscribe(res => this.calcularGastosDelMes(res)));
     }
   }
 
@@ -109,6 +130,49 @@ export class StatsPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  async presentPopover(ev: any) {
+    // const popover = await this.popoverController.create({
+    //   component: PopoverComponent,
+    //   cssClass: 'my-custom-class',
+    //   event: ev,
+    //   translucent: true
+    // });
+    // return await popover.present();
+  }
+
+  calcularPrestamosNuevos(data){
+    this.cantidadPrestamosNuevos = 0;
+    this.montoPrestamosNuevos = 0;
+    //console.log("data: ", data)
+    this.cantidadPrestamosNuevos = data.length;
+    this.montoPrestamosNuevos = data.reduce((prev, cur) => prev + cur.sale.amount, 0);
+
+  }
+
+  calcularPrestamosPagados(data){
+    this.cantidadPrestamosNuevos = 0;
+    this.montoPrestamosNuevos = 0;
+    //console.log("data: ", data)
+    this.calcularPrestamosPagados = data.length;
+    this.montoPrestamosPagados = data.reduce((prev, cur) => prev + cur.sale.amount, 0);
+
+  }
+
+  calcularGastosDelMes(data){
+    this.cantidadTotalGastos = 0;
+    this.montoTotalGastos = 0;
+    this.cantidadTotalGastos =  data.length;
+    this.montoTotalGastos = data.reduce((prev, cur) => prev + cur.amount, 0);;
+    console.log("calcularGastosDelMes: ", data);
+  }
+  
+  doRefresh(event) {
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
   }
 
 }

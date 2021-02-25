@@ -216,4 +216,11 @@ export class RoutePage implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  doRefresh(event) {
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
+
 }

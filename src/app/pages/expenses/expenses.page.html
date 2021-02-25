@@ -6,7 +6,10 @@
 
 
 <ion-content class="expenses-page" *ngIf="roleAutorization.canReadExpense(authSvc.getLoggedUser())">
-
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <div class="background-holder"></div>
 
   <ng-container *ngIf="expenses$ | async; else loading; let expenses">

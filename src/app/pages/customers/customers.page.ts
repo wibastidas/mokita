@@ -82,6 +82,13 @@ export class CustomersPage implements OnInit {
     
   }
 
+  doRefresh(event) {
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
+
 
 
 

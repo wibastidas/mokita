@@ -4,10 +4,12 @@ ion-toolbar
 }
 ion-content 
 {
+    
     --background: #f8f9f9;
 
     .top-item
     {
+        margin-top: 15px;
         ion-item {
             --background: transparent;
 
@@ -30,6 +32,7 @@ ion-content
                     color: #042c5c;
                     font-family: 'AvenirB' !important;
                     margin-top: 10px !important;
+                    font-size: 42px;
                 }
             }
 
@@ -129,7 +132,7 @@ ion-content
     .guage-top-content
     {
         margin: 0 auto;
-        top: 80px !important;
+        top: 55px !important;
         z-index: 40;
         p 
         {
@@ -141,7 +144,34 @@ ion-content
 
     .bottom-section
     {
-        margin-top: 235px;
+        margin-top: 10px;
+
+        p {
+            font-family: 'AvenirH' !important;
+        }
+
+        h3 {
+            color: #77869e !important;
+            font-family: 'AvenirH' !important;
+            //font-size: 14px;
+            font-size: 20px;
+        }
+
+        h6 {
+            color: #77869e !important;
+            font-family: 'AvenirH' !important;
+            font-size: 10px;
+
+        }
+
+        .divider-report {
+            color: #77869e !important;
+            font-family: 'AvenirH' !important;
+            font-size: 0.9rem !important;
+            padding-top: 10px;
+            padding-left: 16px;
+        }
+
         .btns-holder-1 
         {
             margin-top: 10px;
@@ -168,6 +198,8 @@ ion-content
                 height: 50px !important;
             }
         } 
+
+
     }
     
      

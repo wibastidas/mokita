@@ -42,7 +42,7 @@ export class ExpensesPage implements OnInit {
       this.expenses$ = this.expensesService.getExpensesByAdmin(this.authSvc.getLoggedUser().uid, this.today);
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));
     } else {
-      this.expenses$ = this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid, this.today); 
+      this.expenses$ = this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid, '02/24/2021'); 
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));    
     }
   }
@@ -108,6 +108,13 @@ export class ExpensesPage implements OnInit {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  doRefresh(event) {
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
   }
 
 }

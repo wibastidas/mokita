@@ -21,6 +21,20 @@ export class ExpensesService {
     return this.firestore.collection(`expenses`, ref => ref.where('createdBy', "==", cobradorId).where('createdAt', "==", day)).valueChanges({idField: 'id'});
   }
 
+  getExpensesByAdminAndDates(adminId, from, to) {
+    return this.firestore.collection(`expenses`, ref => ref.where('adminId', "==", adminId)
+                                                           .where('createdAt', ">=", from)
+                                                           .where('createdAt', "<=", to))
+                                                           .valueChanges({idField: 'id'})
+  }
+
+  getExpensesByCobradorAndDates(cobradorId, from, to) {
+    return this.firestore.collection(`expenses`, ref => ref.where('createdBy', "==", cobradorId)
+                                                           .where('createdAt', ">=", from)
+                                                           .where('createdAt', "<=", to))
+                                                           .valueChanges({idField: 'id'});
+  }
+
   createNewExpense(expense: Expense){
     let id = this.firestore.createId();
     return this.firestore.collection('expenses').doc( id ).set(expense);

@@ -6,7 +6,10 @@
 
 
 <ion-content class="customer-page" *ngIf="roleAutorization.canReadCustomer(authSvc.getLoggedUser())">
-
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <div class="background-holder"></div>
 
   <ng-container *ngIf="customers$ | async; else loading; let customers">
