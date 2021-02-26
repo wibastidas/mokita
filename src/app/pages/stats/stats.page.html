@@ -129,7 +129,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-item lines="none">
+        <ion-item lines="none" (click)="goReportePrestamosNuevos()">
           <div class="thumb" slot="start" style="margin-right: 12px;" >
             <img src="assets/imgs/category-icons/send.svg" alt="">
           </div>
@@ -138,14 +138,14 @@
             <h3>   {{montoPrestamosNuevos | currency :'$':'symbol':'1.2-2'}}  &nbsp;</h3>
             <h6>Cantidad: {{cantidadPrestamosNuevos}} &nbsp;</h6>
           </ion-label>
-          <ion-icon color="medium" slot="end" name="help-circle"></ion-icon>
+          <ion-icon color="medium" slot="end" name="chevron-forward-outline"></ion-icon>
         </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-item lines="none">
+        <ion-item lines="none" (click)="goReportePrestamosPagados()">
           <div class="thumb" slot="start" style="margin-right: 12px;" >
             <img src="assets/imgs/category-icons/request.svg" alt="">
           </div>
@@ -154,7 +154,7 @@
             <h3> {{montoPrestamosPagados | currency :'$':'symbol':'1.2-2'}} &nbsp;</h3>
             <h6>Cantidad: {{calcularPrestamosPagados}}  &nbsp;</h6>
           </ion-label>
-          <ion-icon color="medium" slot="end" name="help-circle"></ion-icon>
+          <ion-icon color="medium" slot="end" name="chevron-forward-outline"></ion-icon>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -170,7 +170,7 @@
             <h3> {{montoTotalGastos | currency :'$':'symbol':'1.2-2'}} &nbsp;</h3>
             <h6>Cantidad: {{montoTotalGastos}}  &nbsp;</h6>
           </ion-label>
-          <ion-icon color="medium" slot="end" name="help-circle"></ion-icon>
+          <ion-icon color="medium" slot="end" name="chevron-forward-outline"></ion-icon>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -182,11 +182,11 @@
             <img src="assets/imgs/bill1.svg" alt="">
           </div>
           <ion-label>
-            <p>Saldo total</p>
+            <p>Saldo total por recaudar</p>
             <h3> {{totalSaldo | currency :'$':'symbol':'1.2-2'}}   &nbsp;</h3>
             <h6> Total monto pendiente por cobrar. &nbsp;</h6>
           </ion-label>
-          <ion-icon color="medium"  slot="end" name="help-circle"></ion-icon> 
+          <ion-icon color="medium"  slot="end" name="chevron-forward-outline"></ion-icon> 
         </ion-item>
       </ion-col>
     </ion-row>

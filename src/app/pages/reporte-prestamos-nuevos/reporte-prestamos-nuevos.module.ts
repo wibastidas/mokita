@@ -2,22 +2,23 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { NgxGaugeModule } from 'ngx-gauge';
 import { TextAvatarModule } from 'src/app/directives/text-avatar';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { StatsPageRoutingModule } from './stats-routing.module';
-import { StatsPage } from './stats.page';
+import { ReportePrestamosNuevosPageRoutingModule } from './reporte-prestamos-nuevos-routing.module';
+import { ReportePrestamosNuevosPage } from './reporte-prestamos-nuevos.page';
+
+
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    StatsPageRoutingModule,
+    TextAvatarModule,
     SharedModule,
-    NgxGaugeModule,
-    TextAvatarModule
+    ReportePrestamosNuevosPageRoutingModule
   ],
-  declarations: [StatsPage]
+  declarations: [ReportePrestamosNuevosPage]
 })
-export class StatsPageModule {}
+export class ReportePrestamosNuevosPageModule {}

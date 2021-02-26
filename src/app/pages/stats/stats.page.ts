@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { ExpensesService } from 'src/app/services/expenses.service';
+import { ReportePrestamosNuevosPage } from '../reporte-prestamos-nuevos/reporte-prestamos-nuevos.page';
 
 @Component({
   selector: 'app-stats',
@@ -25,6 +26,7 @@ export class StatsPage implements OnInit, OnDestroy {
   public expensesMonth$: Observable<any>
   public prestamosNuevos$: Observable<any>
   public prestamosPagados$: Observable<any>
+  public prestamosConSaldoPendiente = [];
   public cantidadPrestamosNuevos = 0;
   public cantidadPrestamosCobrados = 0;
   public montoPrestamosNuevos = 0;
@@ -38,6 +40,7 @@ export class StatsPage implements OnInit, OnDestroy {
 
   constructor(public authSvc: AuthService, 
               private customersService: CustomersService, 
+              private modalController: ModalController,
               public popoverController: PopoverController,
               private expensesService: ExpensesService,) { }
 
@@ -62,13 +65,13 @@ export class StatsPage implements OnInit, OnDestroy {
       this.expenses$ = this.expensesService.getExpensesByAdmin(this.authSvc.getLoggedUser().uid, this.today);
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));
 
-      this.prestamosPagados$ = this.customersService.getPrestamosPagadosByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/25/2021');
+      this.prestamosPagados$ = this.customersService.getPrestamosPagadosByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/26/2021');
       this.subscription.add(this.prestamosPagados$.subscribe(res => this.calcularPrestamosPagados(res)));
 
-      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/25/2021');
+      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/26/2021');
       this.subscription.add(this.prestamosNuevos$.subscribe(res => this.calcularPrestamosNuevos(res)));
 
-      this.expensesMonth$ = this.expensesService.getExpensesByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/25/2021');
+      this.expensesMonth$ = this.expensesService.getExpensesByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/26/2021');
       this.subscription.add(this.expensesMonth$.subscribe(res => this.calcularGastosDelMes(res)));
 
     } else {
@@ -78,14 +81,14 @@ export class StatsPage implements OnInit, OnDestroy {
       this.expenses$ = this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid, this.today); 
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res))); 
 
-      this.prestamosPagados$  = this.customersService.getPrestamosPagadosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/25/2021');
+      this.prestamosPagados$  = this.customersService.getPrestamosPagadosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/26/2021');
       this.subscription.add(this.prestamosPagados$.subscribe(res => this.calcularPrestamosPagados(res)));
 
-      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/25/2021');
+      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/26/2021');
       this.subscription.add(this.prestamosNuevos$.subscribe(res => this.calcularPrestamosNuevos(res)));
 
 
-      this.expensesMonth$ = this.expensesService.getExpensesByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/25/2021');
+      this.expensesMonth$ = this.expensesService.getExpensesByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/26/2021');
       this.subscription.add(this.expensesMonth$.subscribe(res => this.calcularGastosDelMes(res)));
     }
   }
@@ -95,6 +98,7 @@ export class StatsPage implements OnInit, OnDestroy {
     this.totalSaldo = 0;
     this.totalRecaudar = 0;
     this.totalClientesActivos = 0;
+    this.prestamosConSaldoPendiente = [];
 
     customers.forEach(customer => {
 
@@ -111,7 +115,9 @@ export class StatsPage implements OnInit, OnDestroy {
       }
 
       if(customer.sale && customer.sale.saldo) {
+        this.prestamosConSaldoPendiente.push(customer);
         this.totalSaldo+= customer.sale.saldo;
+
 
         if(customer.sale.montoCuota <= customer.sale.saldo) {
           this.totalRecaudar+= customer.sale.montoCuota;
@@ -174,5 +180,46 @@ export class StatsPage implements OnInit, OnDestroy {
       event.target.complete();
     }, 1000);
   }
+
+  async goReportePrestamosNuevos() {
+
+    const modal = await this.modalController.create({
+      component: ReportePrestamosNuevosPage,
+      componentProps: {
+        title: 'Préstamos Nuevos',
+        prestamos: this.prestamosNuevos$,
+        from: "02/01/2021",
+        to: "02/26/2021"
+      }
+    });
+
+    modal.onDidDismiss()
+    .then((data) => {
+      //if (data['data'].dismissed)  this.getExpenses();
+    });
+
+    return await modal.present();
+  }
+
+  async goReportePrestamosPagados() {
+
+    const modal = await this.modalController.create({
+      component: ReportePrestamosNuevosPage,
+      componentProps: {
+        title: 'Préstamos Finalizados (Pagados)',
+        prestamos: this.prestamosPagados$,
+        from: "02/01/2021",
+        to: "02/26/2021"
+      }
+    });
+
+    modal.onDidDismiss()
+    .then((data) => {
+      //if (data['data'].dismissed)  this.getExpenses();
+    });
+
+    return await modal.present();
+  }
+  
 
 }
