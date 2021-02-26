@@ -5,6 +5,8 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { ExpensesService } from 'src/app/services/expenses.service';
+import { ReporteGastosPage } from '../reporte-gastos/reporte-gastos.page';
+import { ReportePrestamosSaldoPendientePage } from '../reporte-prestamos-saldo-pendiente/reporte-prestamos-saldo-pendiente.page';
 import { ReportePrestamosPage } from '../reporte-prestamos/reporte-prestamos.page';
 
 @Component({
@@ -33,6 +35,7 @@ export class StatsPage implements OnInit, OnDestroy {
   public montoPrestamosPagados = 0;
   public cantidadTotalGastos = 0;
   public montoTotalGastos = 0;
+  public gastos= [];
 
 
   gaugeType = "full";
@@ -167,6 +170,7 @@ export class StatsPage implements OnInit, OnDestroy {
   }
 
   calcularGastosDelMes(data){
+    this.gastos = data;
     this.cantidadTotalGastos = 0;
     this.montoTotalGastos = 0;
     this.cantidadTotalGastos =  data.length;
@@ -189,7 +193,8 @@ export class StatsPage implements OnInit, OnDestroy {
         title: 'Préstamos Nuevos',
         prestamos: this.prestamosNuevos$,
         from: "02/01/2021",
-        to: "02/26/2021"
+        to: "02/26/2021",
+        montoTotal: this.montoPrestamosNuevos
       }
     });
 
@@ -209,7 +214,30 @@ export class StatsPage implements OnInit, OnDestroy {
         title: 'Préstamos Finalizados (Pagados)',
         prestamos: this.prestamosPagados$,
         from: "02/01/2021",
-        to: "02/26/2021"
+        to: "02/26/2021",
+        montoTotal: this.montoPrestamosPagados
+      }
+    });
+
+      
+
+    modal.onDidDismiss()
+    .then((data) => {
+      //if (data['data'].dismissed)  this.getExpenses();
+    });
+
+    return await modal.present();
+  }
+
+  async goReportePrestamosSaldoPendiente() {
+
+    const modal = await this.modalController.create({
+      component: ReportePrestamosSaldoPendientePage,
+      componentProps: {
+        prestamos: this.prestamosConSaldoPendiente,
+        from: "02/01/2021",
+        to: "02/26/2021",
+        montoTotal: this.totalSaldo
       }
     });
 
@@ -221,5 +249,26 @@ export class StatsPage implements OnInit, OnDestroy {
     return await modal.present();
   }
   
+  async goReporteGastos() {
+
+    const modal = await this.modalController.create({
+      component: ReporteGastosPage,
+      componentProps: {
+        gastos: this.gastos,
+        from: "02/01/2021",
+        to: "02/26/2021",
+        montoTotal: this.montoTotalGastos
+
+      }
+    });
+    
+    modal.onDidDismiss()
+    .then((data) => {
+      //if (data['data'].dismissed)  this.getExpenses();
+    });
+
+    return await modal.present();
+  }
+
 
 }

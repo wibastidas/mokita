@@ -1,0 +1,61 @@
+
+.section
+{
+    margin: 10px 0 !important;
+    
+    .section-title
+    {
+        h4{
+
+            color: #C1C7D0 !important;
+            margin-bottom: 0px;
+            margin-top: 0px;
+            font-size: 16px;
+
+            strong {
+                color: #002251 !important;
+            }
+        }
+
+        
+    }
+
+    .the-list
+    {
+        ion-item
+        {
+            .thumb{
+                img{
+                    border-radius: 50%;
+                    height: 70px;
+                    width: 70px;
+                }
+            }
+
+            ion-label
+            {
+                h5
+                {
+                    color: #002251 !important;
+                    font-family: 'AvenirM' !important;
+                    
+                    .amount
+                    {
+                        color: var(--ion-color-primary) !important;
+                        font-family: 'AvenirH' !important;
+                    }
+
+                    .person
+                    {
+                        font-family: 'AvenirH' !important;
+                    }
+                }
+            }
+
+            .end-slot
+            {
+                margin-left: 0 !important;
+            }
+        }
+    }
+}

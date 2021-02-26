@@ -97,6 +97,14 @@ const routes: Routes = [
   {
     path: 'reporte-prestamos',
     loadChildren: () => import('./pages/reporte-prestamos/reporte-prestamos.module').then( m => m.ReportePrestamosPageModule)
+  },
+  {
+    path: 'reporte-prestamos-saldo-pendiente',
+    loadChildren: () => import('./pages/reporte-prestamos-saldo-pendiente/reporte-prestamos-saldo-pendiente.module').then( m => m.ReportePrestamosSaldoPendientePageModule)
+  },
+  {
+    path: 'reporte-gastos',
+    loadChildren: () => import('./pages/reporte-gastos/reporte-gastos.module').then( m => m.ReporteGastosPageModule)
   }
 ];
 @NgModule({

@@ -16,7 +16,8 @@ import { StatsPage } from './stats.page';
     StatsPageRoutingModule,
     SharedModule,
     NgxGaugeModule,
-    TextAvatarModule
+    TextAvatarModule, 
+    SharedModule
   ],
   declarations: [StatsPage]
 })
