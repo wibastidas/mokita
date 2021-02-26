@@ -95,8 +95,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/modals/successmodal/successmodal.module').then( m => m.SuccessmodalPageModule)
   },
   {
-    path: 'reporte-prestamos-nuevos',
-    loadChildren: () => import('./pages/reporte-prestamos-nuevos/reporte-prestamos-nuevos.module').then( m => m.ReportePrestamosNuevosPageModule)
+    path: 'reporte-prestamos',
+    loadChildren: () => import('./pages/reporte-prestamos/reporte-prestamos.module').then( m => m.ReportePrestamosPageModule)
   }
 ];
 @NgModule({

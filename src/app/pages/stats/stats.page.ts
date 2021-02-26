@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { ExpensesService } from 'src/app/services/expenses.service';
-import { ReportePrestamosNuevosPage } from '../reporte-prestamos-nuevos/reporte-prestamos-nuevos.page';
+import { ReportePrestamosPage } from '../reporte-prestamos/reporte-prestamos.page';
 
 @Component({
   selector: 'app-stats',
@@ -184,7 +184,7 @@ export class StatsPage implements OnInit, OnDestroy {
   async goReportePrestamosNuevos() {
 
     const modal = await this.modalController.create({
-      component: ReportePrestamosNuevosPage,
+      component: ReportePrestamosPage,
       componentProps: {
         title: 'Préstamos Nuevos',
         prestamos: this.prestamosNuevos$,
@@ -204,7 +204,7 @@ export class StatsPage implements OnInit, OnDestroy {
   async goReportePrestamosPagados() {
 
     const modal = await this.modalController.create({
-      component: ReportePrestamosNuevosPage,
+      component: ReportePrestamosPage,
       componentProps: {
         title: 'Préstamos Finalizados (Pagados)',
         prestamos: this.prestamosPagados$,

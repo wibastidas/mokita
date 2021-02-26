@@ -4,11 +4,11 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-reporte-prestamos-nuevos',
-  templateUrl: './reporte-prestamos-nuevos.page.html',
-  styleUrls: ['./reporte-prestamos-nuevos.page.scss'],
+  selector: 'app-reporte-prestamos',
+  templateUrl: './reporte-prestamos.page.html',
+  styleUrls: ['./reporte-prestamos.page.scss'],
 })
-export class ReportePrestamosNuevosPage implements OnInit {
+export class ReportePrestamosPage implements OnInit {
   public prestamos$: Observable<any>;
   public title: string;
   public from: string;
