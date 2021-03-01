@@ -24,6 +24,9 @@
 
   <div class="top-item">
     <ion-item lines="none">
+      <div slot='end' class="right-section" >
+        <p class="ion-text-capitalize" style="margin-top: 0px;font-size: 16px;"  >{{dayName}} <strong style="color: #77869e !important;">{{dayToday | date:'dd/MM/yyyy'}} </strong></p>
+      </div>
       <div slot='start' class="left-section">
         <p>Balance del día</p>
         <h1>{{(totalRecaudado - gastosDelDia) | currency :'$':'symbol':'1.0-2'}}</h1>
@@ -110,9 +113,10 @@
 
   <div class="bottom-section" *ngIf="customers$ | async; else loading; let customers">
 
-    <div class="divider-report">
-      Resumen del mes actual
+    <div class="divider-report ion-text-capitalize">
+      Resumen  {{ monthName}} {{yearName}}
     </div>
+    
 
     <!-- <ion-row>
       <ion-col class="btns-holder-1">
@@ -134,8 +138,8 @@
             <img src="assets/imgs/category-icons/send.svg" alt="">
           </div>
           <ion-label>
-            <p>Préstamos Nuevos</p>
-            <h3>   {{montoPrestamosNuevos | currency :'$':'symbol':'1.2-2'}}  &nbsp;</h3>
+            <p class="ion-text-wrap">Préstamos Nuevos</p>
+            <h3>   {{montoPrestamosNuevos | currency :'$':'symbol':'1.0-2'}}  &nbsp;</h3>
             <h6>Cantidad: {{cantidadPrestamosNuevos}} &nbsp;</h6>
           </ion-label>
           <!-- <ion-icon color="medium" slot="end" name="chevron-forward-outline"></ion-icon> -->
@@ -155,8 +159,8 @@
             <img src="assets/imgs/category-icons/request.svg" alt="">
           </div>
           <ion-label>
-            <p>Préstamos Pagados</p>
-            <h3> {{montoPrestamosPagados | currency :'$':'symbol':'1.2-2'}} &nbsp;</h3>
+            <p class="ion-text-wrap">Préstamos Pagados</p>
+            <h3> {{montoPrestamosPagados | currency :'$':'symbol':'1.0-0'}} &nbsp;</h3>
             <h6>Cantidad: {{calcularPrestamosPagados}}  &nbsp;</h6>
           </ion-label>
           <!-- <ion-icon color="medium" slot="end" name="chevron-forward-outline"></ion-icon> -->
@@ -176,8 +180,8 @@
             <img src="assets/imgs/category-icons/addexpense.svg" alt="">
           </div>
           <ion-label>
-            <p>Gastos del mes</p>
-            <h3> {{montoTotalGastos | currency :'$':'symbol':'1.2-2'}} &nbsp;</h3>
+            <p class="ion-text-wrap">Gastos del mes</p>
+            <h3> {{montoTotalGastos | currency :'$':'symbol':'1.0-0'}} &nbsp;</h3>
             <h6>Cantidad: {{montoTotalGastos}}  &nbsp;</h6>
           </ion-label>
           <!-- <ion-icon color="medium" slot="end" name="chevron-forward-outline"></ion-icon> -->
@@ -197,9 +201,9 @@
             <img src="assets/imgs/bill1.svg" alt="">
           </div>
           <ion-label>
-            <p>Saldo por recaudar</p>
-            <h3> {{totalSaldo | currency :'$':'symbol':'1.2-2'}}   &nbsp;</h3>
-            <h6> Total monto pendiente por cobrar. &nbsp;</h6>
+            <p class="ion-text-wrap">Saldo por recaudar</p>
+            <h3> {{totalSaldo | currency :'$':'symbol':'1.0-0'}}   &nbsp;</h3>
+            <h6 class="ion-text-wrap"> Total monto pendiente por cobrar. &nbsp;</h6>
           </ion-label>
           <!-- <ion-icon color="medium"  slot="end" name="chevron-forward-outline"></ion-icon>  -->
           <div class="end-slot" slot="end">

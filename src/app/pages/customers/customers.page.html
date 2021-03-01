@@ -54,12 +54,10 @@
       </div>
       -->
       <div class="list-holder ion-padding-horizontal">
-        <div class="the-list">
+        <div class="the-list" *ngIf="customers$ | async; else loading; let customers">
 
-          <ion-item-sliding  *ngIf="customers$ | async; else loading; let customers">
+          <ion-item-sliding  *ngFor="let customer of customers">
       
-            <ng-container *ngFor="let customer of customers" >
-               
               <ion-item lines="none"  (click)="goCustomerDetail(customer)">
       
                 <div class="thumb" slot="start" class="ion-text-center">
@@ -84,8 +82,7 @@
                 </ion-item-option>
               </ion-item-options>
               
-            </ng-container>
-           </ion-item-sliding>
+            </ion-item-sliding>
       
         </div>
       </div>

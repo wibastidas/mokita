@@ -36,7 +36,11 @@ export class StatsPage implements OnInit, OnDestroy {
   public cantidadTotalGastos = 0;
   public montoTotalGastos = 0;
   public gastos= [];
-
+  public dayName = moment().format('dddd') ;
+  public monthName = moment().format('MMMM') ;
+  public yearName = moment().format('YYYY') ;
+  public dayToday = moment(new Date()).format("MM/DD/YYYY")
+  public firstDayCurrentMonth = moment().date(1).format("MM/DD/YYYY")
 
   gaugeType = "full";
   gaugeAppendText = "$";
@@ -68,13 +72,13 @@ export class StatsPage implements OnInit, OnDestroy {
       this.expenses$ = this.expensesService.getExpensesByAdmin(this.authSvc.getLoggedUser().uid, this.today);
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));
 
-      this.prestamosPagados$ = this.customersService.getPrestamosPagadosByAdminAndDates(this.authSvc.getLoggedUser().uid, '03/01/2021', '03/01/2021');
+      this.prestamosPagados$ = this.customersService.getPrestamosPagadosByAdminAndDates(this.authSvc.getLoggedUser().uid, this.firstDayCurrentMonth, this.dayToday);
       this.subscription.add(this.prestamosPagados$.subscribe(res => this.calcularPrestamosPagados(res)));
 
-      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByAdminAndDates(this.authSvc.getLoggedUser().uid, '03/01/2021', '03/01/2021');
+      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByAdminAndDates(this.authSvc.getLoggedUser().uid, this.firstDayCurrentMonth, this.dayToday);
       this.subscription.add(this.prestamosNuevos$.subscribe(res => this.calcularPrestamosNuevos(res)));
 
-      this.expensesMonth$ = this.expensesService.getExpensesByAdminAndDates(this.authSvc.getLoggedUser().uid, '03/01/2021', '03/01/2021');
+      this.expensesMonth$ = this.expensesService.getExpensesByAdminAndDates(this.authSvc.getLoggedUser().uid, this.firstDayCurrentMonth, this.dayToday);
       this.subscription.add(this.expensesMonth$.subscribe(res => this.calcularGastosDelMes(res)));
 
     } else {
@@ -84,14 +88,14 @@ export class StatsPage implements OnInit, OnDestroy {
       this.expenses$ = this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid, this.today); 
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res))); 
 
-      this.prestamosPagados$  = this.customersService.getPrestamosPagadosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '03/01/2021', '03/01/2021');
+      this.prestamosPagados$  = this.customersService.getPrestamosPagadosByCobradorAndDates(this.authSvc.getLoggedUser().uid, this.firstDayCurrentMonth, this.dayToday);
       this.subscription.add(this.prestamosPagados$.subscribe(res => this.calcularPrestamosPagados(res)));
 
-      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '03/01/2021', '03/01/2021');
+      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByCobradorAndDates(this.authSvc.getLoggedUser().uid, this.firstDayCurrentMonth,this.dayToday);
       this.subscription.add(this.prestamosNuevos$.subscribe(res => this.calcularPrestamosNuevos(res)));
 
 
-      this.expensesMonth$ = this.expensesService.getExpensesByCobradorAndDates(this.authSvc.getLoggedUser().uid, '03/01/2021', '03/01/2021');
+      this.expensesMonth$ = this.expensesService.getExpensesByCobradorAndDates(this.authSvc.getLoggedUser().uid, this.firstDayCurrentMonth, this.dayToday);
       this.subscription.add(this.expensesMonth$.subscribe(res => this.calcularGastosDelMes(res)));
     }
   }

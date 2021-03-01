@@ -69,70 +69,59 @@ ion-content {
             }
         }
     
-        .badge-holder
-        {
-           margin: 0 20px;
-            background: #F8F9F9;
-            border-radius: 12px;
-            padding: 10px 0;
-            .badge
-            {
-                display: inline-block;
-                margin:0 5px;
-            }
-        }
+
     }
 
     .send-money
     {
-        margin-top: 30px;
-        .contact-holder
-        {
-            margin-top: 20px;
-            overflow-x: scroll;
-            overflow-y: hidden;
-            white-space: nowrap;
-            &::-webkit-scrollbar
-            {
-                display: none;
-            }
-            .recip-card
-            {
-                background: white;
-                border: 1px solid #DFE7F5;
-                box-shadow:0px 0px 20px rgba(0, 0, 0, 0.05);
-                border-radius: 12px;
-                display: inline-block;
-                height: 140px;
-                margin: 0 10px;
-                padding-top: 10px;
-                width: 120px;
+         margin-top: 30px;
+        // .contact-holder
+        // {
+        //     margin-top: 20px;
+        //     overflow-x: scroll;
+        //     overflow-y: hidden;
+        //     white-space: nowrap;
+        //     &::-webkit-scrollbar
+        //     {
+        //         display: none;
+        //     }
+        //     .recip-card
+        //     {
+        //         background: white;
+        //         border: 1px solid #DFE7F5;
+        //         box-shadow:0px 0px 20px rgba(0, 0, 0, 0.05);
+        //         border-radius: 12px;
+        //         display: inline-block;
+        //         height: 140px;
+        //         margin: 0 10px;
+        //         padding-top: 10px;
+        //         width: 120px;
     
-                .add-btn-holder
-                {
-                    height: 64px;
-                    margin: 0 auto;
-                    padding-top: 10px;
+        //         .add-btn-holder
+        //         {
+        //             height: 64px;
+        //             margin: 0 auto;
+        //             padding-top: 10px;
     
-                    img
-                    {
-                        height: 2.5rem;
-                    }
-                }
+        //             img
+        //             {
+        //                 height: 2.5rem;
+        //             }
+        //         }
                 
-                ion-avatar
-                {
-                  margin: 0 auto;
-                }
-                p{
-                    color: #77869E !important;
-                    font-family: 'AvenirM' !important;
-                    font-size: 0.9rem !important;
-                    margin: 0 !important;
-                }
-            }
+        //         ion-avatar
+        //         {
+        //           margin: 0 auto;
+        //         }
+        //         p{
+        //             color: #77869E !important;
+        //             font-family: 'AvenirM' !important;
+        //             font-size: 0.9rem !important;
+        //             margin: 0 !important;
+        //         }
+        //     }
     
-        }
+        // }
     }
 }
 
