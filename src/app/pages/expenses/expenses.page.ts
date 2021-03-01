@@ -42,7 +42,7 @@ export class ExpensesPage implements OnInit {
       this.expenses$ = this.expensesService.getExpensesByAdmin(this.authSvc.getLoggedUser().uid, this.today);
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));
     } else {
-      this.expenses$ = this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid, '02/24/2021'); 
+      this.expenses$ = this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid, this.today); 
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));    
     }
   }
@@ -102,6 +102,7 @@ export class ExpensesPage implements OnInit {
   }
 
   calcularGastos(gastos){
+    console.log("gastos: ", gastos)
     this.gastosDelDia = 0;
     this.gastosDelDia = gastos.reduce((prev, cur) => prev + cur.amount, 0);
   }

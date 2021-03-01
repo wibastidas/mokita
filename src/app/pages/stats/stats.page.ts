@@ -68,13 +68,13 @@ export class StatsPage implements OnInit, OnDestroy {
       this.expenses$ = this.expensesService.getExpensesByAdmin(this.authSvc.getLoggedUser().uid, this.today);
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));
 
-      this.prestamosPagados$ = this.customersService.getPrestamosPagadosByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/26/2021');
+      this.prestamosPagados$ = this.customersService.getPrestamosPagadosByAdminAndDates(this.authSvc.getLoggedUser().uid, '03/01/2021', '03/01/2021');
       this.subscription.add(this.prestamosPagados$.subscribe(res => this.calcularPrestamosPagados(res)));
 
-      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/26/2021');
+      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByAdminAndDates(this.authSvc.getLoggedUser().uid, '03/01/2021', '03/01/2021');
       this.subscription.add(this.prestamosNuevos$.subscribe(res => this.calcularPrestamosNuevos(res)));
 
-      this.expensesMonth$ = this.expensesService.getExpensesByAdminAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/26/2021');
+      this.expensesMonth$ = this.expensesService.getExpensesByAdminAndDates(this.authSvc.getLoggedUser().uid, '03/01/2021', '03/01/2021');
       this.subscription.add(this.expensesMonth$.subscribe(res => this.calcularGastosDelMes(res)));
 
     } else {
@@ -84,14 +84,14 @@ export class StatsPage implements OnInit, OnDestroy {
       this.expenses$ = this.expensesService.getExpensesByCobrador(this.authSvc.getLoggedUser().uid, this.today); 
       this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res))); 
 
-      this.prestamosPagados$  = this.customersService.getPrestamosPagadosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/26/2021');
+      this.prestamosPagados$  = this.customersService.getPrestamosPagadosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '03/01/2021', '03/01/2021');
       this.subscription.add(this.prestamosPagados$.subscribe(res => this.calcularPrestamosPagados(res)));
 
-      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/26/2021');
+      this.prestamosNuevos$ = this.customersService.getPrestamosNuevosByCobradorAndDates(this.authSvc.getLoggedUser().uid, '03/01/2021', '03/01/2021');
       this.subscription.add(this.prestamosNuevos$.subscribe(res => this.calcularPrestamosNuevos(res)));
 
 
-      this.expensesMonth$ = this.expensesService.getExpensesByCobradorAndDates(this.authSvc.getLoggedUser().uid, '02/01/2021', '02/26/2021');
+      this.expensesMonth$ = this.expensesService.getExpensesByCobradorAndDates(this.authSvc.getLoggedUser().uid, '03/01/2021', '03/01/2021');
       this.subscription.add(this.expensesMonth$.subscribe(res => this.calcularGastosDelMes(res)));
     }
   }
@@ -133,6 +133,7 @@ export class StatsPage implements OnInit, OnDestroy {
   }
 
   calcularGastos(gastos){
+    console.log("gastos: ", gastos)
     this.gastosDelDia = 0;
     this.gastosDelDia = gastos.reduce((prev, cur) => prev + cur.amount, 0);
   }
@@ -191,8 +192,8 @@ export class StatsPage implements OnInit, OnDestroy {
       componentProps: {
         title: 'Préstamos Nuevos',
         prestamos: this.prestamosNuevos$,
-        from: "02/01/2021",
-        to: "02/26/2021",
+        from: "03/01/2021",
+        to: "03/01/2021",
         montoTotal: this.montoPrestamosNuevos
       }
     });
@@ -212,8 +213,8 @@ export class StatsPage implements OnInit, OnDestroy {
       componentProps: {
         title: 'Préstamos Finalizados (Pagados)',
         prestamos: this.prestamosPagados$,
-        from: "02/01/2021",
-        to: "02/26/2021",
+        from: "03/01/2021",
+        to: "03/01/2021",
         montoTotal: this.montoPrestamosPagados
       }
     });
@@ -234,8 +235,8 @@ export class StatsPage implements OnInit, OnDestroy {
       component: ReportePrestamosSaldoPendientePage,
       componentProps: {
         prestamos: this.prestamosConSaldoPendiente,
-        from: "02/01/2021",
-        to: "02/26/2021",
+        from: "03/01/2021",
+        to: "03/01/2021",
         montoTotal: this.totalSaldo
       }
     });
@@ -254,8 +255,8 @@ export class StatsPage implements OnInit, OnDestroy {
       component: ReporteGastosPage,
       componentProps: {
         gastos: this.gastos,
-        from: "02/01/2021",
-        to: "02/26/2021",
+        from: "03/01/2021",
+        to: "03/01/2021",
         montoTotal: this.montoTotalGastos
 
       }
