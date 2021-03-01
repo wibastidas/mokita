@@ -42,4 +42,8 @@ export class ReportePrestamosPage implements OnInit {
     });
   }
 
+  updateMyDate($event) {
+    console.log($event); // --> wil contains $event.day.value, $event.month.value and $event.year.value
+  }
+
 }

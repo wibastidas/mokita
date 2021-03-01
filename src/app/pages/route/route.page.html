@@ -66,21 +66,21 @@
               <ion-item lines="none" *ngIf="customer && customer.sale" (click)="goSaleDetail(customer.sale)">
                 <div class="thumb" slot="start" class="ion-text-center">
 
-                  <div *ngIf="customer.sale.abonos[customer.sale.abonos.length - 1] 
+                  <div style="width: 57px;" *ngIf="customer.sale.abonos[customer.sale.abonos.length - 1]
                     && (customer.sale.abonos[customer.sale.abonos.length - 1].createdAt != today) 
                     || (!customer.sale.abonos[0])">
-                    <ion-icon name="shield-outline" style="font-size: 25px;" ></ion-icon>
+                    <ion-icon name="shield-outline" style="font-size: 25px;"></ion-icon>
                     <p class="avatar-text">Sin Cargar</p>
                   </div>
 
-                  <div *ngIf="customer.sale.abonos[customer.sale.abonos.length - 1]  
+                  <div style="width: 57px;" *ngIf="customer.sale.abonos[customer.sale.abonos.length - 1]  
                     && (customer.sale.abonos[customer.sale.abonos.length - 1].createdAt == today)
                     && (customer.sale.abonos[customer.sale.abonos.length - 1].monto > 0)">
                     <ion-icon color="success"  style="font-size: 25px;"  name="shield-checkmark-outline"></ion-icon>
                     <p  color="success"  class="avatar-text">Abonado</p>
                   </div>
                   
-                  <div *ngIf="customer.sale.abonos[customer.sale.abonos.length - 1] 
+                  <div style="width: 57px;" *ngIf="customer.sale.abonos[customer.sale.abonos.length - 1] 
                     && (customer.sale.abonos[customer.sale.abonos.length - 1].createdAt == today)
                     && (customer.sale.abonos[customer.sale.abonos.length - 1].monto == 0)">
                     <ion-icon color="danger"  style="font-size: 25px;"  name="shield-outline"></ion-icon>

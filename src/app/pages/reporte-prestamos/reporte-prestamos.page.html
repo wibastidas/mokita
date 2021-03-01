@@ -13,10 +13,28 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+
+
   <div class="section">
     <div class="section-title" *ngIf="title">
-      <h4>Desde <strong>{{from}}</strong>  hasta <strong>{{to}}</strong></h4>
+      <h4>Seleccionar fechas <strong></strong>   <strong></strong></h4>
     </div>
+    <ion-item>
+      <ion-label>Desde</ion-label>
+      <ion-datetime  #myPicker displayFormat="DD-MMM-YYYY"  doneText="Aceptar" cancelText="Cancelar"   
+      monthNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre" 
+      monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic"  [(ngModel)]="from"  
+      (ionChange)="updateMyDate(myPicker.value)"
+      placeholder="Seleccionar Fecha "></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Hasta</ion-label>
+      <ion-datetime #myPicker displayFormat="DD-MMM-YYYY" doneText="Aceptar"  cancelText="Cancelar" 
+      monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic"   [(ngModel)]="to"
+      monthNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre" 
+      (ionChange)="updateMyDate(myPicker.value)"
+      placeholder="Seleccionar Fecha"></ion-datetime>
+    </ion-item>
     <div class="the-list" *ngIf="prestamos$ | async; let prestamos">
       <ion-item *ngFor="let prestamo of prestamos">
         <ion-avatar slot="start">
@@ -34,7 +52,7 @@
     </div>
 
     <div class="section-title" *ngIf="title" style="margin-top:10px">
-      <h4>Monto Total &nbsp;  {{montoTotal  | currency:'$' : 'symbol' : '1.0-0'}}   </h4>
+      <h4 style="font-size: 25px;">Monto Total &nbsp;  {{montoTotal  | currency:'$' : 'symbol' : '1.0-0'}}   </h4>
     </div>
   </div>
 </ion-content>

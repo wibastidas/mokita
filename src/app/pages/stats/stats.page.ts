@@ -175,7 +175,6 @@ export class StatsPage implements OnInit, OnDestroy {
     this.montoTotalGastos = 0;
     this.cantidadTotalGastos =  data.length;
     this.montoTotalGastos = data.reduce((prev, cur) => prev + cur.amount, 0);;
-    console.log("calcularGastosDelMes: ", data);
   }
   
   doRefresh(event) {

@@ -30,7 +30,7 @@
       <div class="the-title  ion-padding-horizontal">
         <h3>Clientes</h3>
       </div>
-      <div class="contact-holder  ion-padding-horizontal" scrollX="true">
+      <!-- <div class="contact-holder  ion-padding-horizontal" scrollX="true">
         <div class="recip-card ion-text-center" *ngFor="let customer of customers" (click)="goCustomerDetail(customer)">
           <ion-avatar>
             <text-avatar [text]="customer.name"></text-avatar>
@@ -40,20 +40,58 @@
             {{ customer.name }} <br> {{ customer.lastName }}
           </p>
         </div>
-      </div>
-      <div class="contact-holder  ion-padding-horizontal" scrollX="true">
-        <div class="recip-card ion-text-center" *ngFor="let customer of customers.reverse()" (click)="goCustomerDetail(customer)">
-          <ion-avatar>
-            <text-avatar [text]="customer.name"></text-avatar>
-          </ion-avatar>
-
-          <p class="ion-text-wrap">
-            {{ customer.name }} <br> {{ customer.lastName }}
-          </p>
-        </div>
-      </div>
+      </div> -->
     </div>
   </ng-container>
+
+  <div class="bottom-section">
+    <ion-row class="btns-holder">
+    </ion-row>
+
+    <div class="details">
+      <!-- <div style="margin-top: 10px"  class="the-title ion-padding-horizontal">
+        <h3>Clientes</h3>
+      </div>
+      -->
+      <div class="list-holder ion-padding-horizontal">
+        <div class="the-list">
+
+          <ion-item-sliding  *ngIf="customers$ | async; else loading; let customers">
+      
+            <ng-container *ngFor="let customer of customers" >
+               
+              <ion-item lines="none"  (click)="goCustomerDetail(customer)">
+      
+                <div class="thumb" slot="start" class="ion-text-center">
+                  <ion-avatar>
+                    <text-avatar [text]="customer.name"></text-avatar>
+                  </ion-avatar>
+                </div>
+      
+                <ion-label>
+                  <h4>{{ customer.name }} {{ customer.lastName }}</h4>
+                  <p> {{customer.address}}</p>
+                </ion-label>
+      
+                <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+      
+              </ion-item>
+      
+              <ion-item-options    *ngIf="roleAutorization.canDeleteCustomer(authSvc.getLoggedUser())">
+                <ion-item-option (click)="deleteCustomer(customer)" color="danger" style="border-radius: 5px;">
+                  <ion-icon slot="bottom" name="close-circle-outline"></ion-icon>
+                  Eliminar
+                </ion-item-option>
+              </ion-item-options>
+              
+            </ng-container>
+           </ion-item-sliding>
+      
+        </div>
+      </div>
+     
+    </div>
+  </div>
 
 </ion-content>
 
