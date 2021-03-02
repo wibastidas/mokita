@@ -274,6 +274,7 @@ export class CustomersService {
   }
 
   getPrestamosNuevosByAdminAndDates(adminId, from, to){
+    console.log("getPrestamosNuevosByAdminAndDates");
 
     return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges({idField: 'id'})
     .pipe(
@@ -317,6 +318,7 @@ export class CustomersService {
   }
 
   getPrestamosNuevosByCobradorAndDates(cobradorId, from, to){
+    console.log("getPrestamosNuevosByCobradorAndDates");
 
     return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).valueChanges({idField: 'id'})
     .pipe(

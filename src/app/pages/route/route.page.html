@@ -89,7 +89,7 @@
 
                 </div>
                 <ion-label>
-                  <h4>{{ customer.name }} {{ customer.lastName }} <strong style="color: red!important" *ngIf="customer.reference && customer.reference === 'pasiva'">- Pasiva</strong> </h4>
+                  <h4 class="ion-text-wrap">{{ customer.name }} {{ customer.lastName }} <strong style="color: red!important" *ngIf="customer.reference && customer.reference === 'pasiva'">- Pasiva</strong> </h4>
                   <p class="ion-text-wrap">Saldo Pendiente: {{customer.sale.saldo | currency:'$' : 'symbol' : '1.0-0'}} </p>
                   <!-- <p class="less-important">Creado el : {{customer.sale.createdAt | date:'dd/MM/yyyy'}}</p> -->
                   <p *ngIf="today <= customer.sale.vencimiento" class="less-important">Vence el : {{customer.sale.vencimiento | date:'dd/MM/yyyy'}}</p>

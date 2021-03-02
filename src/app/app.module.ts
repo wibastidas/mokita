@@ -1,4 +1,4 @@
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
@@ -33,6 +33,7 @@ registerLocaleData(localeEs, 'es');
   ],
   providers: [
     StatusBar,
+    DatePipe,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'es' }

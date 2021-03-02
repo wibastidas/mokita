@@ -1,7 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavParams } from '@ionic/angular';
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
+import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 
@@ -13,8 +15,8 @@ import { CustomersService } from 'src/app/services/customers.service';
 export class ReportePrestamosPage implements OnInit, OnDestroy {
   public prestamos$: Observable<any>;
   public title: string;
-  public from: string;
-  public to: string;
+  public from: any;
+  public to: any;
   public montoTotal;
   private subscription = new Subscription();
   public cantidad = 0;
@@ -23,11 +25,14 @@ export class ReportePrestamosPage implements OnInit, OnDestroy {
   constructor( public navParams: NavParams, 
                public alertController: AlertController,
                public authSvc: AuthService, 
+               public datePipe: DatePipe,
+               private alertService: AlertService,
                private customersService: CustomersService, 
                private modalCtrl: ModalController) { 
   }
 
   ngOnInit() {
+    this.isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
 
     this.prestamos$ = this.navParams.get('prestamos');
     this.title = this.navParams.get('title');
@@ -58,7 +63,7 @@ export class ReportePrestamosPage implements OnInit, OnDestroy {
     if(moment(this.to).diff(moment(this.from), 'days') > 31 || moment(this.to).diff(moment(this.from), 'days') < 0) {
       console.log("El rango de fechas de búsqueda no puede ser mayor a 31 días");
       console.log("1")
-
+      this.alertService.presentAlert("Error!", "El rango de fechas de búsqueda no puede ser mayor a 31 días.", ['Ok'])
     } else {
       console.log("2")
 
@@ -74,14 +79,18 @@ export class ReportePrestamosPage implements OnInit, OnDestroy {
   getPrestamosNuevos(){
     console.log("ger vPréstamos Nuevos")
 
-    this.isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
     if (this.isAdmin) {
-      console.log("ger isAdmin Nuevos")
+      console.log("ger isAdmin Nuevos", this.authSvc.getLoggedUser().uid );
+      console.log("from: ", this.datePipe.transform(this.from, 'MM/dd/yyyy'));
+      console.log("to: ", this.datePipe.transform(this.to, 'MM/dd/yyyy'));
 
-      this.prestamos$ = this.customersService.getPrestamosNuevosByCobradorAndDates(this.authSvc.getLoggedUser().uid, this.from,this.to);
+
+      
+
+      this.prestamos$ = this.customersService.getPrestamosNuevosByAdminAndDates(this.authSvc.getLoggedUser().uid, this.datePipe.transform(this.from, 'MM/dd/yyyy'),this.datePipe.transform(this.to, 'MM/dd/yyyy'));
       this.subscription.add(this.prestamos$.subscribe(res => this.calcularPrestamosNuevos(res)));
     } else {
-      this.prestamos$ = this.customersService.getPrestamosNuevosByCobradorAndDates(this.authSvc.getLoggedUser().uid,  this.from,this.to);
+      this.prestamos$ = this.customersService.getPrestamosNuevosByCobradorAndDates(this.authSvc.getLoggedUser().uid,  this.datePipe.transform(this.from, 'MM/dd/yyyy'),this.datePipe.transform(this.to, 'MM/dd/yyyy'));
       this.subscription.add(this.prestamos$.subscribe(res => this.calcularPrestamosNuevos(res)));
     }
 
@@ -89,12 +98,11 @@ export class ReportePrestamosPage implements OnInit, OnDestroy {
 
   getPrestamosFinalizados(){
 
-    this.isAdmin = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
     if (this.isAdmin) {
-      this.prestamos$ = this.customersService.getPrestamosPagadosByAdminAndDates(this.authSvc.getLoggedUser().uid, this.from,this.to);
+      this.prestamos$ = this.customersService.getPrestamosPagadosByAdminAndDates(this.authSvc.getLoggedUser().uid, this.datePipe.transform(this.from, 'MM/dd/yyyy'),this.datePipe.transform(this.to, 'MM/dd/yyyy'));
       this.subscription.add(this.prestamos$.subscribe(res => this.calcularPrestamosNuevos(res)));
     } else {
-      this.prestamos$  = this.customersService.getPrestamosPagadosByCobradorAndDates(this.authSvc.getLoggedUser().uid, this.from,this.to);
+      this.prestamos$  = this.customersService.getPrestamosPagadosByCobradorAndDates(this.authSvc.getLoggedUser().uid, this.datePipe.transform(this.from, 'MM/dd/yyyy'),this.datePipe.transform(this.to, 'MM/dd/yyyy'));
       this.subscription.add(this.prestamos$.subscribe(res => this.calcularPrestamosNuevos(res)));
 
     }
