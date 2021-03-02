@@ -54,11 +54,9 @@ export class ReporteGastosPage implements OnInit {
   }
 
   buscar(){
-    console.log("buscar")
     if(moment(this.to).diff(moment(this.from), 'days') > 31 || moment(this.to).diff(moment(this.from), 'days') < 0) {
       this.alertService.presentAlert("Error!", "El rango de fechas de búsqueda no puede ser mayor a 31 días.", ['Ok'])
     } else {
-      console.log("2")
       if (this.isAdmin) {
         this.expenses$ = this.expensesService.getExpensesByAdminAndDates(this.authSvc.getLoggedUser().uid, this.datePipe.transform(this.from, 'MM/dd/yyyy'),this.datePipe.transform(this.to, 'MM/dd/yyyy'));
         this.subscription.add(this.expenses$.subscribe(res => this.calcularGastos(res)));

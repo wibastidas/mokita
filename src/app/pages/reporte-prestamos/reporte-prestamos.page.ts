@@ -59,16 +59,10 @@ export class ReportePrestamosPage implements OnInit, OnDestroy {
 
 
   buscar(){
-    console.log("buscar")
     if(moment(this.to).diff(moment(this.from), 'days') > 31 || moment(this.to).diff(moment(this.from), 'days') < 0) {
-      console.log("El rango de fechas de búsqueda no puede ser mayor a 31 días");
-      console.log("1")
       this.alertService.presentAlert("Error!", "El rango de fechas de búsqueda no puede ser mayor a 31 días.", ['Ok'])
     } else {
-      console.log("2")
-
       if(this.title === 'Préstamos Nuevos'){
-
         this.getPrestamosNuevos();
       } else {
         this.getPrestamosFinalizados();
@@ -77,16 +71,8 @@ export class ReportePrestamosPage implements OnInit, OnDestroy {
   }
 
   getPrestamosNuevos(){
-    console.log("ger vPréstamos Nuevos")
 
     if (this.isAdmin) {
-      console.log("ger isAdmin Nuevos", this.authSvc.getLoggedUser().uid );
-      console.log("from: ", this.datePipe.transform(this.from, 'MM/dd/yyyy'));
-      console.log("to: ", this.datePipe.transform(this.to, 'MM/dd/yyyy'));
-
-
-      
-
       this.prestamos$ = this.customersService.getPrestamosNuevosByAdminAndDates(this.authSvc.getLoggedUser().uid, this.datePipe.transform(this.from, 'MM/dd/yyyy'),this.datePipe.transform(this.to, 'MM/dd/yyyy'));
       this.subscription.add(this.prestamos$.subscribe(res => this.calcularPrestamosNuevos(res)));
     } else {
@@ -110,10 +96,8 @@ export class ReportePrestamosPage implements OnInit, OnDestroy {
   }
 
   calcularPrestamosNuevos(data){
-    console.log("calcularPrestamosNuevos: ", data)
     this.cantidad = 0;
     this.montoTotal = 0;
-    //console.log("data: ", data)
     this.cantidad = data.length;
     this.montoTotal = data.reduce((prev, cur) => prev + cur.sale.amount, 0);
   }
