@@ -102,7 +102,6 @@ export class ExpensesPage implements OnInit {
   }
 
   calcularGastos(gastos){
-    console.log("gastos: ", gastos)
     this.gastosDelDia = 0;
     this.gastosDelDia = gastos.reduce((prev, cur) => prev + cur.amount, 0);
   }
