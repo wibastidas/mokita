@@ -26,12 +26,18 @@
       </div>
     </div>
 
-    <div class="send-money">
+    <div class="ion-text-center" style="margin-top: 40px;"  *ngIf="expenses.length === 0" >
+      <ion-icon color="medium" style="font-size: 55px;" name="heart-dislike-outline"></ion-icon>
+      <p class="ion-text-wrap" style="color: #92949c !important;">No hay resultados para mostrar</p>
+    </div>
+
+    <div class="send-money"  *ngIf="expenses.length > 0" >
       <div class="the-title  ion-padding-horizontal">
         <h3>Gastos</h3>
       </div>
       <div class="contact-holder  ion-padding-horizontal" scrollX="true">         
           <ion-item-sliding  *ngFor="let expense of expenses">
+
             <ion-item (click)="goExpenseDetail(expense)" lines="none" style="margin: 5px 0 !important;">
               <ion-label>
                 <ion-text>

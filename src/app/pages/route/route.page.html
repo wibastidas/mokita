@@ -62,9 +62,9 @@
         <div class="list-holder ion-padding-horizontal">
           <div class="the-list">
 
-            <ion-item-sliding  *ngFor="let customer of customers">
-              <ion-item lines="none" *ngIf="customer && customer.sale" (click)="goSaleDetail(customer.sale)">
-                <div class="thumb" slot="start" class="ion-text-center">
+            <ion-item-sliding  *ngFor="let customer of customers" [ngClass]="customer.reference && customer.reference === 'pasiva' ? 'pasiva' : ''" >
+              <ion-item lines="none" *ngIf="customer && customer.sale" (click)="goSaleDetail(customer.sale)" [ngClass]="today > customer.sale.vencimiento ? 'warning-border' : ''" >
+                <div class="thumb" slot="start" class="ion-text-center"  >
 
                   <div style="width: 57px;" *ngIf="customer.sale.abonos[customer.sale.abonos.length - 1]
                     && (customer.sale.abonos[customer.sale.abonos.length - 1].createdAt != today) 
@@ -89,15 +89,17 @@
 
                 </div>
                 <ion-label>
-                  <h4>{{ customer.name }} {{ customer.lastName }}</h4>
-                  <p>Cuotas Pendiente: {{customer.sale.cuotasPendientes | number: '1.0-2'}}</p>
-                  <p class="less-important">Saldo Pendiente: {{customer.sale.saldo | currency:'$' : 'symbol' : '1.0-0'}}</p>
+                  <h4>{{ customer.name }} {{ customer.lastName }} <strong style="color: red!important" *ngIf="customer.reference && customer.reference === 'pasiva'">- Pasiva</strong> </h4>
+                  <p class="ion-text-wrap">Saldo Pendiente: {{customer.sale.saldo | currency:'$' : 'symbol' : '1.0-0'}} </p>
+                  <!-- <p class="less-important">Creado el : {{customer.sale.createdAt | date:'dd/MM/yyyy'}}</p> -->
+                  <p *ngIf="today <= customer.sale.vencimiento" class="less-important">Vence el : {{customer.sale.vencimiento | date:'dd/MM/yyyy'}}</p>
+                  <p *ngIf="today > customer.sale.vencimiento" class="less-important" style="color:red!important">Vencido el: {{customer.sale.vencimiento | date:'dd/MM/yyyy' }}</p>
                   <p *ngIf="customer.sale.abonos && customer.sale.abonos.length  > 0 && customer.sale.abonos[customer.sale.abonos.length - 1].createdAt == today"  class="less-important">Abono del día: {{customer.sale.abonos[customer.sale.abonos.length - 1].monto | currency:'$' : 'symbol' : '1.0-0'}}</p>
                 </ion-label>
                 <div slot="end">
                   <h5 class="ion-text-center">{{customer.sale.cuotasPendientes | number: '1.0-1'}}</h5>
-                  <!-- <p class="pending-text ion-text-center">Cuotas</p> -->
-                  <!-- <p class="pending-text ion-text-center">Pendiente</p> -->
+                  <p class="pending-text ion-text-center" class="cuotas-pendiente">Cuotas</p>
+                  <p class="pending-text ion-text-center" class="cuotas-pendiente">Pendiente</p>
                 </div>
               </ion-item>
 
@@ -120,7 +122,7 @@
       </div>
     </div>
 
-    <ion-item-divider >
+    <ion-item-divider *ngIf="isAdmin">
       <ion-label>
         Total Saldo: {{totalSaldo | currency :'$':'symbol':'1.2-2'}}  
       </ion-label>

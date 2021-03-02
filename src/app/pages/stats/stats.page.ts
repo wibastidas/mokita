@@ -215,7 +215,7 @@ export class StatsPage implements OnInit, OnDestroy {
     const modal = await this.modalController.create({
       component: ReportePrestamosPage,
       componentProps: {
-        title: 'Préstamos Finalizados (Pagados)',
+        title: 'Préstamos Finalizados',
         prestamos: this.prestamosPagados$,
         from: "03/01/2021",
         to: "03/01/2021",

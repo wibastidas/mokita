@@ -119,7 +119,9 @@ export class RoutePage implements OnInit, OnDestroy {
       //   customer.sale.vencido = moment(customer.sale.vencimiento, "MM/DD/YYYY").isBefore(this.dayToday);
       // }
 
+
       if(customer.sale && customer.sale.abonos && customer.sale.abonos.length > 0) {
+
         customer.sale.abonos.forEach(abono => {
           if(abono.createdAt == this.today && abono.monto > 0) {
             this.totalRecaudado+=  abono.monto;

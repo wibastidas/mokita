@@ -113,3 +113,23 @@ ion-content {
 
     
 }
+
+
+.warning-border {
+    border-width: 1px;
+    border-style: solid;
+    border-color: red;
+}
+
+.cuotas-pendiente {
+    font-family: 'AvenirR'!important;
+    color: #77869E !important;
+    font-size: 10px!important;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.pasiva {
+    background-color: #ffecec;
+}

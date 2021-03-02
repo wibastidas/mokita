@@ -194,7 +194,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row *ngIf="isAdmin">
       <ion-col>
         <ion-item lines="none" (click)="goReportePrestamosSaldoPendiente()">
           <div class="thumb" slot="start" style="margin-right: 12px;" >

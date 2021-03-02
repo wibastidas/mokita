@@ -185,6 +185,7 @@ export class CustomersService {
 
 
   getPrestamosPagadosByAdminAndDates(adminId, from, to){
+    console.log("getPrestamosPagadosByAdminAndDates");
 
     return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges({idField: 'id'})
     .pipe(

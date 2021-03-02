@@ -14,28 +14,39 @@
 
 <ion-content class="ion-padding">
 
-
   <div class="section">
-    <div class="section-title" *ngIf="title">
-      <h4>Seleccionar fechas <strong></strong>   <strong></strong></h4>
-    </div>
-    <ion-item>
-      <ion-label>Desde</ion-label>
-      <ion-datetime  #myPicker displayFormat="DD-MMM-YYYY"  doneText="Aceptar" cancelText="Cancelar"   
-      monthNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre" 
-      monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic"  [(ngModel)]="from"  
-      (ionChange)="updateMyDate(myPicker.value)"
-      placeholder="Seleccionar Fecha "></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label>Hasta</ion-label>
-      <ion-datetime #myPicker displayFormat="DD-MMM-YYYY" doneText="Aceptar"  cancelText="Cancelar" 
-      monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic"   [(ngModel)]="to"
-      monthNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre" 
-      (ionChange)="updateMyDate(myPicker.value)"
-      placeholder="Seleccionar Fecha"></ion-datetime>
-    </ion-item>
+
+    <ng-container *ngIf="isAdmin">
+      <div class="section-title" *ngIf="title">
+        <h4>Seleccionar fechas <strong></strong>   <strong></strong></h4>
+      </div>
+      <ion-item>
+        <ion-label>Desde</ion-label>
+        <ion-datetime  #myPickerFrom displayFormat="DD-MMM-YYYY"  doneText="Aceptar" cancelText="Cancelar"   
+        monthNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre" 
+        monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic"  [(ngModel)]="from"  
+        placeholder="Seleccionar Fecha "></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Hasta</ion-label>
+        <ion-datetime #myPickerTo displayFormat="DD-MMM-YYYY" doneText="Aceptar"  cancelText="Cancelar" 
+        monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic"   [(ngModel)]="to"
+        monthNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre" 
+        placeholder="Seleccionar Fecha"></ion-datetime>
+      </ion-item>
+
+      <div class="ion-text-center" style="margin-top: 10px;">  
+        <ion-button (click)="buscar()" size="small" fill="outline">Búscar</ion-button>
+      </div>
+    </ng-container>
+
     <div class="the-list" *ngIf="prestamos$ | async; let prestamos">
+
+      <div class="ion-text-center" style="margin-top: 40px;"  *ngIf="prestamos.length === 0" >
+        <ion-icon color="medium" style="font-size: 55px;" name="heart-dislike-outline"></ion-icon>
+        <p class="ion-text-wrap" style="color: #92949c !important;">No hay resultados para mostrar</p>
+      </div>
+
       <ion-item *ngFor="let prestamo of prestamos">
         <ion-avatar slot="start">
           <text-avatar [text]="prestamo.name"></text-avatar>
@@ -47,12 +58,13 @@
             <p> Vence el {{prestamo.sale.vencimiento }}</p>
 
         </ion-label>
+
+        <div class="section-title" *ngIf="title" style="margin-top:10px">
+          <h4 style="font-size: 25px;">Monto Total &nbsp;  {{montoTotal  | currency:'$' : 'symbol' : '1.0-0'}}   </h4>
+        </div>
+
       </ion-item>
 
-    </div>
-
-    <div class="section-title" *ngIf="title" style="margin-top:10px">
-      <h4 style="font-size: 25px;">Monto Total &nbsp;  {{montoTotal  | currency:'$' : 'symbol' : '1.0-0'}}   </h4>
     </div>
   </div>
 </ion-content>
