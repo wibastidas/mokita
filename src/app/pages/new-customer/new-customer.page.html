@@ -110,6 +110,7 @@
     <ion-item lines="none" *ngIf="roleAutorization.canEditCustomerVendor(authSvc.getLoggedUser())">
       <ion-label color="primary">Seleccionar Cobrador</ion-label>
       <ion-select mode="ios" okText="Seleccionar" cancelText="Cancelar">
+        <ion-select-option value="null">Sin cobrador</ion-select-option>
         <ion-select-option *ngFor="let cobrador of cobradores" value="{{cobrador.uid}}">{{cobrador.displayName || cobrador.email}} </ion-select-option>
       </ion-select>
     </ion-item>

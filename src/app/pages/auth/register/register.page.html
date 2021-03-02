@@ -1,5 +1,108 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="login"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <div class="the-content">
+    <div class="the-title">
+      <h2>Regístrate</h2>
+    </div>
+    <ion-grid style="height: 100%">
+      <ion-row class="ion-justify-content-center ion-align-items-center " style="height: 100%">
+        <div class="holder">
+          <form [formGroup]="signupForm" (ngSubmit)="signup(signupForm.value, isNewUserCobrador)">
+            <div class="details">
+
+              <!-- <div class="detail-item">
+                <ion-label>Nombre y Apellidos</ion-label>
+                <ion-item>
+                  <span class="icn-holder" slot="end" *ngIf="!signupForm.get('username').invalid">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+                  </span>
+                  <ion-input formControlName="username" class="username" placeholder="Ingresar nombre y apellidos"> </ion-input>
+                </ion-item>
+
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of error_messages.username">
+                    <div class="error-message"
+                      *ngIf="signupForm.get('username').hasError(error.type) && (signupForm.get('username').dirty || signupForm.get('username').touched)">
+                      {{error.message}}
+                    </div>
+                  </ng-container>
+                </div>
+              </div> -->
+
+              <div class="detail-item">
+                <ion-label>Correo</ion-label>
+                <ion-item>
+                  <span class="icn-holder" slot="end" *ngIf="!signupForm.get('email').invalid">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+                  </span>
+                  <ion-input formControlName="email" class="email" placeholder="Ingresar correo" type="email">
+                  </ion-input>
+                </ion-item>
+
+                <div class="error-messages">
+                  <ng-container *ngFor="let error of error_messages.email">
+                    <div class="error-message"
+                      *ngIf="signupForm.get('email').hasError(error.type) && (signupForm.get('email').dirty || signupForm.get('email').touched)">
+                      {{error.message}}
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+
+
+              <div class="detail-item">
+                <ion-label>Contraseña</ion-label>
+                <ion-item>
+                  <span class="icn-holder" slot="end" *ngIf="!signupForm.get('password').invalid">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+                  </span>
+                  <ion-input class="password" placeholder="Ingrease contraseña" formControlName="password"> </ion-input>
+                </ion-item>
+              </div>
+
+
+              <div class="error-messages">
+                <ng-container *ngFor="let error of error_messages.password">
+                  <div class="error-message"
+                    *ngIf="signupForm.get('password').hasError(error.type) && (signupForm.get('password').dirty || signupForm.get('password').touched)">
+                    {{error.message}}
+                  </div>
+                </ng-container>
+              </div>
+
+              <div class="agreement-holder">
+                <ion-item lines="none" class="ion-no-padding">
+                  <ion-label class="ion-text-wrap">Al crear una cuenta, acepta nuestros
+                    Términos y Condiciones</ion-label>
+                  <ion-checkbox mode="ios" slot="start" formControlName="terms" ></ion-checkbox>
+                </ion-item>
+              </div>
+
+            </div>
+            <div class="btn-holder ion-padding-top">
+              <ion-button expand="block" type="submit" routerDirection="root" [disabled]="signupForm.invalid">
+                Registrarse
+              </ion-button>
+            </div>
+
+          </form>
+        </div>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+</ion-content>
+
+
+
+<!-- <ion-header class="ion-no-border">
+  <ion-toolbar>
     <ion-title>Crear una cuenta</ion-title>
 
     <ion-buttons slot="start">
@@ -31,4 +134,4 @@
       </p>
     </ion-col>
   </ion-row>
-</ion-content>
+</ion-content> -->
