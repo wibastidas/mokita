@@ -1,33 +1,44 @@
+
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Verificación </ion-title>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="login"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<ion-content class="ion-padding" *ngIf="user$ | async as user">
+  <div class="the-content">
+    <div class="the-title">
+      <h2>Gracias por registrarte</h2>
+    </div>
+    <ion-grid style="height: 100%">
+      <ion-row class="ion-justify-content-center ion-align-items-center " style="height: 100%">
+        <div class="holder">
 
-<ion-content *ngIf="user$ | async as user">
-  <ion-row>
-    <ion-col>
-      <h2>Gracias por registrarte!</h2>
-      <p>Hemos enviado un correo electrónico de confirmación a <strong>{{user.email}}</strong></p>
-      <p>Entre a su correo electrónico y haga clic en el enlace para verificar su dirección de correo electrónico.</p>
-    </ion-col>
-  </ion-row>
+          <div class="details">
 
-  <ion-row>
-    <ion-col>
-      <ion-button type="submit" color="primary" expand="block" (click)="onSendEmail()">
-        Reenviar el correo de verificación</ion-button>
-    </ion-col>
-  </ion-row>
+              <div class="detail-item">
+                <p>Hemos enviado un correo electrónico de confirmación a <strong> {{user.email}}</strong></p>
+                <p>Entre a su correo electrónico y haga clic en el enlace para verificar su dirección de correo electrónico.</p>
+              </div>
+            </div>
 
-  <ion-row>
-    <ion-col>
-      <p class="ion-text-center">
-        <a routerLink="/login">Ir a Iniciar Sesión</a>
-      </p>
-    </ion-col>
-  </ion-row>
+            <div class="btn-holder ion-padding-top">
+              <ion-button expand="block" (click)="onSendEmail()">
+                Reenviar el correo de verificación
+              </ion-button>
+            </div>
+
+        </div>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p class="ion-text-center">
+            <a routerLink="/login">Ir a Iniciar Sesión</a>
+          </p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
 </ion-content>

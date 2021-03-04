@@ -90,6 +90,10 @@ export class CustomersService {
     return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges({idField: 'id'})
     .pipe(
       switchMap(customers => {
+        if(customers.length === 0) { 
+          return combineLatest([of([]),of([]),of([])])
+        } 
+
         const customerIds = uniq(customers.map((bp:any) => bp.id))
 
         return combineLatest([ 
@@ -124,6 +128,11 @@ export class CustomersService {
           return 0;
         })
 
+        console.log("customers: ", customers);
+        console.log("sales: ", sales);
+        console.log("salesPagadas: ", salesPagadas);
+
+
         return customersSort.map((customer: any) => {
           return {
             ...customer,
@@ -139,6 +148,10 @@ export class CustomersService {
     return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).valueChanges({idField: 'id'})
     .pipe(
       switchMap(customers => {
+        if(customers.length === 0) { 
+          return combineLatest([of([]),of([]),of([])])
+        } 
+
         const customerIds = uniq(customers.map((bp:any) => bp.id))
 
         return combineLatest([ 
@@ -190,6 +203,10 @@ export class CustomersService {
     return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges({idField: 'id'})
     .pipe(
       switchMap(customers => {
+        if(customers.length === 0) { 
+          return combineLatest([of([]),of([])])
+        } 
+        
         const customerIds = uniq(customers.map((bp:any) => bp.id))
 
         return combineLatest([ 
@@ -234,6 +251,10 @@ export class CustomersService {
     return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).valueChanges({idField: 'id'})
     .pipe(
       switchMap(customers => {
+        if(customers.length === 0) { 
+          return combineLatest([of([]),of([])])
+        } 
+        
         const customerIds = uniq(customers.map((bp:any) => bp.id))
 
         return combineLatest([ 
@@ -279,6 +300,10 @@ export class CustomersService {
     return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges({idField: 'id'})
     .pipe(
       switchMap(customers => {
+        if(customers.length === 0) { 
+          return combineLatest([of([]),of([])])
+        } 
+        
         const customerIds = uniq(customers.map((bp:any) => bp.id))
 
         return combineLatest([ 
@@ -322,6 +347,10 @@ export class CustomersService {
     return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).valueChanges({idField: 'id'})
     .pipe(
       switchMap(customers => {
+        if(customers.length === 0) { 
+          return combineLatest([of([]),of([])])
+        } 
+
         const customerIds = uniq(customers.map((bp:any) => bp.id))
 
         return combineLatest([ 
