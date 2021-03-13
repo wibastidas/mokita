@@ -215,8 +215,9 @@ export class SaleDetailPage implements OnInit {
     await alert.present();
   }
 
-  openWhatsapp(){
-    window.open(`https://wa.me/${this.phoneNumber}`)
+  openWhatsapp(sale){
+
+    window.open(`https://wa.me/${this.phoneNumber}?text=ACTUALIZACIÓN DE PRÉSTAMO! Cuotas pagadas: ${sale.cuotasPagadas}, Cuotas pendiente: ${sale.cuotasPendientes}, Saldo pendiente: $${sale.saldo} , Vence el ${ moment(sale.vencimiento).format("LLLL")}`)
   }
 
   openCall(){
