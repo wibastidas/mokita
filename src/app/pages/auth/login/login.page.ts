@@ -25,7 +25,8 @@ export class LoginPage {
     ]
   }
 
-  constructor(public authSvc: AuthService, private router: Router, 
+  constructor(public authSvc: AuthService, 
+              private router: Router, 
               public formBuilder:FormBuilder, 
               private navCtrl:NavController) {
     this.loginForm = this.formBuilder.group({

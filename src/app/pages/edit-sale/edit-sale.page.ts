@@ -48,33 +48,15 @@ export class EditSalePage implements OnInit, OnDestroy {
       porcentaje: new FormControl("", Validators.compose([
         Validators.required
       ])),
-      cuotas: new FormControl([], Validators.compose([
-        Validators.required
-      ])),
-      montoConInteres: new FormControl("", Validators.compose([
-        Validators.required
-      ])),
-      montoCuota: new FormControl({ value: "", disabled: true }, Validators.compose([
-        Validators.required
-      ])),
-      estado: new FormControl({ value: "", disabled: true }, Validators.compose([
-        Validators.required
-      ])),
-      createdAt: new FormControl({ value: "", disabled: true }, Validators.compose([
-        Validators.required
-      ])),
-      customerId: new FormControl("", Validators.compose([
-        Validators.required
-      ])),
-      cuotasPagadas: new FormControl("", Validators.compose([
-        Validators.required
-      ])),
-      cuotasPendientes: new FormControl("", Validators.compose([
-        Validators.required
-      ])),
-      intereses: new FormControl("", Validators.compose([
-        Validators.required
-      ])),
+      cuotas: new FormControl([]),
+      montoConInteres: new FormControl(""),
+      montoCuota: new FormControl({ value: "", disabled: true }),
+      estado: new FormControl({ value: "", disabled: true }),
+      createdAt: new FormControl({ value: "", disabled: true }),
+      customerId: new FormControl(""),
+      cuotasPagadas: new FormControl(""),
+      cuotasPendientes: new FormControl(""),
+      intereses: new FormControl(""),
       updatedAt: new FormControl(""),
       // vencimiento: new FormControl({ value: "", disabled: true }, Validators.compose([
       //   Validators.required

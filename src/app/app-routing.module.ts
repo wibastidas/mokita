@@ -49,7 +49,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'sale-detail/:id',
+    path: 'sale-detail/:id/:name/:lastName/:phoneNumber',
     loadChildren: () => import('./pages/sale-detail/sale-detail.module').then( m => m.SaleDetailPageModule),
     canActivate: [AuthGuard]
   },

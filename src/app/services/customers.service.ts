@@ -128,11 +128,6 @@ export class CustomersService {
           return 0;
         })
 
-        console.log("customers: ", customers);
-        console.log("sales: ", sales);
-        console.log("salesPagadas: ", salesPagadas);
-
-
         return customersSort.map((customer: any) => {
           return {
             ...customer,

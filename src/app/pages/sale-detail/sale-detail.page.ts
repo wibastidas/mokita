@@ -18,6 +18,10 @@ import { EditSalePage } from '../edit-sale/edit-sale.page';
 export class SaleDetailPage implements OnInit {
   sale: Sale;
   saleId: string;
+  lastName: string;
+  name: string;
+  phoneNumber: string;
+
   // loading: Boolean= false;
   public sale$: Observable<any>
 
@@ -29,6 +33,9 @@ export class SaleDetailPage implements OnInit {
               public roleAutorization: RoleBasedAutorizationService,
               private modalController: ModalController) {
     this.saleId = this.route.snapshot.paramMap.get('id');
+    this.name = this.route.snapshot.paramMap.get('name');
+    this.lastName = this.route.snapshot.paramMap.get('lastName');
+    this.phoneNumber = this.route.snapshot.paramMap.get('phoneNumber');
   }
 
   ngOnInit() {
@@ -206,6 +213,14 @@ export class SaleDetailPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  openWhatsapp(){
+    window.open(`https://wa.me/${this.phoneNumber}`)
+  }
+
+  openCall(){
+    window.open('tel:+' + this.phoneNumber, '_system');
   }
 
 }

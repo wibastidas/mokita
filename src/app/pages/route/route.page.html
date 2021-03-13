@@ -63,7 +63,7 @@
           <div class="the-list">
 
             <ion-item-sliding  *ngFor="let customer of customers" [ngClass]="customer.reference && customer.reference === 'pasiva' ? 'pasiva' : ''" >
-              <ion-item lines="none" *ngIf="customer && customer.sale" (click)="goSaleDetail(customer.sale)" [ngClass]="today > customer.sale.vencimiento ? 'warning-border' : ''" >
+              <ion-item lines="none" *ngIf="customer && customer.sale" (click)="goSaleDetail(customer)" [ngClass]="today > customer.sale.vencimiento ? 'warning-border' : ''" >
                 <div class="thumb" slot="start" class="ion-text-center"  >
 
                   <div style="width: 57px;" *ngIf="customer.sale.abonos[customer.sale.abonos.length - 1]

@@ -8,19 +8,32 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-fab horizontal="end" vertical="bottom" *ngIf="phoneNumber" slot="fixed" (click)="openWhatsapp()" >
+    <ion-fab-button color="success" >
+      <ion-icon name="logo-whatsapp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab horizontal="start" vertical="bottom" *ngIf="phoneNumber" slot="fixed" (click)="openCall()" >
+    <ion-fab-button color="secondary">
+      <ion-icon name="call"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <div class="background-holder"></div>
   <div class="top-card ion-text-center ion-padding-vertical" *ngIf="customer; else loading">
     <div class="img-holder">
       <ion-avatar>
         <text-avatar [text]="customer.name"></text-avatar>
       </ion-avatar>
-
     </div>
     <div class="details">
       <h5>{{customer.name}} {{customer.lastName}}</h5>
       <p>{{customer.address}}</p>
     </div>
   </div>
+
 
   <div class="details" style="margin-top: 30px;">
     <!-- <div class="the-title ion-padding-horizontal">

@@ -19,7 +19,8 @@
   <div class="top-card ion-padding-vertical">
 
     <div class="details">
-      <h5>Saldo Pendiente: {{sale.saldo | currency:'$'}}</h5>
+      <h3>{{name}} {{lastName}}</h3>
+      <p>Saldo Pendiente: {{sale.saldo | currency:'$'}}</p>
       <p>Cuotas Pendientes:  {{sale.cuotasPendientes | number}} </p>
       <p>Cuotas Pagadas: {{sale.cuotasPagadas | number}}</p>
       <p>Interés: {{sale.porcentaje | currency:'%'}}</p>
@@ -30,6 +31,18 @@
       <!-- <p>porcentajePagado; {{sale.porcentajePagado}}</p> -->
     </div>
   </div>
+
+  <ion-fab horizontal="end" vertical="top" *ngIf="phoneNumber" slot="fixed" (click)="openWhatsapp()" >
+    <ion-fab-button color="success" >
+      <ion-icon name="logo-whatsapp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab horizontal="end" style="margin-top: 70px;" vertical="top" *ngIf="phoneNumber" slot="fixed" (click)="openCall()" >
+    <ion-fab-button color="secondary">
+      <ion-icon name="call"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
   <div class="progress ion-padding">
     <ion-row>

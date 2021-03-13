@@ -82,7 +82,7 @@
           <div class="bottom-section">
             <ion-row>
               <ion-col class="btns-holder">
-                <ion-button [disabled]="saleForm.invalid" type="submit" expand="block">
+                <ion-button [disabled]="!saleForm.valid" type="submit" expand="block">
                   Actualizar
                 </ion-button>
               </ion-col>

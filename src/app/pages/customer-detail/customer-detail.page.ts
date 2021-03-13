@@ -26,6 +26,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   type: string;
   sales: Sale[];
   loadingCustomerInformation = false;
+  phoneNumber;
   loadingLoansInformation = false;
   validation_messages = {
     name: [
@@ -134,6 +135,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
       this.loadingCustomerInformation = false;
       res.id = this.customerId;
       this.customer = res
+      this.phoneNumber = res.phoneNumber;
       this.customerForm.setValue(res);
       this.getSalesByCustomerId();
     });
@@ -183,7 +185,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   }
 
   goSaleDetail(sale){
-    this.router.navigateByUrl('/sale-detail/' + sale.id);
+    this.router.navigateByUrl('/sale-detail/' + sale.id + '/' + this.customer.name + '/' + this.customer.lastName + '/' + this.customer.phoneNumber);
   }
 
   // createCustomer(customer: Customer){
@@ -225,6 +227,14 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
     });
 
     await alert.present();
+  }
+
+  openWhatsapp(){
+    window.open(`https://wa.me/${this.phoneNumber}`)
+  }
+
+  openCall(){
+    window.open('tel:+' + this.phoneNumber, '_system');
   }
 
 }
