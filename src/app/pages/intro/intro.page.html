@@ -1,0 +1,48 @@
+<ion-header class="ion-no-border" translucent="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="primary" (click)="goLogin()">
+        SALTAR
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="max-height: 91%;">
+  <div class="intro-img-holder ion-text-center animated fadeInUp delay-2s">
+    <img src="assets/imgs/phone.svg" alt="">
+  </div>
+
+  <div class="bottom-holder absolute">
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide>
+        <div class="slide-content ion-text-center ion-padding-horizontal">
+          <h4 class="ion-text-wrap">Welcome, Manage your expenses</h4>
+          <p class="ion-text-wrap">easily manage your expenses by your mobile</p>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="slide-content ion-text-center ion-padding-horizontal">
+          <h4 class="ion-text-wrap">Welcome, Manage your expenses</h4>
+          <p class="ion-text-wrap">easily manage your expenses by your mobile</p>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="slide-content ion-text-center ion-padding-horizontal">
+          <h4 class="ion-text-wrap">Welcome, Manage your expenses</h4>
+          <p class="ion-text-wrap">easily manage your expenses by your mobile</p>
+        </div>
+      </ion-slide>
+    </ion-slides>
+    <div class="btns-holder" paddding-horizontal text-center>
+      <ion-button (click)="goLogin()">
+        Iniciar Sesión
+      </ion-button>
+      <ion-button id="signup" fill="none" (click)="goSignup()">
+        Regístrate
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+
+ 

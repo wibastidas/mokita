@@ -1,0 +1,57 @@
+ion-toolbar
+{
+
+}
+
+ion-content
+{
+    .intro-img-holder
+    {
+        img
+        {
+            height: auto
+        }
+    }
+
+    .bottom-holder
+    {
+        background: white;
+        bottom: 0;
+        z-index: 20;
+
+        .slide-content
+        {
+            h4
+            {
+                color: #042C5C;
+                font-family: 'AvenirH' !important;
+            }
+            p{
+                color: #77869E;
+                font-family: 'AvenirM' !important;
+                margin-top: 10px !important;
+                padding-bottom: 20px !important;
+            }
+        }
+        .btns-holder
+        {
+            margin: 0 10px;
+            padding-bottom: 10px !important;
+        
+            ion-button{
+                display: inline-block !important;
+                height: 3rem !important;
+                margin: 0 5px !important;
+                width: 45% !important;
+            }
+
+            #signup
+            {
+                --border-color: #77869E;
+                --border-size:0.8px;
+                --border-style: solid;
+                --color: #77869E;
+            }
+        }
+    }
+}
