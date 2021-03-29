@@ -8,13 +8,6 @@ const routes: Routes = [
     path: '',
     component: IndexPage,
     children: [
-      // {
-      //   path: '',
-      //   loadChildren: () =>
-      //   import('../pages/welcome/welcome.module').then(
-      //   m => m.WelcomePageModule
-      //   )
-      // },
       {
         path: '',
         loadChildren: () =>

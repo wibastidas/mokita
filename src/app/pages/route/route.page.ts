@@ -50,7 +50,7 @@ export class RoutePage implements OnInit, OnDestroy {
   }
 
   goNewSale(){
-    this.router.navigateByUrl('/new-sale');
+    this.router.navigateByUrl('/home/new-sale');
   }
 
   async showOptions() {
@@ -107,7 +107,7 @@ export class RoutePage implements OnInit, OnDestroy {
   goSaleDetail(customer){
     console.log("customer: ", customer)
 
-    this.router.navigateByUrl('/sale-detail/' + customer.sale.id + '/' + customer.name + '/' + customer.lastName + '/' + customer.phoneNumber);
+    this.router.navigateByUrl('/home/sale-detail/' + customer.sale.id + '/' + customer.name + '/' + customer.lastName + '/' + customer.phoneNumber);
   }
 
   calcularRecaudoYsaldo(customers){

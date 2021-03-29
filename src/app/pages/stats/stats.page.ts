@@ -166,6 +166,7 @@ export class StatsPage implements OnInit, OnDestroy {
   }
 
   calcularPrestamosPagados(data){
+    
     this.cantidadPrestamosNuevos = 0;
     this.montoPrestamosNuevos = 0;
     //console.log("data: ", data)

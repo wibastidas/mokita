@@ -43,7 +43,7 @@ export class CustomersPage implements OnInit {
   }
 
   goCustomerDetail(customer){
-    this.router.navigateByUrl('/customer-detail/' + customer.id);
+    this.router.navigateByUrl('/home/customer-detail/' + customer.id);
   }
 
   async createCustomer() {
