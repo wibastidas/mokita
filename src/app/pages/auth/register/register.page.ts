@@ -99,7 +99,7 @@ export class RegisterPage implements OnInit {
 
   private redirectUser(isVerified: boolean): void {
     if (isVerified) {
-      this.router.navigate(['/']);
+      this.router.navigate(['home']);
     } else {
       this.router.navigate(['verify-email']);
       //this.authSvc.setLoggedUser(null);

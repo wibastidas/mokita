@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { AddtransactionsPage } from '../modals/addtransactions/addtransactions.page';
+import { AddtransactionsPage } from '../pages/modals/addtransactions/addtransactions.page';
 
 @Component({
-  selector: 'app-tabs',
-  templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
 })
-export class TabsPage {
+export class HomePage {
 
   constructor(private modalCtrl: ModalController) {}
 
