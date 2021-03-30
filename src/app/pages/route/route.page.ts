@@ -107,7 +107,7 @@ export class RoutePage implements OnInit, OnDestroy {
   goSaleDetail(customer){
     console.log("customer: ", customer)
 
-    this.router.navigateByUrl('/home/sale-detail/' + customer.sale.id + '/' + customer.name + '/' + customer.lastName + '/' + customer.phoneNumber);
+    this.router.navigateByUrl('home/route/sale-detail/' + customer.sale.id + '/' + customer.name + '/' + customer.lastName + '/' + customer.phoneNumber);
   }
 
   calcularRecaudoYsaldo(customers){

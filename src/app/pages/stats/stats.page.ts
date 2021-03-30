@@ -35,6 +35,7 @@ export class StatsPage implements OnInit, OnDestroy {
   public montoPrestamosPagados = 0;
   public cantidadTotalGastos = 0;
   public montoTotalGastos = 0;
+  public prestamosPagados = 0;
   public gastos= [];
   public dayName = moment().format('dddd') ;
   public monthName = moment().format('MMMM') ;
@@ -170,7 +171,7 @@ export class StatsPage implements OnInit, OnDestroy {
     this.cantidadPrestamosNuevos = 0;
     this.montoPrestamosNuevos = 0;
     //console.log("data: ", data)
-    this.calcularPrestamosPagados = data.length;
+    this.prestamosPagados = data.length;
     this.montoPrestamosPagados = data.reduce((prev, cur) => prev + cur.sale.amount, 0);
 
   }

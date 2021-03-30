@@ -32,7 +32,16 @@ const routes: Routes = [
       },
       {
         path: 'route',
-        loadChildren: () => import('../pages/route/route.module').then( m => m.RoutePageModule),
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../pages/route/route.module').then( m => m.RoutePageModule),
+          },
+          {
+            path: 'route/sale-detail/:id/:name/:lastName/:phoneNumber',
+            loadChildren: () => import('../pages/sale-detail/sale-detail.module').then( m => m.SaleDetailPageModule),
+          }
+        ]
       },
       {
         path: 'customer-detail/:id',
@@ -45,10 +54,6 @@ const routes: Routes = [
       {
         path: 'expense-detail',
         loadChildren: () => import('../pages/expense-detail/expense-detail.module').then( m => m.ExpenseDetailPageModule),
-      },
-      {
-        path: 'sale-detail/:id/:name/:lastName/:phoneNumber',
-        loadChildren: () => import('../pages/sale-detail/sale-detail.module').then( m => m.SaleDetailPageModule),
       },
       {
         path: 'new-sale',
