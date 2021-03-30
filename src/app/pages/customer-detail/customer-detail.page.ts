@@ -185,7 +185,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   }
 
   goSaleDetail(sale){
-    this.router.navigateByUrl('/home/sale-detail/' + sale.id + '/' + this.customer.name + '/' + this.customer.lastName + '/' + this.customer.phoneNumber);
+    this.router.navigateByUrl('/home/customers/sale-detail/' + sale.id + '/' + this.customer.name + '/' + this.customer.lastName + '/' + this.customer.phoneNumber);
   }
 
   // createCustomer(customer: Customer){

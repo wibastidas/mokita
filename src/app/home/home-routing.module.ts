@@ -32,19 +32,19 @@ const routes: Routes = [
       },
       {
         path: 'route',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('../pages/route/route.module').then( m => m.RoutePageModule),
-          },
-          {
-            path: 'route/sale-detail/:id/:name/:lastName/:phoneNumber',
-            loadChildren: () => import('../pages/sale-detail/sale-detail.module').then( m => m.SaleDetailPageModule),
-          }
-        ]
+        loadChildren: () => import('../pages/route/route.module').then( m => m.RoutePageModule),
+        
       },
       {
-        path: 'customer-detail/:id',
+        path: 'route/sale-detail/:id/:name/:lastName/:phoneNumber',
+        loadChildren: () => import('../pages/sale-detail/sale-detail.module').then( m => m.SaleDetailPageModule),
+      },
+      {
+        path: 'customers/sale-detail/:id/:name/:lastName/:phoneNumber',
+        loadChildren: () => import('../pages/sale-detail/sale-detail.module').then( m => m.SaleDetailPageModule),
+      },
+      {
+        path: 'customers/customer-detail/:id',
         loadChildren: () => import('../pages/customer-detail/customer-detail.module').then( m => m.CustomerDetailPageModule),
       },
       {

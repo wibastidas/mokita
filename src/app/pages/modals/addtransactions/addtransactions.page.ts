@@ -51,7 +51,7 @@ export class AddtransactionsPage implements OnInit {
   goNewSale(){
     this.dismiss();
 
-    this.router.navigateByUrl('/home/new-sale');
+    this.router.navigateByUrl('/new-sale');
   }
 
 
