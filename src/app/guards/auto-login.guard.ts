@@ -4,31 +4,21 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+
+export class AutoLoginGuard implements CanActivate {
   constructor(public authSvc: AuthService, private router: Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    // return this.authSvc.user$.pipe(
-    //   take(1),
-    //   map((user) => {
-    //     //console.log("User->", user);
-    //     if (user) {
-    //       return true;
-    //     } else {
-    //       this.router.navigate(['/login']);
-    //       return false;
-    //     }
-    //   })
-    // );
     if (this.authSvc.getLoggedUser) {
-      return true;
+      console.log("AutoLoginGuard home");
+      this.router.navigateByUrl('/home', { replaceUrl: true });
     } else {
-      this.router.navigate(['/login']);
-      return false;
+      console.log("AutoLoginGuard true");
+      return true;
     };
   }
 }
