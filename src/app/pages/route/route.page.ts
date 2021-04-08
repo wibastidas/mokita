@@ -59,7 +59,7 @@ export class RoutePage implements OnInit, OnDestroy {
       icon: 'log-out-outline',
       handler: () => {
         this.authSvc.logout();
-        this.router.navigate(['/login']);
+        this.router.navigate(['/home']);
       }
     }, {
       text: 'Cancelar',
