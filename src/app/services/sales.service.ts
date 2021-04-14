@@ -16,7 +16,7 @@ export class SalesService {
 
   getSaleById(saleId: string) {
     return this.firestore.doc('/sales/' + saleId).valueChanges({idField: 'id'}).pipe(
-        map((response:any) => ({...response, abonos: response.abonos.reverse(), porcentajePagado: this.calcularPorcentaje(response.montoConInteres, response.montoConInteres - response.saldo)}))
+        map((response:any) => ({...response, porcentajePagado: this.calcularPorcentaje(response.montoConInteres, response.montoConInteres - response.saldo)}))
       );
   }
 
