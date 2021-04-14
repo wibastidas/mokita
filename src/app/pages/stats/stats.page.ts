@@ -198,8 +198,8 @@ export class StatsPage implements OnInit, OnDestroy {
       componentProps: {
         title: 'Préstamos Nuevos',
         prestamos: this.prestamosNuevos$,
-        from: "03/01/2021",
-        to: "03/01/2021",
+        from: this.firstDayCurrentMonth, 
+        to: this.dayToday,
         montoTotal: this.montoPrestamosNuevos
       }
     });
@@ -219,8 +219,8 @@ export class StatsPage implements OnInit, OnDestroy {
       componentProps: {
         title: 'Préstamos Finalizados',
         prestamos: this.prestamosPagados$,
-        from: "03/01/2021",
-        to: "03/01/2021",
+        from: this.firstDayCurrentMonth, 
+        to: this.dayToday,
         montoTotal: this.montoPrestamosPagados
       }
     });
@@ -241,8 +241,8 @@ export class StatsPage implements OnInit, OnDestroy {
       component: ReportePrestamosSaldoPendientePage,
       componentProps: {
         prestamos: this.prestamosConSaldoPendiente,
-        from: "03/01/2021",
-        to: "03/01/2021",
+        from: this.firstDayCurrentMonth, 
+        to: this.dayToday,
         montoTotal: this.totalSaldo
       }
     });
@@ -261,8 +261,8 @@ export class StatsPage implements OnInit, OnDestroy {
       component: ReporteGastosPage,
       componentProps: {
         gastos: this.gastos,
-        from: "03/01/2021",
-        to: "03/01/2021",
+        from: this.firstDayCurrentMonth, 
+        to: this.dayToday,
         montoTotal: this.montoTotalGastos
 
       }
