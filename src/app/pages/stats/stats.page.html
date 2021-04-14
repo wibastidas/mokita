@@ -109,7 +109,31 @@
         </ion-item>
       </ion-col>
     </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none" (click)="goReportePrestamosSaldoPendiente()">
+          <div class="thumb" slot="start" style="margin-right: 12px;" >
+            <img src="assets/imgs/bill1.svg" alt="">
+          </div>
+          <ion-label>
+            <p class="ion-text-wrap">Saldo total por recaudar</p>
+            <h3> {{totalSaldo | currency :'$':'symbol':'1.0-0'}}   &nbsp;</h3>
+            <!-- <h6 class="ion-text-wrap"> Total monto pendiente por cobrar. &nbsp;</h6> -->
+          </ion-label>
+          <!-- <ion-icon color="medium"  slot="end" name="chevron-forward-outline"></ion-icon>  -->
+          <div class="end-slot" slot="end">
+            <ion-button>
+              Detalle
+            </ion-button>
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
   </div>
+
+  
 
   <div class="bottom-section" *ngIf="customers$ | async; else loading; let customers">
 
@@ -185,27 +209,6 @@
             <h6>Cantidad: {{montoTotalGastos}}  &nbsp;</h6>
           </ion-label>
           <!-- <ion-icon color="medium" slot="end" name="chevron-forward-outline"></ion-icon> -->
-          <div class="end-slot" slot="end">
-            <ion-button>
-              Detalle
-            </ion-button>
-          </div>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-item lines="none" (click)="goReportePrestamosSaldoPendiente()">
-          <div class="thumb" slot="start" style="margin-right: 12px;" >
-            <img src="assets/imgs/bill1.svg" alt="">
-          </div>
-          <ion-label>
-            <p class="ion-text-wrap">Saldo por recaudar</p>
-            <h3> {{totalSaldo | currency :'$':'symbol':'1.0-0'}}   &nbsp;</h3>
-            <h6 class="ion-text-wrap"> Total monto pendiente por cobrar. &nbsp;</h6>
-          </ion-label>
-          <!-- <ion-icon color="medium"  slot="end" name="chevron-forward-outline"></ion-icon>  -->
           <div class="end-slot" slot="end">
             <ion-button>
               Detalle

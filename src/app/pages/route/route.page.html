@@ -20,6 +20,7 @@
     <div class="background-holder">
 
     </div>
+
     <div class="top-card absolute ion-text-center ion-padding-vertical">
       <ion-row class="top-row">
         <ion-col size="auto" class="ion-text-left">
@@ -53,6 +54,13 @@
     <div class="bottom-section ">
       <ion-row class="btns-holder">
       </ion-row>
+      <ion-item *ngIf="isAdmin" >
+        <ion-label>Seleccionar Cobrador</ion-label>
+        <ion-select mode="ios" okText="Seleccionar" cancelText="Cancelar" [(ngModel)]="cobradorSeleccionado" (ionChange)="cobradorChange($event)"       >
+          <ion-select-option value="todos" selected>Todos</ion-select-option>
+          <ion-select-option *ngFor="let cobrador of cobradores" value="{{cobrador.uid}}">{{cobrador.displayName || cobrador.email}} </ion-select-option>
+        </ion-select>
+      </ion-item>
   
       <div class="details">
         <!-- <div style="margin-top: 10px"  class="the-title ion-padding-horizontal">

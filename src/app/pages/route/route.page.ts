@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
+import { User } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
 import { RoleBasedAutorizationService } from 'src/app/services/role-based-autorization.service';
@@ -25,6 +26,8 @@ export class RoutePage implements OnInit, OnDestroy {
   public isAdmin;
   private subscription = new Subscription();
   public totalRecaudar;
+  cobradores: any;
+  cobradorSeleccionado = "todos";
 
   category:any = "day";
   gaugePrependText = "$"
@@ -97,6 +100,15 @@ export class RoutePage implements OnInit, OnDestroy {
     if (this.isAdmin) {
       this.customers$ = this.customersService.getSalesAndCustomersByAdmin(this.authSvc.getLoggedUser().uid);
       this.subscription.add(this.customers$.subscribe(res => this.calcularRecaudoYsaldo(res)));
+      this.customersService.getVendedoresByAdmin(this.authSvc.getLoggedUser().uid).subscribe((data) => {
+ 
+        this.cobradores = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data() as User
+          } 
+        });
+      });
     } else {
       this.customers$ = this.customersService.getSalesAndCustomersByCobrador(this.authSvc.getLoggedUser().uid);
       this.subscription.add(this.customers$.subscribe(res => this.calcularRecaudoYsaldo(res)));
@@ -226,6 +238,17 @@ export class RoutePage implements OnInit, OnDestroy {
     setTimeout(() => {
       event.target.complete();
     }, 1000);
+  }
+
+  cobradorChange(ev){
+    if(this.cobradorSeleccionado === 'todos'){
+      this.customers$ = this.customersService.getSalesAndCustomersByAdmin(this.authSvc.getLoggedUser().uid);
+      this.subscription.add(this.customers$.subscribe(res => this.calcularRecaudoYsaldo(res)));
+    } else {
+      this.customers$ = this.customersService.getSalesAndCustomersByCobrador(this.cobradorSeleccionado);
+      this.subscription.add(this.customers$.subscribe(res => this.calcularRecaudoYsaldo(res)));
+    }
+
   }
 
 }
