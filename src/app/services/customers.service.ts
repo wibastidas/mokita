@@ -193,7 +193,6 @@ export class CustomersService {
 
 
   getPrestamosPagadosByAdminAndDates(adminId, from, to){
-    console.log("getPrestamosPagadosByAdminAndDates");
 
     return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges({idField: 'id'})
     .pipe(
@@ -290,7 +289,6 @@ export class CustomersService {
   }
 
   getPrestamosNuevosByAdminAndDates(adminId, from, to){
-    console.log("getPrestamosNuevosByAdminAndDates");
 
     return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges({idField: 'id'})
     .pipe(
@@ -355,6 +353,101 @@ export class CustomersService {
               this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId)
                                                            .where('createdAt', ">=", from)
                                                            .where('createdAt', "<=", to)).valueChanges({idField: 'id'}).pipe(
+                  map(salesPagadas => {
+                        if (salesPagadas && salesPagadas[0]) return  salesPagadas[0]
+                  })
+                )
+              )
+          )
+        ])
+      }),
+      map(([customers, salesPagadas]) => {
+
+        let salesFiltered = salesPagadas.filter(sale => sale != undefined);
+
+        let customersSort = customers.sort((a: any, b: any) => {
+          if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;
+        })
+
+        return customersSort.map((customer: any) => {
+          return {
+            ...customer,
+           sale: salesFiltered.find((a:any) => a && a.customerId === customer.id)
+          }
+        }).filter(customer => customer.sale != undefined);
+
+      })
+    )
+  }
+
+
+  getAbonosByAdminAndDates(adminId, from, to){
+
+    return this.firestore.collection(`customers`, ref => ref.where('adminId', "==", adminId)).valueChanges({idField: 'id'})
+    .pipe(
+      switchMap(customers => {
+        if(customers.length === 0) { 
+          return combineLatest([of([]),of([])])
+        } 
+        
+        const customerIds = uniq(customers.map((bp:any) => bp.id))
+
+        return combineLatest([ 
+          of(customers),
+          combineLatest( 
+            customerIds.map((customerId) =>
+              this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId)
+                                                           .where('updatedAt', ">=", from)
+                                                           .where('updatedAt', "<=", to)).valueChanges({idField: 'id'}).pipe(
+                  map(salesPagadas => {
+                        if (salesPagadas && salesPagadas[0]) return  salesPagadas[0]
+                  })
+                )
+              )
+          )
+        ])
+      }),
+      map(([customers, salesPagadas]) => {
+
+        let salesFiltered = salesPagadas.filter(sale => sale != undefined);
+
+        let customersSort = customers.sort((a: any, b: any) => {
+          if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;
+        })
+
+        return customersSort.map((customer: any) => {
+          return {
+            ...customer,
+           sale: salesFiltered.find((a:any) => a && a.customerId === customer.id)
+          }
+        }).filter(customer => customer.sale != undefined);
+
+      })
+    )
+  }
+
+  getAbonosByCobradorAndDates(cobradorId, from, to){
+
+    return this.firestore.collection(`customers`, ref => ref.where('cobradorId', "==", cobradorId)).valueChanges({idField: 'id'})
+    .pipe(
+      switchMap(customers => {
+        if(customers.length === 0) { 
+          return combineLatest([of([]),of([])])
+        } 
+
+        const customerIds = uniq(customers.map((bp:any) => bp.id))
+
+        return combineLatest([ 
+          of(customers),
+          combineLatest( 
+            customerIds.map((customerId) =>
+              this.firestore.collection(`sales`, ref => ref.where('customerId', "==", customerId)
+                                                           .where('updatedAt', ">=", from)
+                                                           .where('updatedAt', "<=", to)).valueChanges({idField: 'id'}).pipe(
                   map(salesPagadas => {
                         if (salesPagadas && salesPagadas[0]) return  salesPagadas[0]
                   })

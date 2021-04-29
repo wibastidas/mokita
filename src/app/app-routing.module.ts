@@ -9,6 +9,10 @@ const routes: Routes = [
     {
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+  },
+  {
+    path: 'reporte-recaudo',
+    loadChildren: () => import('./pages/reporte-recaudo/reporte-recaudo.module').then( m => m.ReporteRecaudoPageModule)
   }
 ];
 

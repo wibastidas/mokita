@@ -25,10 +25,13 @@
   <div class="top-item">
     <ion-item lines="none">
       <div slot='end' class="right-section" >
-        <p class="ion-text-capitalize" style="margin-top: 0px;font-size: 16px;"  >{{dayName}} <strong style="color: #77869e !important;">{{dayToday | date:'dd/MM/yyyy'}} </strong></p>
+          <ion-button (click)="goReporteRecaudo()">
+            Detalle
+          </ion-button>
+        <!-- <p class="ion-text-capitalize" style="margin-top: 0px;font-size: 16px;"  >{{dayName}} <strong style="color: #77869e !important;">{{dayToday | date:'dd/MM/yyyy'}} </strong></p> -->
       </div>
       <div slot='start' class="left-section">
-        <p>Balance del día</p>
+        <p>Balance del día {{dayName}} <strong style="color: #77869e !important;">{{dayToday | date:'dd/MM/yyyy'}} </strong> </p>
         <h1>{{(totalRecaudado - gastosDelDia) | currency :'$':'symbol':'1.0-2'}}</h1>
       </div>
       <!-- <div slot='end' class="right-section">

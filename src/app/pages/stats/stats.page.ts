@@ -8,6 +8,7 @@ import { ExpensesService } from 'src/app/services/expenses.service';
 import { ReporteGastosPage } from '../reporte-gastos/reporte-gastos.page';
 import { ReportePrestamosSaldoPendientePage } from '../reporte-prestamos-saldo-pendiente/reporte-prestamos-saldo-pendiente.page';
 import { ReportePrestamosPage } from '../reporte-prestamos/reporte-prestamos.page';
+import { ReporteRecaudoPage } from '../reporte-recaudo/reporte-recaudo.page';
 
 @Component({
   selector: 'app-stats',
@@ -273,6 +274,15 @@ export class StatsPage implements OnInit, OnDestroy {
       //if (data['data'].dismissed)  this.getExpenses();
     });
 
+    return await modal.present();
+  }
+
+  async goReporteRecaudo() {
+
+    const modal = await this.modalController.create({
+      component: ReporteRecaudoPage
+    });
+  
     return await modal.present();
   }
 
