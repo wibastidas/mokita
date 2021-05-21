@@ -13,12 +13,14 @@
               </ion-button>
             </ion-col> -->
             <ion-col>
+              <p style="color: #77869E !important;font-family: 'AvenirR' !important;font-size: 0.9rem !important;margin-top: 0px;margin-bottom: 0px;text-align: center;">Solo usuarios administradores.</p>
               <ion-button fill="none" (click)="onLoginGoogle()" style="width: 50%;">
                 <img src="assets/imgs/google.svg" alt="">
               </ion-button>
             </ion-col>
           </ion-row>
         </div>
+
         <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
           <div class="details">
             <div class="detail-item">

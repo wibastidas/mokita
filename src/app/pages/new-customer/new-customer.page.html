@@ -103,7 +103,7 @@
       <ion-icon size="small" name="reader-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
     </ion-item>
 
-    <ion-list-header class="ios hydrated">
+    <ion-list-header class="ios hydrated" *ngIf="roleAutorization.canEditCustomerVendor(authSvc.getLoggedUser())">
       Cobrador
     </ion-list-header>
 
