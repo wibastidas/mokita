@@ -139,7 +139,6 @@ export class StatsPage implements OnInit, OnDestroy {
   }
 
   calcularGastos(gastos){
-    console.log("gastos: ", gastos)
     this.gastosDelDia = 0;
     this.gastosDelDia = gastos.reduce((prev, cur) => prev + cur.amount, 0);
   }
@@ -148,20 +147,9 @@ export class StatsPage implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  async presentPopover(ev: any) {
-    // const popover = await this.popoverController.create({
-    //   component: PopoverComponent,
-    //   cssClass: 'my-custom-class',
-    //   event: ev,
-    //   translucent: true
-    // });
-    // return await popover.present();
-  }
-
   calcularPrestamosNuevos(data){
     this.cantidadPrestamosNuevos = 0;
     this.montoPrestamosNuevos = 0;
-    //console.log("data: ", data)
     this.cantidadPrestamosNuevos = data.length;
     this.montoPrestamosNuevos = data.reduce((prev, cur) => prev + cur.sale.amount, 0);
 
@@ -171,7 +159,6 @@ export class StatsPage implements OnInit, OnDestroy {
     
     this.cantidadPrestamosNuevos = 0;
     this.montoPrestamosNuevos = 0;
-    //console.log("data: ", data)
     this.prestamosPagados = data.length;
     this.montoPrestamosPagados = data.reduce((prev, cur) => prev + cur.sale.amount, 0);
 

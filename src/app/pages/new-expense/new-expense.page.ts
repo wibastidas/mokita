@@ -56,7 +56,6 @@ export class NewExpensePage implements OnInit, OnDestroy {
 
   @HostListener('window:popstate', ['$event'])
   dismissModal() {
-    console.log("dismissModal");
     this.modalCtrl.dismiss();
   }
 
@@ -79,7 +78,6 @@ export class NewExpensePage implements OnInit, OnDestroy {
         }, {
           text: 'Ok',
           handler: () => {
-            console.log("createGasto: ", expense);
             this.createExpense(expense);
           }
         }
@@ -90,8 +88,6 @@ export class NewExpensePage implements OnInit, OnDestroy {
 
   createExpense(expense: Expense){
   
-    console.log('expense: ', expense);
-
     expense.createdBy = this.authSvc.getLoggedUser().uid;
     if(this.authSvc.getLoggedUser().createdBy) {
       //Lo esta creando un cobrador. Aunque no se soporta este permiso actualmente

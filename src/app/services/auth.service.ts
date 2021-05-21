@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import firebase from 'firebase/app';
 import { Observable, of, Subject } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/interfaces';
 import { AlertService } from './alert.service';
 
@@ -18,6 +19,7 @@ export class AuthService {
   public loggedUser$ = new Subject<any>();
   
   constructor(public afAuth: AngularFireAuth, 
+              public afAuthNonCobrador: AngularFireAuth, 
               private afs: AngularFirestore, 
               private alertService: AlertService) {
     this.user$ = this.afAuth.authState.pipe(
@@ -30,12 +32,35 @@ export class AuthService {
     );
   }
 
-
   async registerUser(email: string, password: string, isNewUserCobrador: boolean, createdBy): Promise<User> {
     try {
       const { user } = await this.afAuth.createUserWithEmailAndPassword(email, password);
       this.updateUserData(user, isNewUserCobrador, createdBy);
-      await this.sendVerifcationEmail();
+      await this.sendVerifcationEmail(user);
+      return user;
+    } catch (error) {
+
+      let message: string;
+      if (error.code == 'auth/weak-password') {
+        message = 'La contraseña debe tener al menos 6 caracteres'
+      } else if (error.code == 'auth/email-already-in-use') {
+        message = 'La dirección de correo electrónico ya está siendo utilizada por otra cuenta.'
+      } else {
+        message = error.message;
+      }
+      this.alertService.presentAlert("Error!", message, ['Ok'])
+
+    }
+  }
+
+
+  async registerUserCobrador(email: string, password: string, isNewUserCobrador: boolean, createdBy): Promise<User> {
+    try {
+      const app2 = firebase.initializeApp(environment.firebase, 'tempApp');
+
+      const { user } = await app2.auth().createUserWithEmailAndPassword(email, password)
+      this.updateUserData(user, isNewUserCobrador, createdBy);
+      await this.sendVerifcationEmail(user);
       return user;
     } catch (error) {
 
@@ -97,9 +122,10 @@ export class AuthService {
     }
   }
 
-  async sendVerifcationEmail(): Promise<void> {
+  async sendVerifcationEmail(user): Promise<void> {
     try {
-      return (await this.afAuth.currentUser).sendEmailVerification();
+      let currentUser = user ?? this.afAuth.currentUser
+      return (await currentUser).sendEmailVerification();
     } catch (error) {
       console.log('Error->', error);
       this.alertService.presentAlert("Error!", error.message, ['Ok'])
@@ -139,6 +165,9 @@ export class AuthService {
       createdBy
     };
 
+    // if(isNewUserCobrador){
+    //   this.afAuthNonCobrador.signOut();
+    // }
     return userRef.set(data, { merge: true });
   }
 

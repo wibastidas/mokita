@@ -39,16 +39,7 @@ export class SaleDetailPage implements OnInit {
   }
 
   ngOnInit() {
-
-    // this.loading = true;
     this.sale$ = this.salesService.getSaleById(this.saleId);
-
-    // this.salesService.getSaleById(this.saleId).subscribe((res: Sale) => {
-    //   console.log("res:", res);
-    //   // this.loading = false;
-    //   this.sale = res;
-    //   this.sale.id = this.saleId;
-    // });
   }
 
   async agregarAbono(montoCuota, sale) {
@@ -140,7 +131,6 @@ export class SaleDetailPage implements OnInit {
   }
 
   deleteAbono(index) {
-    console.log(" this.sale: ",  this.sale);
     this.sale.abonos.splice(index, 1);
     this.updateSale();
   }

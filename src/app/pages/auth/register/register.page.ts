@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -12,35 +13,37 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RegisterPage implements OnInit {
   public isNewUserCobrador: any = null;
   public user;
-  signupForm : FormGroup;
-  
+  signupForm: FormGroup;
+
   error_messages = {
     // 'username':[
     //   { type:'required', message: 'El nombre y apellidos son requeridos'},
     //   { type:'minlength', message: 'El nombre y apellidos deben ser mayor o igual a 6 caracteres.'},
     //   { type:'maxlength', message: 'El nombre y apellidos no pueden superar los 30 caracteres.'},
     // ],
-    'email':[
-      { type:'required', message: 'El correo es requerido.'},
-      { type:'minlength', message: 'La longitud del correo debe ser mayor o igual a 6 caracteres.'},
-      { type:'maxlength', message: 'La longitud del correo no puede superar los 30 caracteres.'},
-      { type:'pattern', message: 'Por favor ingrese un formato de correo válido.'}
+    'email': [
+      { type: 'required', message: 'El correo es requerido.' },
+      { type: 'minlength', message: 'La longitud del correo debe ser mayor o igual a 6 caracteres.' },
+      { type: 'maxlength', message: 'La longitud del correo no puede superar los 30 caracteres.' },
+      { type: 'pattern', message: 'Por favor ingrese un formato de correo válido.' }
     ],
-    'password':[
-      { type:'required', message: 'La contraseña es requerida.'},
-      { type:'minlength', message: 'La contraseña debe ser mayor o igual a 6 caracteres.'},
-      { type:'maxlength', message: 'La contraseña no puede superar los 30 caracteres.'},
-      { type:'pattern', message: 'La contraseña debe contener números, letras mayúsculas y minúsculas.'}
+    'password': [
+      { type: 'required', message: 'La contraseña es requerida.' },
+      { type: 'minlength', message: 'La contraseña debe ser mayor o igual a 6 caracteres.' },
+      { type: 'maxlength', message: 'La contraseña no puede superar los 30 caracteres.' },
+      { type: 'pattern', message: 'La contraseña debe contener números, letras mayúsculas y minúsculas.' }
     ],
     'terms': [
-      { type:'required', message: 'Debe aceptar los Términos y Condiciones.'},
+      { type: 'required', message: 'Debe aceptar los Términos y Condiciones.' },
     ]
   }
 
-  constructor(public authSvc: AuthService, 
-              private router: Router,
-              public formBuilder:FormBuilder,
-              private navCtrl:NavController) {
+  constructor(public authSvc: AuthService,
+    private router: Router,
+    private zone: NgZone,
+    public formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private navCtrl: NavController) {
     this.signupForm = this.formBuilder.group({
       // username: new FormControl('',Validators.compose([
       //   Validators.required,
@@ -48,31 +51,31 @@ export class RegisterPage implements OnInit {
       //   Validators.maxLength(30),
       //   Validators.pattern('^[a-zA-Z0-9_.+-]+$')
       // ])),
-      email: new FormControl('',Validators.compose([
+      email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(30),
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9.-]+$')
       ])),
-      password: new FormControl('',Validators.compose([
+      password: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(30),
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
       ])),
-      terms: new FormControl(undefined,Validators.compose([
+      terms: new FormControl(undefined, Validators.compose([
         Validators.requiredTrue
       ]))
     })
-              }
+  }
 
   ngOnInit() {
     this.getCurrentUser();
   }
 
-  getCurrentUser(){
+  getCurrentUser() {
 
-    if(this.authSvc.getLoggedUser()){
+    if (this.authSvc.getLoggedUser()) {
       let isAdminCreator = Object.assign({}, this.authSvc.getLoggedUser().roles).hasOwnProperty('admin');
       if (isAdminCreator) {
         this.isNewUserCobrador = true;
@@ -80,17 +83,25 @@ export class RegisterPage implements OnInit {
     }
 
   }
-  
+
   async signup(data, isNewUserCobrador) {
     try {
       let createdBy = null;
+      let user;
       if (isNewUserCobrador) {
         createdBy = this.authSvc.getLoggedUser().uid;
-      } 
-      const user = await this.authSvc.registerUser(data.email, data.password, isNewUserCobrador, createdBy);
-      if (user) {
-        const isVerified = this.authSvc.isEmailVerified(user);
-        this.redirectUser(isVerified);
+        user = await this.authSvc.registerUserCobrador(data.email, data.password, isNewUserCobrador, createdBy);
+      } else {
+        user = await this.authSvc.registerUser(data.email, data.password, isNewUserCobrador, createdBy);
+      }
+      if (!isNewUserCobrador) {
+        if (user) {
+          const isVerified = this.authSvc.isEmailVerified(user);
+          this.redirectUser(isVerified);
+        }
+      } else {
+        console.log("creado satisfactoriamente.")
+        this.alertService.presentAlert("Cobrador creado satisfactoriamente!", "Hemos enviado un correo electrónico de confirmación al usuario creatado. El usuario debe entrar a su correo electrónico y hacer clic en el enlace para verificar el mismo, luego podrá iniciar sesión en la aplicación", ['Ok'])
       }
     } catch (error) {
       console.log('Error', error);
@@ -105,5 +116,11 @@ export class RegisterPage implements OnInit {
       //this.authSvc.setLoggedUser(null);
       //pendiente no hacer login con el usuario creado cuando es un cobrador
     }
+  }
+
+  volver(){
+    this.zone.run(() => {
+      this.router.navigate(['/login']);
+    });
   }
 }

@@ -57,6 +57,7 @@ export class RoutePage implements OnInit, OnDestroy {
   }
 
   async showOptions() {
+    //this.authSvc.logout();
     let buttonsActionSheet = [{
       text: 'Cerrar Sesión',
       icon: 'log-out-outline',
@@ -117,23 +118,15 @@ export class RoutePage implements OnInit, OnDestroy {
 
 
   goSaleDetail(customer){
-    console.log("customer: ", customer)
-
     this.router.navigateByUrl('home/route/sale-detail/' + customer.sale.id + '/' + customer.name + '/' + customer.lastName + '/' + customer.phoneNumber);
   }
 
   calcularRecaudoYsaldo(customers){
-    console.log("calcularRecaudoYsaldo");
     this.totalRecaudado = 0;
     this.totalSaldo = 0;
     this.totalRecaudar = 0;
 
     customers.forEach(customer => {
-
-      // if(customer.sale){
-      //   customer.sale.vencido = moment(customer.sale.vencimiento, "MM/DD/YYYY").isBefore(this.dayToday);
-      // }
-
 
       if(customer.sale && customer.sale.abonos && customer.sale.abonos.length > 0) {
 

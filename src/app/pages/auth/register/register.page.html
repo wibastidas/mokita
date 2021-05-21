@@ -1,14 +1,15 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="login"></ion-back-button>
+      <ion-button  (click)="volver()" >Volver</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
   <div class="the-content">
     <div class="the-title">
-      <h2>Regístrate</h2>
+      <h2 *ngIf="!isNewUserCobrador">Regístrate</h2>
+      <h2 *ngIf="isNewUserCobrador">Regístrar Cobrador</h2>
     </div>
     <ion-grid style="height: 100%">
       <ion-row class="ion-justify-content-center ion-align-items-center " style="height: 100%">
@@ -86,10 +87,16 @@
 
             </div>
             <div class="btn-holder ion-padding-top">
-              <ion-button expand="block" type="submit" routerDirection="root" [disabled]="signupForm.invalid">
+              <ion-button expand="block" type="submit" routerDirection="root" [disabled]="signupForm.invalid" *ngIf="!isNewUserCobrador">
                 Registrarse
               </ion-button>
+              <ion-button expand="block" type="submit" routerDirection="root" [disabled]="signupForm.invalid" *ngIf="isNewUserCobrador">
+                Registrar cobrador
+              </ion-button>
             </div>
+
+
+            
 
           </form>
         </div>

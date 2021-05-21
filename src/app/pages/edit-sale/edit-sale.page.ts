@@ -83,7 +83,6 @@ export class EditSalePage implements OnInit, OnDestroy {
 
   @HostListener('window:popstate', ['$event'])
   dismissModal() {
-    console.log("dismissModal");
     this.modalCtrl.dismiss(this.sale);
   }
 

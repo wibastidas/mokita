@@ -15,6 +15,7 @@ export class AutoLoginGuard implements CanActivate {
   ): boolean | Observable<boolean> | Promise<boolean> {
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged((user: firebase.User) => {
+        console.log('user: ', user)
         if (user) {
           this.router.navigateByUrl('/home/route');
         } else {

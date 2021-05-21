@@ -14,7 +14,7 @@ export class VerifyEmailPage {
 
   async onSendEmail(): Promise<void> {
     try {
-      await this.authSvc.sendVerifcationEmail();
+      await this.authSvc.sendVerifcationEmail(null);
     } catch (error) {
       console.log('Error->', error);
     }

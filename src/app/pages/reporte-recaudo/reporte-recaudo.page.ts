@@ -86,45 +86,24 @@ export class ReporteRecaudoPage implements OnInit {
               lastName: cliente.lastName
             }
             abonos.push(newAbono);
-            // abonos.sort(function(a, b) {
-            //   return Math.abs(new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());  
-            // })
           }
         });
       }
     });
 
-    // console.log("abonos**: ", abonos)
     let abonosGrouped = this.groupBy(abonos, abono => abono.createdAt);
-    // console.log("grouped", grouped); 
-    // for (var key in grouped.) {
-    //   var value = grouped[key];
-    //   console.log(key, value);
-    // }
 
     abonosGrouped = new Map([...abonosGrouped.entries()].sort().reverse());
 
     abonosGrouped.forEach((value, key) => {
-      console.log("value", value);
-      console.log("key", key);
       if(value && value.length > 0){
-        //let bonoTotalDia = this.calcularAbonos(value);
         this.montoTotalRecaudado = this.montoTotalRecaudado + this.calcularAbonos(value);
-        console.log("this.calcularAbonos(value)", this.calcularAbonos(value));
-
       }
       this.abonos.push(value)
     });
-
- 
-    console.log("this.abonos: ", this.abonos)
-
-    
-
   }
 
   calcularAbonos(abonos){
-    console.log("calcularAbonos: ", abonos);
     return abonos.reduce((total, abono) => total + abono.monto, 0);
   }
 

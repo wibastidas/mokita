@@ -73,7 +73,6 @@ export class ExpensesPage implements OnInit {
   }
 
   async deleteExpense(expense) {
-    console.log("expense: ", expense);
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -86,7 +85,7 @@ export class ExpensesPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Cancelar');
+            //console.log('Cancelar');
           }
         }, {
           text: 'Ok',

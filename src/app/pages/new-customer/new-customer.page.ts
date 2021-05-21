@@ -88,7 +88,6 @@ export class NewCustomerPage implements OnInit, OnDestroy {
 
   @HostListener('window:popstate', ['$event'])
   dismissModal() {
-    console.log("dismissModal");
     this.modalCtrl.dismiss();
   }
 
@@ -138,7 +137,6 @@ export class NewCustomerPage implements OnInit, OnDestroy {
         }, {
           text: 'Ok',
           handler: () => {
-            console.log("createCustomer: ", customer);
             this.createCustomer(customer);
           }
         }
@@ -161,26 +159,14 @@ export class NewCustomerPage implements OnInit, OnDestroy {
     }
     this.customersService.getCustomerByDocument(customer.document).pipe(take(1))
     .subscribe(async cliente => {
-      console.log('cliente: ', cliente);
       if(cliente.length > 0) {
         this.alertService.presentToast("El numero de cédula ya fue registrado.", 2000, "top" ,"secondary");
       } else {
         await this.customersService.createNewCustomer(customer).then(res => { console.log('res: ', res) });
-
-        //this.eventorService.emit('CUSTOMER_SEGMENT_CHANGED', { type: "registeredCustomer", document: customer.document });
       }
       this.dismissModal();
     });
   }
-
-  // update(customer: Customer) {
-  //   this.customersService.updateCustomer(customer);
-  // }
-
-  // delete(id: string) {
-  //   this.customersService.deleteCustomer(id);
-  // }
-
 }
 
 
