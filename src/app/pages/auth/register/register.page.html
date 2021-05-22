@@ -14,7 +14,7 @@
     </div>
     <ion-grid style="height: 100%">
       <ion-row class="ion-justify-content-center ion-align-items-center " style="height: 100%">
-        <div class="holder">
+        <div class="holder" style="width: 100%;">
           <form [formGroup]="signupForm" (ngSubmit)="signup(signupForm.value, isNewUserCobrador)">
             <div class="details">
 
@@ -78,13 +78,13 @@
                 </ng-container>
               </div>
 
-              <div class="agreement-holder">
+              <!-- <div class="agreement-holder">
                 <ion-item lines="none" class="ion-no-padding">
                   <ion-label class="ion-text-wrap">Al crear una cuenta, acepta nuestros
                     Términos y Condiciones</ion-label>
                   <ion-checkbox mode="ios" slot="start" formControlName="terms" ></ion-checkbox>
                 </ion-item>
-              </div>
+              </div> -->
 
             </div>
             <div class="btn-holder ion-padding-top">
