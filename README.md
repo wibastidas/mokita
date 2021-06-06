@@ -4,3 +4,10 @@
 # firebase deploy
 
 # https://mokita-app.web.app
+
+# ionic build --prod
+# npx cap sync
+
+# npx cap add android
+# npx cap sync
+# npx cap open android
