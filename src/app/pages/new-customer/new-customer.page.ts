@@ -160,11 +160,11 @@ export class NewCustomerPage implements OnInit, OnDestroy {
     this.customersService.getCustomerByDocument(customer.document).pipe(take(1))
     .subscribe(async cliente => {
       if(cliente.length > 0) {
-        this.alertService.presentToast("El numero de cédula ya fue registrado.", 2000, "top" ,"secondary");
+        this.alertService.presentToast("El numero de cédula ya fue registrado.", 2000, "top" ,"warning");
       } else {
         await this.customersService.createNewCustomer(customer).then(res => { console.log('res: ', res) });
+        this.dismissModal();
       }
-      this.dismissModal();
     });
   }
 }

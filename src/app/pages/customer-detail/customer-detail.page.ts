@@ -172,7 +172,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
 
   updateCustomer(){
     this.customersService.updateCustomer(this.customerForm.value).then(res => res);
-    this.alertService.presentToast("Cliente Actualizado!.", 2000, "top" ,"secondary");
+    this.alertService.presentToast("Cliente Actualizado!.", 2000, "top" ,"success");
   }
 
   segmentChanged(ev : any){

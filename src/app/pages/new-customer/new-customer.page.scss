@@ -8,7 +8,7 @@ ion-toolbar {
 }
 
 ion-content{
-    --background: #F8F9F9!important;
+    --background: #e6e6e6!important;
 }
 
  
@@ -16,7 +16,7 @@ ion-content{
 
     margin-left: 12px;
     margin-right: 12px;
-    --background: #F8F9F9!important;
+    --background: #e6e6e6!important;
     
     .validation-errors {
         .error-message {
@@ -42,7 +42,7 @@ ion-content{
         padding: 8px 16px;
         ion-button
         {
-            --background: #dfe7f5;
+            --background: #ffffff;
             --border-radius: 12px !important;
             --box-shadow: none;
             --color: #0047cc;

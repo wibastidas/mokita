@@ -101,7 +101,7 @@ export class RegisterPage implements OnInit {
         }
       } else {
         console.log("creado satisfactoriamente.")
-        this.alertService.presentAlert("Cobrador creado satisfactoriamente!", "Hemos enviado un correo electrónico de confirmación al usuario creatado. El usuario debe entrar a su correo electrónico y hacer clic en el enlace para verificar el mismo, luego podrá iniciar sesión en la aplicación", ['Ok'])
+        this.alertService.presentAlert("Cobrador creado satisfactoriamente!", "Hemos enviado un correo electrónico de confirmación al usuario creado. El usuario debe entrar a su correo electrónico y hacer clic en el enlace para verificar el mismo, luego podrá iniciar sesión en la aplicación", ['Ok'])
       }
     } catch (error) {
       console.log('Error', error);
