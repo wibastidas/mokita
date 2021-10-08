@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IonMaskDirective } from 'src/app/ion-mask.directive';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { NewCustomerPageRoutingModule } from './new-customer-routing.module';
 import { NewCustomerPage } from './new-customer.page';
 
@@ -12,9 +12,10 @@ import { NewCustomerPage } from './new-customer.page';
     FormsModule,
     IonicModule,
     NewCustomerPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
-  declarations: [NewCustomerPage, IonMaskDirective],
+  declarations: [NewCustomerPage],
   exports: [NewCustomerPage]
 })
 export class NewCustomerPageModule {}
