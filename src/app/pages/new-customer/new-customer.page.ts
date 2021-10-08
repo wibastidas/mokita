@@ -43,6 +43,7 @@ export class NewCustomerPage implements OnInit, OnDestroy {
       { type:"required", message: "La referencia es requerida."}
     ]
   }
+  public mask : Array<any>  = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]
   constructor(private formBuilder: FormBuilder, 
               public alertController: AlertController,
               public roleAutorization: RoleBasedAutorizationService,

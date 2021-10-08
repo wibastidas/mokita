@@ -3,7 +3,7 @@ export interface Customer {
     name : string,
     lastName : string,
     document : number,
-    phoneNumber : string,
+    phoneNumber : any,
     address : string,
     email : string,
     reference : string,

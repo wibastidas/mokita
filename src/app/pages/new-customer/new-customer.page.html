@@ -60,7 +60,7 @@
   
     <ion-item lines="none">
       <ion-label position="floating" color="primary">Celular: </ion-label>
-      <ion-input type="tel"  formControlName="phoneNumber"></ion-input>
+      <ion-input type="tel" [ionMask]="mask" placeholder="(598) 95 555 555" formControlName="phoneNumber"></ion-input>
       <ion-icon size="small" name="phone-portrait-outline" color="primary" slot="end" class="ion-align-self-center"></ion-icon>
 
     </ion-item>

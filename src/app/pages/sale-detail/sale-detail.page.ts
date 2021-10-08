@@ -207,11 +207,11 @@ export class SaleDetailPage implements OnInit {
 
   openWhatsapp(sale){
 
-    window.open(`https://wa.me/${this.phoneNumber}?text=ACTUALIZACIÓN DE PRÉSTAMO! Cuotas pagadas: ${sale.cuotasPagadas}, Cuotas pendiente: ${sale.cuotasPendientes}, Saldo pendiente: $${sale.saldo} , Vence el ${ moment(sale.vencimiento).format("LLLL")}`)
+    window.open(`https://wa.me/${this.phoneNumber.replace(/\D/g,'')}?text=ACTUALIZACIÓN DE PRÉSTAMO! Cuotas pagadas: ${sale.cuotasPagadas}, Cuotas pendiente: ${sale.cuotasPendientes}, Saldo pendiente: $${sale.saldo} , Vence el ${ moment(sale.vencimiento).format("LLLL")}`)
   }
 
   openCall(){
-    window.open('tel:+' + this.phoneNumber, '_system');
+    window.open('tel:+' + this.phoneNumber.replace(/\D/g,''), '_system');
   }
 
 }

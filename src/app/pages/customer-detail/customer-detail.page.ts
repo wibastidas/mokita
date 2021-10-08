@@ -52,6 +52,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
       { type:"required", message: "La referencia es requerida."}
     ]
   }
+  public mask : Array<any>  = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]
 
   constructor(public modalCtrl: ModalController,
               public customersService:CustomersService,
@@ -132,6 +133,7 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
 
     this.loadingCustomerInformation = true;
     this.customersService.getCustomerById(this.customerId).subscribe((res:Customer) => {
+      console.log("getCustomerById: ", res.phoneNumber.replace(/\D/g,''))
       this.loadingCustomerInformation = false;
       res.id = this.customerId;
       this.customer = res
@@ -230,11 +232,11 @@ export class CustomerDetailPage implements OnInit, OnDestroy {
   }
 
   openWhatsapp(){
-    window.open(`https://wa.me/${this.phoneNumber}`)
+    window.open(`https://wa.me/${this.phoneNumber.replace(/\D/g,'')}`)
   }
 
   openCall(){
-    window.open('tel:+' + this.phoneNumber, '_system');
+    window.open('tel:+' + this.phoneNumber.replace(/\D/g,''), '_system');
   }
 
 }
